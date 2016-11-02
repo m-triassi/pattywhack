@@ -12,7 +12,7 @@
 
 <body>
     <h1>Welcome to Patty Whack.com</h1> 
-    
+    <h2>This is a website</h2>
     
     </body>
 
