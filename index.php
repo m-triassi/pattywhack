@@ -1,5 +1,4 @@
 <html>
-<link rel="stylesheet" type="text/css" href="indexStyles.css">
 
     <!-- BootStrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -7,6 +6,7 @@
 
     <!-- JQuery -->
 <script src="jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="indexStyles.css">
 
 <script>
     window.onload = function () {
@@ -19,11 +19,11 @@
 </head>
 
 <body style="display:none;">
-    <h1>Welcome to Patty Whack.com<br />
+    <?php include("includes/navbar.html"); ?>
+    <h1 class="topbanner">Welcome to Patty Whack.com<br />
         <small>Add some variety to your life</small>
         <input type="button" value="Login" class="btn btn-success btn-sm" style="float: right;">
     </h1>
-    <?php include("includes/navbar.html"); ?>
     
     <div class="webcontent">
         <p class="webcontent">
