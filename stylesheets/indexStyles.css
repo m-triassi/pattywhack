@@ -1,0 +1,26 @@
+.homebody {
+    background-color: black;
+}
+
+.topbanner {
+    margin-top: 57px;
+    padding-left: 1%;
+    padding-right: 2%;
+    color: white;
+    font-family: 'Shrikhand', cursive;
+}
+
+.topbanner small {
+    color: 
+}
+
+.webcontent {
+    padding-left: 10px;
+    padding-top: 20px;
+    color: black;
+}
+
+/*.well {
+    padding-left: 50%;
+    background-image:  linear-gradient(to bottom,#585858 0,#000000 100%)
+}*/
