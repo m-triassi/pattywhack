@@ -25,23 +25,23 @@
     <form class="registerform">
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+            <input type="email" class="form-control" id="EmailBox" placeholder="Email">
         </div>
         <div class="form-group">
             <label for="exampleInputUsername1">Username</label>
-            <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Username">
+            <input type="text" class="form-control" id="UsernameBox" placeholder="Username">
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"> 
+            <input type="password" class="form-control" id="PasswordBox" placeholder="Password"> 
         </div>
         <div class="form-group">
             <label for="exampleInputAddress1">Address</label>
-            <input type="text" class="form-control" id="exampleInputAddress1" placeholder="Address">
+            <input type="text" class="form-control" id="AddressBox" placeholder="Address">
         </div>
         <div class="form-group">
             <label for="exampleInputPostalCode1">PostalCode</label>
-            <input type="text" class="form-control" id="exampleInputPostalCode1" placeholder="Postal Code">
+            <input type="text" class="form-control" id="PostalCodeBox" placeholder="Postal Code">
         </div>
         <div class="checkbox">
             <label>
