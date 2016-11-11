@@ -22,7 +22,7 @@
     <h1 class="registerhead">Register your Account</h1>
 
 <body style="display:none;" class="homebody">
-    <form class="registerform">
+    <form method="post" class="registerform">
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="EmailBox" placeholder="Email">
