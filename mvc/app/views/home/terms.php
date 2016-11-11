@@ -14,7 +14,7 @@
     <br /> <br /><br />
     
     <p class="text-center" style="font-size:30px;">Since you came all the way over here, heres a dog for your trouble...</p>
-    <img src="img/zMN2FrL.jpg" style="width:383.3px;height:535.83px;display:block;margin-left:auto;margin-right:auto;">
+    <img src="/pattywhack/mvc/public/img/zMN2FrL.jpg" style="width:383.3px;height:535.83px;display:block;margin-left:auto;margin-right:auto;">
 </body>
 
 </html>

@@ -15,4 +15,8 @@ class Home extends Controller {
         $this->view('home/register');
     }
     
+    public function terms()
+    {
+        $this->view('home/terms');
+    }
 }
