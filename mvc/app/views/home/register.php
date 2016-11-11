@@ -7,7 +7,7 @@
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet">
 <!-- Style Sheets -->
-<link rel="stylesheet" type="text/css" href="stylesheets/registerStyles.css">
+<link rel="stylesheet" type="text/css" href="/pattywhack/mvc/public/stylesheets/registerStyles.css">
 <script>
     window.onload = function () {
         $("body").fadeIn(950);
@@ -17,7 +17,7 @@
 <head>
     <title>Patty Whack</title>
 </head>
-    <?php include("includes/navbar.html"); ?>
+    <?php include("/pattywhack/mvc/public/includes/navbar.html"); ?>
     
     <h1 class="registerhead">Register your Account</h1>
 
