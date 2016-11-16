@@ -17,7 +17,7 @@
 <head>
     <title>Patty Whack</title>
 </head>
-    <div class="alert alert-danger">
+    <div class="alert alert-danger" style="clear: right;">
         <?php include("../public/includes/navbar.html"); ?>
     </div>
     
