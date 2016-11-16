@@ -6,13 +6,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
     <!-- JQuery -->
-<script src="/mvc/public/jquery-3.1.1.min.js"></script>
+<script src="/pattywhack/mvc/public/jquery-3.1.1.min.js"></script>
     
     <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet">
     
     <!-- Style Sheets -->
-<link rel="stylesheet" type="text/css" href="/mvc/public/stylesheets/indexStyles.css">
+<link rel="stylesheet" type="text/css" href="/pattywhack/mvc/public/stylesheets/indexStyles.css">
 
 <script>
     window.onload = function () {
