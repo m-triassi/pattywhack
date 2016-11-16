@@ -17,7 +17,9 @@
 <head>
     <title>Patty Whack</title>
 </head>
-    <?php include("../public/includes/navbar.html"); ?>
+    <div class="alert alert-danger">
+        <?php include("../public/includes/navbar.html"); ?>
+    </div>
     
     <h1 class="registerhead">Register your Account</h1>
 
