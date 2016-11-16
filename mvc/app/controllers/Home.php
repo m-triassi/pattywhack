@@ -19,6 +19,12 @@ class Home extends Controller{
 		$user->$name = $name;*/
 		$this->view('home/terms');//, ['name' => $user->$name]);
 	}
+    
+        public function login($name = ''){
+		/*$user = $this->model('User');
+		$user->$name = $name;*/
+		$this->view('home/login');//, ['name' => $user->$name]);
+	}
 
 	public function createUser(){
 		if(isset($_POST)){
