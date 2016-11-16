@@ -20,13 +20,8 @@ class User extends Eloquent
 
 	public function isValid(){
 		$valid = true;
-		$pattern = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/';
-		if(!preg_match($pattern, $this->username))
-			$valid = false;
-		
 		if(!filter_var($this->email, FILTER_VALIDATE_EMAIL))
 			$valid = false;
-
 		return $valid;
 	}
 }
