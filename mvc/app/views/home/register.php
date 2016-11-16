@@ -18,13 +18,13 @@
     <title>Patty Whack</title>
 </head>
     <div class="alert alert-danger">
-        <?php include("../public/includes/navbar.html"); ?>
+        <?php  if(isset($data['message'])){echo $data['message'];}?> 
     </div>
-    
+    <?php include("../public/includes/navbar.html"); ?>
     <h1 class="registerhead">Register your Account</h1>
 
 <body style="display:none;" class="homebody">
-<?php  if(isset($data['message'])){echo $data['message'];}?> 
+
     <form method="POST" class="registerform" action="../home/createUser" >
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
