@@ -17,7 +17,7 @@
 <head>
     <title>Patty Whack</title>
 </head>
-    <div class="alert alert-danger">
+    <div class="alert alert-danger" style="margin-top: 4%; font-size: 2em;">
         <?php  if(isset($data['message'])){echo $data['message'];}?> 
     </div>
     <?php include("../public/includes/navbar.html"); ?>

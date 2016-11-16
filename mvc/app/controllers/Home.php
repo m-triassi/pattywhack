@@ -23,8 +23,6 @@ class Home extends Controller{
 	public function createUser(){
 		if(isset($_POST)){
 			$passHash = password_hash($_POST["PasswordBox"], PASSWORD_DEFAULT);
-
-
 			$newguy = new User;
 			$newguy->username = $_POST["UsernameBox"];
 			$newguy->password_hash = $passHash;
@@ -44,6 +42,7 @@ class Home extends Controller{
 			if($newguy->isValid() && ($getUserByEmail->count() == 0)){
 				$newguy->save();
 				$this->index();
+				//$_SESSION['user'] = $_POST["UsernameBox"];
 			}		
 			else{
 				if(isset($_POST["EmailBox"]) && isset($_POST["AddressBox"]) && isset($_POST["PostalCodeBox"]))
