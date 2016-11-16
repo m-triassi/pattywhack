@@ -1,4 +1,3 @@
-<?php ?>
 <html>
 
     <!-- BootStrap -->
@@ -25,7 +24,7 @@
 </head>
 
 <body style="display:none;" class="homebody">
-    <?php include("../public/includes/navbar.html"); ?>
+    <?php include("includes/navbar.html"); ?>
     <h1 class="topbanner">Welcome to Patty Whack.com<br />
         <small>Add some variety to your life</small>
     </h1>
@@ -38,7 +37,7 @@
         </p>
         <input type="button" value="Place an Order" class="btn btn-outline-secondary" />
     </div>
-    </form>
+        </form>
     
     
     
