@@ -46,7 +46,8 @@ class Home extends Controller{
 				$this->index();
 			}		
 			else{
-				$this->view('home/register',['message'=>"Username already in use."]);
+				if(isset($_POST["EmailBox"]) && isset($_POST["AddressBox"]) && isset($_POST["PostalCodeBox"]))
+					$this->view('home/register',['message'=>"Username already in use.", 'email'=>$_POST["EmailBox"],'address'=>$_POST["AddressBox"],'pCode'=>$_POST["PostalCodeBox"]]);
 
 			}
 			

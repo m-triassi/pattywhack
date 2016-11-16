@@ -28,7 +28,7 @@
     <form method="POST" class="registerform" action="../home/createUser" >
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" required class="form-control" name="EmailBox" placeholder="Email" />
+            <input type="email" required class="form-control" name="EmailBox" placeholder="Email" value="<?php  if(isset($data['email'])){echo $data['email'];}?>" />
         </div>
         <div class="form-group">
             <label for="exampleInputUsername1">Username </label>
@@ -40,11 +40,11 @@
         </div>
         <div class="form-group">
             <label for="exampleInputAddress1">Address</label>
-            <input type="text" class="form-control" name="AddressBox" placeholder="Address" />
+            <input type="text" class="form-control" name="AddressBox" placeholder="Address" value="<?php  if(isset($data['address'])){echo $data['address'];}?>" />
         </div>
         <div class="form-group">
             <label for="exampleInputPostalCode1">PostalCode</label>
-            <input type="text" class="form-control" name="PostalCodeBox" placeholder="Postal Code" />
+            <input type="text" class="form-control" name="PostalCodeBox" placeholder="Postal Code" value="<?php  if(isset($data['pCode'])){echo $data['pCode'];}?>" />
         </div>
         <div class="checkbox">
             <label>
