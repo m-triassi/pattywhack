@@ -3,11 +3,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <!-- JQuery -->
-<script src="/mvc/public/jquery-3.1.1.min.js"></script>
+<script src="/pattywhack/mvc/public/jquery-3.1.1.min.js"></script>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet">
 <!-- Style Sheets -->
-<link rel="stylesheet" type="text/css" href="/mvc/public/stylesheets/registerStyles.css">
+<link rel="stylesheet" type="text/css" href="/pattywhack/mvc/public/stylesheets/registerStyles.css">
 <script>
     window.onload = function () {
         $("body").fadeIn(950);
@@ -46,7 +46,7 @@
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" required /> I agree to the <a href="terms.html" target="_blank">Terms of Service </a> </label>
+                <input type="checkbox" required /> I agree to the <a href="terms" target="_blank">Terms of Service </a> </label>
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>

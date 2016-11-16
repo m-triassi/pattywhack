@@ -14,6 +14,11 @@ class Home extends Controller{
 		$this->view('home/register');//, ['name' => $user->$name]);
 	}
 
+    public function terms($name = ''){
+		/*$user = $this->model('User');
+		$user->$name = $name;*/
+		$this->view('home/terms');//, ['name' => $user->$name]);
+	}
 
 	public function createUser(){
 		if(isset($_POST)){
