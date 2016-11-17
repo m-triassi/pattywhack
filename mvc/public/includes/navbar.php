@@ -7,6 +7,8 @@
         
     }
 </style>
+
+
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
          <a class="navbar-brand" href="/pattywhack/mvc/public/home/index"><img alt="Brand" src="/pattywhack/mvc/public/img/pattyLogo.ico" style="height: 20px; width: 20px;"></a>
@@ -17,9 +19,18 @@
             <li><a href="#">Other Thing</a></li>
         </ul>
            <!-- <input type="button" value="Login" class="btn btn-success btn-sm" style="float: right; font-size: 15px;" /> -->
+        
         <ul class="nav navbar-nav" style="float: right;">    
-            <li><a href="/pattywhack/mvc/public/home/register" style="float: right; font-size: 15px;">Register</a></li>
-            <li><a href="/pattywhack/mvc/public/home/login" style="float: right; font-size: 15px;">Login</a></li>
+            <?php 
+                if(isset($_SESSION['user'])) {
+                    echo '<li><a href="/pattywhack/mvc/public/home/logout" style="float: right; font-size: 15px;">Logout</a></li>';
+                }
+                    else {
+                        echo '<li><a href="/pattywhack/mvc/public/home/register" style="float: right; font-size: 15px;">Register</a></li>
+                        <li><a href="/pattywhack/mvc/public/home/login" style="float: right; font-size: 15px;">Login</a></li>';
+                    }
+                
+            ?>
         </ul>
     </div>
 </nav>
