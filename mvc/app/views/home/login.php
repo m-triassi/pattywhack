@@ -22,14 +22,18 @@
     <h1 class="registerhead">Login</h1>
 
 <body style="display:none;" class="homebody">
-    <form method="POST" class="registerform" action="../home/" >
+    <?php 
+    if(isset($data['message'])) { 
+        echo "<div class='alert alert-danger' style='margin-top: 4%; font-size: 2em;'>$data[message] <br/> $data[pass] </div>";
+     }?>
+    <form method="POST" class="registerform" action="../home/logUser" >
         <div class="form-group">
             <label for="exampleInputEmail1">Username</label>
-            <input type="text" required class="form-control" name="UserLogin" placeholder="Username" />
+            <input type="text" required class="form-control" name="UserLogin" placeholder="Username" required />
         </div>
         <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="password" required class="form-control" name="PasswordLogin" placeholder="Password" />
+            <label for="exampleInputEmail1">Password</label>
+            <input type="password" required class="form-control" name="PasswordLogin" placeholder="Password" required />
         </div>
         <button type="submit" class="btn btn-default">Login</button>
     </form>

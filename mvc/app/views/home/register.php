@@ -32,7 +32,7 @@
         </div>
         <div class="form-group">
             <label for="exampleInputUsername1">Username </label>
-            <input type="text" required class="form-control" name="UsernameBox" placeholder="Username" pattern="(?=.*[a-zA-Z])(?=.*\d).{4,30}" />
+            <input type="text" required class="form-control" name="UsernameBox" placeholder="Username" pattern="(?=.*[a-zA-Z]).{4,30}" />
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>

@@ -26,6 +26,33 @@ class Home extends Controller{
 		$this->view('home/login');//, ['name' => $user->$name]);
 	}
 
+
+	public function logUser(){
+		if(isset($_POST["UserLogin"])){
+			//$getUserByUsername = User::where('username' , $_POST["UserLogin"])->get()->first();
+			$getUserByUsername = $this->model('user');
+
+			if($getUserByUsername->where('username' , $_POST["UserLogin"])->exists()){
+
+				$hash = $getUserByUsername->where('username' , $_POST["UserLogin"])->first()->password_hash;
+				echo '<pre>';
+				var_dump($hash);
+				echo '</pre>';
+				$verify = password_verify($_POST["PasswordLogin"], $hash);
+				if($verify){
+					$_SESSION['user'] = $_POST["UserLogin"];
+					$this->index();
+				}
+				else{
+					$this->view('home/login',['message'=>"Wrong password", 'pass'=>$hash]);
+				}
+			}
+			else{
+				$this->view('home/login',['message'=>"Wrong username", 'pass'=>$_POST["PasswordLogin"]]);
+			}
+		}
+	}
+
 	public function createUser(){
 		if(isset($_POST)){
 			$passHash = password_hash($_POST["PasswordBox"], PASSWORD_DEFAULT);
@@ -48,7 +75,6 @@ class Home extends Controller{
 			if($newguy->isValid() && ($getUserByEmail->count() == 0)){
 				$newguy->save();
 				$this->index();
-				//$_SESSION['user'] = $_POST["UsernameBox"];
 			}		
 			else{
 				if(isset($_POST["EmailBox"]) && isset($_POST["AddressBox"]) && isset($_POST["PostalCodeBox"]))
