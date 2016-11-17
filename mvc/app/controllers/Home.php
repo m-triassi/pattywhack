@@ -77,6 +77,21 @@ class Home extends Controller{
 		header("Location: http://localhost/pattywhack/mvc/public/home");	
 	}
 
+	public function parseAmazon( $url = ''){
+		require_once 'core/simple_html_dom.php';
+		if(isset($_POST['website']))
+			$url = $_POST['website'];
+		if($url != ''){
+			libxml_use_internal_errors(true);
+			$html = file_get_html($url);			
+			$title = $html->find('span#productTitle')->plaintext;
+			$price = $html->find('span#priceblock_ourprice')->plaintext;
+			$category = $html->find('a.a-link-normal a-color-tertiary')->firstChild->plaintext;
+			header("Location: http://localhost/pattywhack/mvc/public/home");
+			var_dump($html);
+		}
+	}
+
 
 	public function createUser(){
 		if(isset($_POST)){
