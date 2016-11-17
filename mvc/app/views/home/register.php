@@ -20,7 +20,7 @@
     <div class="alert alert-danger" style="margin-top: 4%; font-size: 2em;">
         <?php  if(isset($data['message'])){echo $data['message'];}?> 
     </div>
-    <?php include("../public/includes/navbar.html"); ?>
+    <?php include("../public/includes/navbar.php"); ?>
     <h1 class="registerhead">Register your Account</h1>
 
 <body style="display:none;" class="homebody">

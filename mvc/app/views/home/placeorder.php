@@ -22,7 +22,7 @@
 <head>
     <title>Patty Whack</title>
 </head>
-    <?php include("../public/includes/navbar.html"); ?>
+    <?php include("../public/includes/navbar.php"); ?>
     <h1 class="registerhead">Place your order</h1>
 
 <body style="display:none;" class="homebody">

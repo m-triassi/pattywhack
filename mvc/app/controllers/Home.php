@@ -29,29 +29,34 @@ class Home extends Controller{
 
 	public function logUser(){
 		if(isset($_POST["UserLogin"])){
-			//$getUserByUsername = User::where('username' , $_POST["UserLogin"])->get()->first();
-			$getUserByUsername = $this->model('user');
 
+			$getUserByUsername = $this->model('user');
 			if($getUserByUsername->where('username' , $_POST["UserLogin"])->exists()){
 
 				$hash = $getUserByUsername->where('username' , $_POST["UserLogin"])->first()->password_hash;
 				echo '<pre>';
-				var_dump($hash);
+				var_dump($getUserByUsername);
 				echo '</pre>';
 				$verify = password_verify($_POST["PasswordLogin"], $hash);
 				if($verify){
 					$_SESSION['user'] = $_POST["UserLogin"];
-					$this->index();
+					header("Location: http://localhost/pattywhack/mvc/public/home");				
 				}
 				else{
-					$this->view('home/login',['message'=>"Wrong password", 'pass'=>$hash]);
+					$this->view('home/login',['message'=>"Wrong password"]);
 				}
 			}
 			else{
-				$this->view('home/login',['message'=>"Wrong username", 'pass'=>$_POST["PasswordLogin"]]);
+				$this->view('home/login',['message'=>"Wrong username"]);
 			}
 		}
 	}
+
+	public function logOut(){
+		unset($_SESSION['user']);
+		header("Location: http://localhost/pattywhack/mvc/public/home");	
+	}
+
 
 	public function createUser(){
 		if(isset($_POST)){
@@ -74,7 +79,8 @@ class Home extends Controller{
 			
 			if($newguy->isValid() && ($getUserByEmail->count() == 0)){
 				$newguy->save();
-				$this->index();
+				header("Location: http://localhost/pattywhack/mvc/public/home");			
+
 			}		
 			else{
 				if(isset($_POST["EmailBox"]) && isset($_POST["AddressBox"]) && isset($_POST["PostalCodeBox"]))

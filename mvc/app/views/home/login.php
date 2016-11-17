@@ -17,7 +17,7 @@
 <head>
     <title>Patty Whack</title>
 </head>
-        <?php include("../public/includes/navbar.html"); ?>
+        <?php include("../public/includes/navbar.php"); ?>
     
     <h1 class="registerhead">Login</h1>
 

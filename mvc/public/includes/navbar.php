@@ -23,12 +23,13 @@
         <ul class="nav navbar-nav" style="float: right;">    
             <?php 
                 if(isset($_SESSION['user'])) {
-                    echo '<li><a href="/pattywhack/mvc/public/home/logout" style="float: right; font-size: 15px;">Logout</a></li>';
+                    echo "Welcome " . $_SESSION['user'];
+                    echo '<li><a href="/pattywhack/mvc/public/home/logOut"  style="float: right; font-size: 15px;">Logout</a></li>';
                 }
-                    else {
-                        echo '<li><a href="/pattywhack/mvc/public/home/register" style="float: right; font-size: 15px;">Register</a></li>
-                        <li><a href="/pattywhack/mvc/public/home/login" style="float: right; font-size: 15px;">Login</a></li>';
-                    }
+                else {
+                    echo '<li><a href="/pattywhack/mvc/public/home/register" style="float: right; font-size: 15px;">Register</a></li>
+                    <li><a href="/pattywhack/mvc/public/home/login" style="float: right; font-size: 15px;">Login</a></li>';
+                }
                 
             ?>
         </ul>
