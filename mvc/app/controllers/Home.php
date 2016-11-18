@@ -79,6 +79,12 @@ class Home extends Controller{
 			}
 		}
 	}
+
+	public function getURL(){
+		return $getURLs = $this->model('RequestURL')->where('status_id', 1)->get();
+	}
+
+
 	public function checkAuth(){
 		if(isset($_SESSION['user'])) {
 			$getUserByUsername = $this->model('user');

@@ -53,9 +53,26 @@
             </div>
             <br/>
             <div class="well" style="height:400px;overflow-y:auto;">
+                <table class="table">
+                <tr>
+                <th>URL</th><th>Action</th>
+                </tr>
+                
                 <?php 
+                  $getURLrequest = $control->getURL();
+                  for($index = 0; $index < $getURLrequest->count(); $index++){
+                        echo "<tr>";
+                        echo "<td>";
+                        echo $getURLrequest->get($index)->url;
+                        echo "</td>";
+                        echo "<td>";
+                        echo "</td>";                    
+                        echo "</tr>";
+                  }
+                    
                     
                 ?>
+
             </div>
 
         </form>
