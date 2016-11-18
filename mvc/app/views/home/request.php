@@ -32,7 +32,7 @@
 <body style="display:none;" class="homebody">
     <div>
         <h2 style="color:white;">Request to Add a Product</h2>
-        <form method="POST" action="../public/home/addValidURL" >
+        <form method="POST" action="../home/addValidURL" >
 
             <div class="well">
                 <label for="reqURL">Product Link </label> <br/>

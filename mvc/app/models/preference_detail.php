@@ -6,7 +6,7 @@ class Preference_detail extends Eloquent
 {
 	use Traits\HasCompositePrimaryKey;
 
-	public $timestamp = false;
+	public $timestamps = false;
 	protected $table = 'preference_detail';
 	protected $primaryKey = array('username','preference_id');
 	protected $fillable = ['username','preference_id'];

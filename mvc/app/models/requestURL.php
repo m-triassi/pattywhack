@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class Request extends Eloquent
+class RequestURL extends Eloquent
 {
-	public $timestamp = false;
+	public $timestamps = false;
 	protected $table = 'request';
 	protected $primaryKey = 'request_id';
 	protected $fillable = ['url'];

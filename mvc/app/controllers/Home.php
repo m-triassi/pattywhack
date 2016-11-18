@@ -88,14 +88,16 @@ class Home extends Controller{
 
 	public function addValidURL(){
 		$url = null;
-		$amazon = "/amazon.ca/"
-		$wish = "/wish.ca/"
-		$etsy = "/etsy.ca/"
-		if(isset($_POST['website'])){
-			$url = $_POST['website'];			
-			if(count(preg_match($amazon, $url])) > 0  || count(preg_match($wish, $url)) > 0 || count(preg_match($etsy, $url)) > 0){
-			$itemRequest = new Request;
-			$itemRequest->url = $url;				
+		$amazon = "amazon.ca";
+		$wish = "wish.com";
+		$etsy = "etsy.com/ca";
+		$url = filter_var($url, FILTER_SANITIZE_URL);
+		if(isset($_POST['reqURL'])){
+			$url = $_POST['reqURL'];			
+			if( strpos($url, $amazon) !== FALSE || strpos($url, $wish) !== FALSE  || strpos($url, $etsy) !== FALSE ){
+			$itemRequest = $this->model('RequestURL');
+			$itemRequest->url = $url;	
+			$itemRequest->save();			
 			}
 		}
 		header("Location: http://localhost/pattywhack/mvc/public/home/request");
