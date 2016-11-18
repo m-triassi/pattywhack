@@ -22,31 +22,7 @@
 <script type="text/javascript">
 function update()
 {   
-    try{
-        //firefox,chrome and opera
-        xmlHttp=new XMLHttpRequest();
-    }catch(e){
-        try{
-        //for IE    
-        xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    catch(e2){
-        alert('AJAX not supported by your browser.');
-    }
-    }
-    //create a handler function to handle the response
-    xmlHttp.onreadystatechange=function(){
-        //execute the code only when response is successfull
-        //readyState=4 denotes success
-        //HTTP status=200 denotes OK.
-        if(xmlHttp.readyState==4&&xmlHttp.status==200){
-            //update the div inside HTML with the respone text received.
-            document.getElementById('points').innerHTML=xmlHttp.responseText;
-        }
-    }
-    //make AJAX call
-    xmlHttp.open('GET','ajax_reply.php?points='+document.getElementById('budgBox').value,true);
-    xmlHttp.send(null);
+  
 }
 </script>
 
