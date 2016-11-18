@@ -20,10 +20,9 @@
 </script>
     
 <script type="text/javascript">
-function update()
-{   
-  
-}
+$( document ).ready(function() {
+    console.log( "ready!" );
+});
 </script>
 
 <head>
