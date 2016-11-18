@@ -33,7 +33,7 @@
 <body style="display:none;" class="homebody">
     <div>
         <h2 style="color:white;">Add a Product</h2>
-        <form method="POST" action="../home/" >
+        <form method="POST" action="../public/home/parseLink" >
 
             <div class="well">
                 <label for="adminProdURL">Product Link </label> <br/>
