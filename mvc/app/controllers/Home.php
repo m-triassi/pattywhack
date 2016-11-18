@@ -79,6 +79,23 @@ class Home extends Controller{
 			}
 		}
 	}
+	public function checkAuth(){
+		if(isset($_SESSION['user'])) {
+			$getUserByUsername = $this->model('user');
+			$auth = $getUserByUsername->where('username' , $_SESSION["user"])->first()->authority_id;
+			if($auth == 4){
+				return TRUE;
+			}
+			else{
+				return false;
+			}
+        }
+        else{
+                echo "<br/><br/><br/><br/><br/><br/> Error";
+
+        return false;
+    	}
+	}
 
 	public function logOut(){
 		unset($_SESSION['user']);
@@ -95,9 +112,12 @@ class Home extends Controller{
 		if(isset($_POST['reqURL'])){
 			$url = $_POST['reqURL'];			
 			if( strpos($url, $amazon) !== FALSE || strpos($url, $wish) !== FALSE  || strpos($url, $etsy) !== FALSE ){
-			$itemRequest = $this->model('RequestURL');
-			$itemRequest->url = $url;	
-			$itemRequest->save();			
+				$getURLs = $this->model('RequestURL');
+				if(!($getURLs->where('url', $url)->exists())){
+					$itemRequest = $this->model('RequestURL');
+					$itemRequest->url = $url;	
+					$itemRequest->save();
+				}		
 			}
 		}
 		header("Location: http://localhost/pattywhack/mvc/public/home/request");

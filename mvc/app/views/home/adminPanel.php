@@ -1,3 +1,11 @@
+<?php  
+     require_once '../app/controllers/home.php';
+     $control = new home();
+    if(!$control->checkAuth()){
+        header("Location: http://localhost/pattywhack/mvc/public/home");
+
+
+} ?>
 <html>
 <!-- JQuery -->
 <script src="/pattywhack/mvc/public/jquery-3.1.1.min.js"></script>
