@@ -21,8 +21,17 @@
     
 <script type="text/javascript">
 $( document ).ready(function() {
-    console.log( "ready!" );
+    $("#budgBox").keyup(function() {
+        $('#points').attr('max', $("#budgBox").val());
+    });
+    
+    
 });
+    
+function updateTextInput(val) {
+    document.getElementById('dispVal').value=val; 
+}    
+    
 </script>
 
 <head>
@@ -39,8 +48,9 @@ $( document ).ready(function() {
             <input type="number" required class="form-control" onkeyup="update()" name="budgetBox" id="budgBox"/>
         </div>
         <div class="form-group">
-            <label for="budgetBox">Max Price/Item: </label>
-            <input type="range" name="points" id="points" value="50" min="1" max=<?php echo $_SESSION['budgetBox']; ?> >
+            <label for="budgetBox">Max Price/Item: </label> 
+            <input type="range" name="points" id="points" min="1" max="100" onchange="updateTextInput(this.value);"> <br/>
+            <input class="form-control" id="dispVal" type="text" style="width:90px;">
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>

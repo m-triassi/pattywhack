@@ -47,6 +47,10 @@ class Home extends Controller{
 		$this->view('home/userAccount');
 	}
     
+        public function adminPanel(){
+		$this->view('home/adminPanel');
+	}
+    
 	public function logUser(){
 		if(isset($_POST["UserLogin"])){
 
