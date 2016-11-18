@@ -4,7 +4,7 @@
 
 .topbanner {
     margin-top: 57px;
-    padding-left: 1%;
+    padding-left: 1.5%;
     padding-right: 2%;
     color: white;
     font-family: 'Shrikhand', cursive;
@@ -20,7 +20,12 @@
     color: black;
 }
 
-/*.well {
-    padding-left: 50%;
-    background-image:  linear-gradient(to bottom,#585858 0,#000000 100%)
-}*/
+.black-background {background-color:darkgray;}
+
+.white {color:#ffffff;}
+
+.well {
+    margin-left: 30px;
+    margin-right: 30px;
+    /*background-image:  linear-gradient(to bottom,#585858 0,#000000 100%)*/
+}

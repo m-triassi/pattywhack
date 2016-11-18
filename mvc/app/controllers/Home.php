@@ -25,8 +25,28 @@ class Home extends Controller{
 		$user->$name = $name;*/
 		$this->view('home/login');//, ['name' => $user->$name]);
 	}
+    
+    public function placeOrder(){
+		$this->view('home/placeOrder');
+	}
+    
+    public function shipping(){
+		$this->view('home/shipping');
+	}
 
-
+    public function confirmOrder(){
+		$this->view('home/confirmOrder');
+	}
+    
+    public function insertOrder(){
+        header("Location: http://localhost/pattywhack/mvc/public/home");	
+		$this->view('home/index');
+	}
+    
+    public function userAccount(){
+		$this->view('home/userAccount');
+	}
+    
 	public function logUser(){
 		if(isset($_POST["UserLogin"])){
 

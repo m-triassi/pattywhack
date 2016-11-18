@@ -18,6 +18,37 @@
         $("body").fadeIn(950);
     };
 </script>
+    
+<script type="text/javascript">
+function update()
+{   
+    try{
+        //firefox,chrome and opera
+        xmlHttp=new XMLHttpRequest();
+    }catch(e){
+        try{
+        //for IE    
+        xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    catch(e2){
+        alert('AJAX not supported by your browser.');
+    }
+    }
+    //create a handler function to handle the response
+    xmlHttp.onreadystatechange=function(){
+        //execute the code only when response is successfull
+        //readyState=4 denotes success
+        //HTTP status=200 denotes OK.
+        if(xmlHttp.readyState==4&&xmlHttp.status==200){
+            //update the div inside HTML with the respone text received.
+            document.getElementById('points').innerHTML=xmlHttp.responseText;
+        }
+    }
+    //make AJAX call
+    xmlHttp.open('GET','ajax_reply.php?points='+document.getElementById('budgBox').value,true);
+    xmlHttp.send(null);
+}
+</script>
 
 <head>
     <title>Patty Whack</title>
@@ -27,18 +58,14 @@
 
 <body style="display:none;" class="homebody">
 
-    <form method="POST" class="registerform" action="../home/createUser" >
+    <form method="POST" class="registerform" action="../home/shipping" >
         <div class="form-group">
             <label for="budgetBox">Order Budget: </label>
-            <input type="number" required class="form-control" name="budgetBox" placeholder="10.00" />
+            <input type="number" required class="form-control" onkeyup="update()" name="budgetBox" id="budgBox"/>
         </div>
         <div class="form-group">
-            <label for="budgetBox">Order Budget: </label>
-            <input type="number" required class="form-control" name="maxPPISlider"  />
-        </div>
-        <div class="form-group">
-            <input type="range" name="points" id="points" value="50" min="1" max=<?php $_GET['budgetBox'] ?> >
-            <input type="submit" data-inline="true" value="Submit">
+            <label for="budgetBox">Max Price/Item: </label>
+            <input type="range" name="points" id="points" value="50" min="1" max=<?php echo $_SESSION['budgetBox']; ?> >
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>

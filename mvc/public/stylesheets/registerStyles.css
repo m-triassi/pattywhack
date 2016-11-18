@@ -2,12 +2,21 @@
     background-color: black;
 }
 
+.registerformclose {
+    color: white;
+    padding-left: 10%;
+    padding-right: 50%;
+    padding-top: 5%;
+}
+
 .registerform {
     color: white;
     padding-left: 10%;
     padding-right: 50%;
-    padding-top: 10%;
+    padding-top: 9%;
 }
+
+
 
 .registerhead {
     color: white;

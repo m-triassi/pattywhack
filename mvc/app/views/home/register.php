@@ -17,9 +17,13 @@
 <head>
     <title>Patty Whack</title>
 </head>
-    <div class="alert alert-danger" style="margin-top: 4%; font-size: 2em;">
-        <?php  if(isset($data['message'])){echo $data['message'];}?> 
-    </div>
+    <?php
+    if(isset($data['message'])){
+        print '<div class="alert alert-danger" style="margin-top: 4%; font-size: 2em;">';
+        print 'echo $data[message]';
+        print ' </div> ';
+    }
+?> 
     <?php include("../public/includes/navbar.php"); ?>
     <h1 class="registerhead">Register your Account</h1>
 

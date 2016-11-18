@@ -15,7 +15,7 @@
         <a class="navbar-brand" href="/pattywhack/mvc/public/home/index">PattyWhack</a>
         <ul class="nav navbar-nav">
             <li><a href="/pattywhack/mvc/public/home/index">Home</a></li>
-            <li><a href="#">A Thing</a></li>
+            <li><a href="/pattywhack/mvc/public/home/placeOrder">Place Order</a></li>
             <li><a href="#">Other Thing</a></li>
         </ul>
            <!-- <input type="button" value="Login" class="btn btn-success btn-sm" style="float: right; font-size: 15px;" /> -->
@@ -25,6 +25,7 @@
                 if(isset($_SESSION['user'])) {
                     echo "Welcome " . $_SESSION['user'];
                     echo '<li><a href="/pattywhack/mvc/public/home/logOut"  style="float: right; font-size: 15px;">Logout</a></li>';
+                    echo '<li><a href="/pattywhack/mvc/public/home/userAccount"  style="float: right; font-size: 15px;">My Account</a></li>';
                 }
                 else {
                     echo '<li><a href="/pattywhack/mvc/public/home/register" style="float: right; font-size: 15px;">Register</a></li>
