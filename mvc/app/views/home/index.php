@@ -39,15 +39,7 @@
     </div>
         </form>
 
-        <form method="POST" class="registerform" action="../public/home/parseAmazon" >
-        <div class="form-group">
-            <label for="exampleInputEmail1">website</label>
-            <input type="text" required class="form-control" name="website" placeholder="Username" required />
-        </div>
-       
-        <button type="submit" class="btn btn-default">Parse</button>
-    
-    
+        
     
     </body>
 
