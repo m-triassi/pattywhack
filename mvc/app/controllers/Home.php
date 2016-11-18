@@ -62,9 +62,7 @@ class Home extends Controller{
 			if($getUserByUsername->where('username' , $_POST["UserLogin"])->exists()){
 
 				$hash = $getUserByUsername->where('username' , $_POST["UserLogin"])->first()->password_hash;
-				echo '<pre>';
-				var_dump($getUserByUsername);
-				echo '</pre>';
+
 				$verify = password_verify($_POST["PasswordLogin"], $hash);
 				if($verify){
 					$_SESSION['user'] = $_POST["UserLogin"];
@@ -131,26 +129,13 @@ class Home extends Controller{
 
 
 
-	public function parseAmazon($url){
-		$url = null;
-		if(isset($_POST['website']))
-			$url = $_POST['website'];
-
+	public function parseAmazon($url){	
 		if($url != null){
-			$dom = file_get_contents($url);
-			//$dom->preserveWhiteSpace = FALSE;
-			//libxml_use_internal_errors(true);
-			//@$dom->loadHTMLFile($url);		
-			//$dom->saveHTML();	
-			//$title = $dom->getElementById('productTitle');
-			//$price = $html->find('span#priceblock_ourprice')->plaintext;
-			//$category = $html->find('a.a-link-normal a-color-tertiary')->firstChild->plaintext;
-			//header("Location: http://localhost/pattywhack/mvc/public/home");
-			//echo $title;
-			//$url = filter_var($url, FILTER_SANITIZE_URL);
+			$dom = file_get_contents($url);		
 
 			$pattern = "/<span id=\"productTitle\".+>[[:space:]]+(.+)[[:space:]]+<\/span>/";
 			preg_match($pattern, $dom, $title);
+			
 			if(count($title) > 0){
 			$pattern2 = "/<span id=\"priceblock_saleprice\".+>(.+)+<\/span>/";
 			preg_match($pattern2, $dom, $currencyPrice);
@@ -178,15 +163,14 @@ class Home extends Controller{
 				preg_match("/[0-9]+.[0-9]+/", $currencyPrice[1], $price);
 
 				$pattern3 = "/<a class=\"a-link-normal a-color-tertiary\".+>[[:space:]]+(.+)[[:space:]]+<\/a>/";
-				preg_match($pattern3, $dom, $category);
-				
+				preg_match($pattern3, $dom, $category);				
 					if(count($currencyPrice) > 0 &&  count($category) > 0 ){
 						echo '<pre>';
 						echo $title[1];
 						echo "<br/>";
 						echo $price[0];
 						echo "<br/>";
-						var_dump($category);
+						echo $category[1];
 						echo '</pre>';
 					}
 				
@@ -195,6 +179,33 @@ class Home extends Controller{
 			}
 		}
 	}
+
+
+	public function parseEtsy($url){
+		if($url != null){
+			$dom = file_get_contents($url);		
+
+			$pattern = "/<span itemprop=\"name\">(.+)<\/span>/";
+			preg_match($pattern, $dom, $title);
+			
+			if(count($title) > 0){
+			$pattern2 = "/<span id=\"listing-price\".+>+[[:space:]]+(.+)/";
+			preg_match($pattern2, $dom, $currencyPrice);
+				if(count($currencyPrice) > 0){
+				preg_match("/[0-9]+.[0-9]+/", $currencyPrice[1], $price);				
+				
+					if(count($currencyPrice) > 0){
+						echo '<pre>';
+						echo $title[1];
+						echo "<br/>";
+						echo $price[0];
+						echo '</pre>';
+					}				
+				}	
+			}
+		}
+	}
+
 
 
 	public function createUser(){

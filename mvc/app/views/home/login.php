@@ -24,7 +24,7 @@
 <body style="display:none;" class="homebody">
     <?php 
     if(isset($data['message'])) { 
-        echo "<div class='alert alert-danger' style='margin-top: 4%; font-size: 2em;'>$data[message] <br/> $data[pass] </div>";
+        echo "<div class='alert alert-danger' style='margin-top: 4%; font-size: 2em;'>$data[message]</div>";
      }?>
     <form method="POST" class="registerform" action="../home/logUser" >
         <div class="form-group">

@@ -23,9 +23,10 @@
                     echo '<li><a href="/pattywhack/mvc/public/home/logOut"  style="float: right; font-size: 15px;">Logout</a></li>';
                     echo '<li><a href="/pattywhack/mvc/public/home/userAccount"  style="float: right; font-size: 15px;">My Account</a></li>';
                     
-                    if(!$control->checkAuth()){
+                    if($control->checkAuth()){
                         echo '<li><a href="/pattywhack/mvc/public/home/adminPanel"  style="float: right; font-size: 15px;">Admin Panel</a></li>';
                     }
+                    
                 }
                 else {
                     echo '<li><a href="/pattywhack/mvc/public/home/register" style="float: right; font-size: 15px;">Register</a></li>
