@@ -50,7 +50,7 @@ function updateTextInput(val) {
         <div class="form-group">
             <label for="budgetBox">Max Price/Item: </label> 
             <input type="range" name="points" id="points" min="1" max="100" onchange="updateTextInput(this.value);"> <br/>
-            <input class="form-control" id="dispVal" type="text" style="width:90px;">
+            <input class="form-control" id="dispVal" disabled type="text" style="width:90px;">
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
