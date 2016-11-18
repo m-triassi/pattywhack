@@ -82,7 +82,7 @@ class Home extends Controller{
 	}
 
 
-	public function addValidUrlRequest(){
+	public function addValidURL(){
 		$url = null;
 		$amazon = "/amazon.ca/"
 		$wish = "/wish.ca/"
