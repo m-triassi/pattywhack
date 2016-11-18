@@ -43,8 +43,12 @@
                 <input name="manualCheckbox" type="checkbox">
                  <label for="manualCheckbox">Enter a Product Manually?</label>
             </div>
-
-            
+            <br/>
+            <div class="well" style="height:400px;overflow-y:auto;">
+                <?php 
+                    
+                ?>
+            </div>
 
         </form>
     </div>
