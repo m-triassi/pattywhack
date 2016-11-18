@@ -19,7 +19,7 @@
             require_once '../app/controllers/home.php';
             $control = new home();
                 if(isset($_SESSION['user'])) {
-                    echo "Welcome " . $_SESSION['user'];
+                    echo "<p style=\"float: right; font-size: 2em; text-align: center; margin-left: 50px;\"> Welcome " . $_SESSION['user'] . "</p>";
                     echo '<li><a href="/pattywhack/mvc/public/home/logOut"  style="float: right; font-size: 15px;">Logout</a></li>';
                     echo '<li><a href="/pattywhack/mvc/public/home/userAccount"  style="float: right; font-size: 15px;">My Account</a></li>';
                     
