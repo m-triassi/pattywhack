@@ -29,11 +29,11 @@
     <form method="POST" class="registerform" action="../home/logUser" >
         <div class="form-group">
             <label for="exampleInputEmail1">Username</label>
-            <input type="text" required class="form-control" name="UserLogin" placeholder="Username" required />
+            <input type="text" class="form-control" name="UserLogin" placeholder="Username"  />
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Password</label>
-            <input type="password" required class="form-control" name="PasswordLogin" placeholder="Password" required />
+            <input type="password" class="form-control" name="PasswordLogin" placeholder="Password"  />
         </div>
         <button type="submit" class="btn btn-default">Login</button>
     </form>

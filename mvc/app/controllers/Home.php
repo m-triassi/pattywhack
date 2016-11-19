@@ -264,20 +264,30 @@ class Home extends Controller{
 						$user->address = $_POST['addrBox'];
 					if(isset($_POST['postalBox']))
 						$user->postal_code = $_POST['postalBox'];
+                
+                if (($_POST['NewPassBox'] == '' || $_POST['NewPassBox'] == null) && ($_POST['conNewPassBox'] == '' || $_POST['conNewPassBox'] == null)) {
+                    
+                }
+                
 				if(isset($_POST['NewPassBox']) && isset($_POST['conNewPassBox'])){
+                    
 					if($_POST['NewPassBox'] === $_POST['conNewPassBox']){
 						$password = password_hash($_POST['NewPassBox'], PASSWORD_DEFAULT);
 						$user->password_hash = $password;
 					}
+                    
 					else{
 						$this->view('home/userAccount',['message'=>"Wrong password", 'addressBox' => $_POST['addrBox'], 'postalCodeBox' => $_POST['postalBox']]);
 					}
+                    
 				}
 				$user->save();
+                header("Location: http://localhost/pattywhack/mvc/public/home/userAccount");
 			}
 			else{
 				$this->view('home/userAccount',['message'=>"Wrong password", 'addressBox' => $_POST['addrBox'], 'postalCodeBox' => $_POST['postalBox']]);
 			}
+            
 		}
 	}
 	

@@ -13,6 +13,17 @@
         $("body").fadeIn(950);
     };
 </script>
+    
+    <style>
+        .editAccount{
+            margin-left: 60px;
+            margin-right: 60px;
+        }
+        
+        .modhead {
+            color: white;
+        }
+    </style>
 
 <head>
     <title>Patty Whack</title>
@@ -25,17 +36,24 @@
     if(isset($data['message'])) { 
         echo "<div class='alert alert-danger' style='margin-top: 4%; font-size: 2em;'>$data[message]</div>";
      }?>
-    <form method="POST" action="../home/editUser" >
-        <h2>Modify Account Details</h2>
+    <form method="POST" class="editAccount" action="../home/editUser" >
+        <h2 class="modhead">Modify Account Details</h2>
         <div class="form-group well">
+            <label for="emailbxx">Email: </label>
+            <input type="text" disabled required class="form-control" name="emailbxx"/>
+            
+            <label for="userNBox">Username: </label>
+            <input type="text" disabled required class="form-control" name="userNBox"/>
+            
+            
             <label for="oldPassBox">Current Password*: </label>
             <input type="password" required class="form-control" name="oldPassBox" placeholder="Current Password" />
             
             <label for="NewPassBox">New Password: </label>
-            <input type="password" class="form-control" name="NewPassBox" placeholder="New Password" />
+            <input type="password" class="form-control" name="NewPassBox" placeholder="New Password"  pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}"/>
             
             <label for="conNewPassBox">Confirm New Password: </label>
-            <input type="password" class="form-control" name="conNewPassBox" placeholder="Confirm New Password" />
+            <input type="password" class="form-control" name="conNewPassBox" placeholder="Confirm New Password" pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}" />
             
             <label for="addrBox">New Address: </label>
             <input type="text" class="form-control" name="addrBox" placeholder="New Address" value="<?php  if(isset($data['addressBox'])){echo $data['addressBox'];}?>" />
