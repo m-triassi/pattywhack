@@ -261,11 +261,11 @@ class Home extends Controller{
 			$hash = $user->password_hash;
 			$verify = password_verify($_POST["oldPassBox"], $hash);
 			if($verify){			
-				if(isset($_POST['addrBox']))
+				if(isset($_POST['addrBox']) && strlen($_POST['addrBox']) > 0)
 						$user->address = $_POST['addrBox'];
-					if(isset($_POST['postalBox']))
+					if(isset($_POST['postalBox']) && strlen($_POST['postalBox']) > 0)
 						$user->postal_code = $_POST['postalBox'];
-					
+
 				if(isset($_POST['NewPassBox']) && isset($_POST['conNewPassBox'])){
                    if(strlen($_POST['NewPassBox']) > 0 && strlen($_POST['conNewPassBox']) > 0)
 					if($_POST['NewPassBox'] === $_POST['conNewPassBox']){
