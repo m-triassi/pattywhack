@@ -31,7 +31,11 @@ $( document ).ready(function() {
 function updateTextInput(val) {
     document.getElementById('dispVal').value=val; 
 }    
-    
+  
+function revealMPPI() {
+   var MPItem = document.getElementById("MPPI");
+    MPItem.style.display = MPItem.style.display === 'none' ? '' : 'none';
+}
 </script>
 
 <head>
@@ -47,12 +51,14 @@ function updateTextInput(val) {
             <label for="budgetBox">Order Budget: </label>
             <input type="number" required class="form-control" onkeyup="update()" name="budgetBox" id="budgBox"/>
         </div>
-        <div class="form-group">
+        <div id="MPPI" class="form-group" style="display: none;">
             <label for="budgetBox">Max Price/Item: </label> 
             <input type="range" name="points" id="points" min="1" max="100" onchange="updateTextInput(this.value);"> <br/>
             <input class="form-control" id="dispVal" disabled type="text" style="width:90px;">
         </div>
+        <button type="button" class="btn btn-default" onclick="revealMPPI()">Choose the Max Price/Item</button> <br/><br/>
         <button type="submit" class="btn btn-default">Submit</button>
+        
     </form>
 </body>
 
