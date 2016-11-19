@@ -118,6 +118,29 @@ class Home extends Controller{
         }
         print $toReturnStr;
     }
+    
+    public function listAllPref() {
+        //error_reporting(E_ERROR | E_WARNING | E_PARSE);
+        $getCat = $this->model('preference')->get();
+        $getUserPrefs = $this->model('preference_detail')->where('username', $_SESSION["user"])->get();
+        $toReturnStr = "";
+        for ($i = 0; $i < $getCat->count(); $i++)
+        {
+            $category =  $getCat->get($i)->preference_category;
+            $categoryID = $getCat->get($i)->preference_id;
+            
+            //If any user prefs match the current category ID, make the inputs checked
+            if($getUserPrefs->where('preference_id', $categoryID) == $categoryID)
+            {
+                $toReturnStr = $toReturnStr . "<li>" . "<input type=checkbox value='" . $category . "' checked>" . "<label>" . $category . "</label>" . "</li>";
+                
+            }
+            else
+            //var_dump($getUserPrefs);
+            $toReturnStr = $toReturnStr . "<li>" . "<input type=checkbox value='" . $categoryID . "'>" . "<label>" . $category . "</label>" . "</li>";
+        }
+        print $toReturnStr;
+    }
 
 
 	public function addValidURL(){
