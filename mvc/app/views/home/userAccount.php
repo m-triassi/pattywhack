@@ -21,24 +21,27 @@
     <h1 class="registerhead"></h1>
 
 <body style="display:none;" class="homebody">
-
-    <form method="POST" action="../home/" >
+    <?php 
+    if(isset($data['message'])) { 
+        echo "<div class='alert alert-danger' style='margin-top: 4%; font-size: 2em;'>$data[message]</div>";
+     }?>
+    <form method="POST" action="../home/editUser" >
         <h2>Modify Account Details</h2>
         <div class="form-group well">
-            <label for="oldPassBox">Old Password: </label>
-            <input type="text" required class="form-control" name="oldPassBox" placeholder="Old Password" />
+            <label for="oldPassBox">Current Password*: </label>
+            <input type="password" required class="form-control" name="oldPassBox" placeholder="Current Password" />
             
             <label for="NewPassBox">New Password: </label>
-            <input type="text" required class="form-control" name="NewPassBox" placeholder="New Password" />
+            <input type="password" class="form-control" name="NewPassBox" placeholder="New Password" />
             
             <label for="conNewPassBox">Confirm New Password: </label>
-            <input type="text" required class="form-control" name="conNewPassBox" placeholder="Confirm New Password" />
+            <input type="password" class="form-control" name="conNewPassBox" placeholder="Confirm New Password" />
             
             <label for="addrBox">New Address: </label>
-            <input type="text" required class="form-control" name="addrBox" placeholder="New Address" />
+            <input type="text" class="form-control" name="addrBox" placeholder="New Address" value="<?php  if(isset($data['addressBox'])){echo $data['addressBox'];}?>" />
             
             <label for="postalBox">New Postal Code: </label>
-            <input type="text" required class="form-control" name="postalBox" placeholder="New Postal Code" />
+            <input type="text" class="form-control" name="postalBox" placeholder="New Postal Code" value="<?php  if(isset($data['postalCodeBox'])){echo $data['postalCodeBox'];}?>" />
         </div>
         
         <button type="submit" class="btn btn-default">Submit</button>

@@ -241,7 +241,33 @@ class Home extends Controller{
 		}
 	}
 
-
+	public function editUser(){
+		if(isset($_POST)){
+			$getUserByUsername = $this->model('user');
+			$user = $getUserByUsername->where('username' , $_SESSION["user"])->first();
+			$hash = $user->password_hash;
+			$verify = password_verify($_POST["oldPassBox"], $hash);
+			if($verify){			
+				if(isset($_POST['addrBox']))
+						$user->address = $_POST['addrBox'];
+					if(isset($_POST['postalBox']))
+						$user->postal_code = $_POST['postalBox'];
+				if(isset($_POST['NewPassBox']) && isset($_POST['conNewPassBox'])){
+					if($_POST['NewPassBox'] === $_POST['conNewPassBox']){
+						$password = password_hash($_POST['NewPassBox'], PASSWORD_DEFAULT);
+						$user->password_hash = $password;
+					}
+					else{
+						$this->view('home/userAccount',['message'=>"Wrong password", 'addressBox' => $_POST['addrBox'], 'postalCodeBox' => $_POST['postalBox']]);
+					}
+				}
+				$user->save();
+			}
+			else{
+				$this->view('home/userAccount',['message'=>"Wrong password", 'addressBox' => $_POST['addrBox'], 'postalCodeBox' => $_POST['postalBox']]);
+			}
+		}
+	}
 	
 }
 ?>
