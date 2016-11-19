@@ -60,11 +60,11 @@
                     <input type="text" class="form-control urlbox" name="adminProdPrice" placeholder="Product Price" /><br/>
                     
                     <label for="adminProdURL">Product Category </label> <br/>
-                    <select>
+                    <select class="form-control">
                     <?php 
                         $control->getCategory();                        
                     ?> 
-                    </select> <br/>
+                    </select> <br/><br/>
                     
                 </div>
                 

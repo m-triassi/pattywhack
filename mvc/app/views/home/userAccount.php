@@ -63,6 +63,15 @@
         
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
+    
+    
+    <form method="POST" class="editaccount" action="../home/">
+        <h2 class="modhead">Change your Prefences</h2>
+        <div class="form-group well">
+            
+        </div>
+    
+    </form>
 </body>
 
 </html>
