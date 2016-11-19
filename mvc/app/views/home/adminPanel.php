@@ -62,14 +62,7 @@
                     <label for="adminProdURL">Product Category </label> <br/>
                     <select>
                     <?php 
-                        $getCategories = $control->getCategory();
-                        for ($i = 0; $i < $getCategories->count(); $i++)
-                        {
-                            
-                            echo "<option value=" .  $getCategories->get($i)->preference_category . ">";
-                            echo $getCategories->get($i)->preference_category;
-                            echo "</option>";
-                        }
+                        $control->getCategory();                        
                     ?> 
                     </select> <br/>
                     

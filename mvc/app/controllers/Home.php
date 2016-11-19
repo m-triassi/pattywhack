@@ -108,8 +108,14 @@ class Home extends Controller{
     
 
     public function getCategory() {
-        $getCat = $this->model('preference');
-        return $getCat;
+        $getCat = $this->model('preference')->get();
+        $toReturnStr = "";
+        for ($i = 0; $i < $getCat->count(); $i++)
+        {
+            $category =  $getCat->get($i)->preference_category;
+            $toReturnStr = $toReturnStr . "<option value='" . $category . "'>" . $category . "</option>";
+        }
+        print $toReturnStr;
     }
 
 
