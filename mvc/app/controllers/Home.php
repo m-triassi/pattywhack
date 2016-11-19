@@ -105,6 +105,12 @@ class Home extends Controller{
 		unset($_SESSION['user']);
 		header("Location: http://localhost/pattywhack/mvc/public/home");	
 	}
+    
+
+    public function getCategory() {
+        $getCat = $this->model('preference');
+        return $getCat;
+    }
 
 
 	public function addValidURL(){

@@ -30,8 +30,8 @@
     };
     
     function revealManual() {
-   var MPItem = document.getElementById("MPPI");
-    MPItem.style.display = MPItem.style.display === 'none' ? '' : 'none';
+        var manualDetails = document.getElementById("manualControl");
+        manualDetails.style.display = manualDetails.style.display === 'none' ? '' : 'none';
 }
   
 </script>
@@ -51,21 +51,34 @@
             <div class="well">
                 <label for="adminProdURL">Product Link </label> <br/>
                 <input type="text" class="form-control urlbox" name="adminProdURL" placeholder="Product URL" /> <br/>
-                <div id="manualControl" class="form-control" style="display:none;">
+                
+                <div id="manualControl" style="display:none;">
                     <label for="adminProdName">Product Name </label> <br/>
-                    <input type="text" class="form-control urlbox" name="adminProdName" placeholder="Product Name" />
+                    <input type="text" class="form-control urlbox" name="adminProdName" placeholder="Product Name" /><br/>
                     
                     <label for="adminProdPrice">Product Price </label> <br/>
-                    <input type="text" class="form-control urlbox" name="adminProdPrice" placeholder="Product URL" />
+                    <input type="text" class="form-control urlbox" name="adminProdPrice" placeholder="Product Price" /><br/>
                     
                     <label for="adminProdURL">Product Category </label> <br/>
-                    <input type="text" class="form-control urlbox" name="adminProdURL" placeholder="Product URL" />
+                    <select>
+                    <?php 
+                        $getCategories = $control->getCategory();
+                        for ($i = 0; $i < $getCategories->count(); $i++)
+                        {
+                            
+                            echo "<option value=" .  $getCategories->get($i)->preference_category . ">";
+                            echo $getCategories->get($i)->preference_category;
+                            echo "</option>";
+                        }
+                    ?> 
+                    </select> <br/>
                     
                 </div>
+                
                 <button type="submit" class="btn btn-primary btn-sm">Add Item</button>
                 <br/> <br/> 
-                <input name="manualCheckbox" type="checkbox">
-                 <label for="manualCheckbox" onchange="revealManual()">Enter a Product Manually?</label>
+                <input name="manualCheckbox" onclick="revealManual()" type="checkbox">
+                 <label for="manualCheckbox">Enter a Product Manually?</label>
             </div>
             <br/>
             <div class="well" style="height:400px;overflow-y:auto;">
