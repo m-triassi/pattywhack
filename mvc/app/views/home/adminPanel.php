@@ -28,6 +28,11 @@
     window.onload = function () {
         $("body").fadeIn(950);
     };
+    
+    function revealManual() {
+   var MPItem = document.getElementById("MPPI");
+    MPItem.style.display = MPItem.style.display === 'none' ? '' : 'none';
+}
   
 </script>
 
@@ -46,10 +51,21 @@
             <div class="well">
                 <label for="adminProdURL">Product Link </label> <br/>
                 <input type="text" class="form-control urlbox" name="adminProdURL" placeholder="Product URL" /> <br/>
+                <div id="manualControl" class="form-control" style="display:none;">
+                    <label for="adminProdName">Product Name </label> <br/>
+                    <input type="text" class="form-control urlbox" name="adminProdName" placeholder="Product Name" />
+                    
+                    <label for="adminProdPrice">Product Price </label> <br/>
+                    <input type="text" class="form-control urlbox" name="adminProdPrice" placeholder="Product URL" />
+                    
+                    <label for="adminProdURL">Product Category </label> <br/>
+                    <input type="text" class="form-control urlbox" name="adminProdURL" placeholder="Product URL" />
+                    
+                </div>
                 <button type="submit" class="btn btn-primary btn-sm">Add Item</button>
                 <br/> <br/> 
                 <input name="manualCheckbox" type="checkbox">
-                 <label for="manualCheckbox">Enter a Product Manually?</label>
+                 <label for="manualCheckbox" onchange="revealManual()">Enter a Product Manually?</label>
             </div>
             <br/>
             <div class="well" style="height:400px;overflow-y:auto;">

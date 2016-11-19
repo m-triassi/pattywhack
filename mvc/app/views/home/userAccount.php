@@ -22,8 +22,23 @@
 
 <body style="display:none;" class="homebody">
 
-            <label for=""> </label>
-            <input type="text" required class="form-control" name="" placeholder="" />
+    <form method="POST" action="../home/" >
+        <h2>Modify Account Details</h2>
+        <div class="form-group well">
+            <label for="oldPassBox">Old Password: </label>
+            <input type="text" required class="form-control" name="oldPassBox" placeholder="Old Password" />
+            
+            <label for="NewPassBox">New Password: </label>
+            <input type="text" required class="form-control" name="NewPassBox" placeholder="New Password" />
+            
+            <label for="conNewPassBox">Confirm New Password: </label>
+            <input type="text" required class="form-control" name="conNewPassBox" placeholder="Confirm New Password" />
+            
+            <label for="addrBox">New Address: </label>
+            <input type="text" required class="form-control" name="addrBox" placeholder="New Address" />
+            
+            <label for="postalBox">New Postal Code: </label>
+            <input type="text" required class="form-control" name="postalBox" placeholder="New Postal Code" />
         </div>
         
         <button type="submit" class="btn btn-default">Submit</button>
