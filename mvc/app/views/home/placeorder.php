@@ -42,6 +42,7 @@ function revealMPPI() {
     <title>Patty Whack</title>
 </head>
     <?php include("../public/includes/navbar.php"); ?>
+    <?php include("includes/footer.php"); ?>
     <h1 class="registerhead">Place your order</h1>
 
 <body style="display:none;" class="homebody">

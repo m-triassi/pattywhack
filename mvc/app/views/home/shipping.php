@@ -19,6 +19,7 @@
 </head>
     
     <?php include("../public/includes/navbar.php"); ?>
+      <?php include("includes/footer.php"); ?>
     <h1 class="registerhead">Enter Your Shipping Details</h1>
 
 <body style="display:none;" class="homebody">

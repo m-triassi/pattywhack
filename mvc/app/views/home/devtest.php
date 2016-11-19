@@ -1,7 +1,11 @@
-hello <?=$data['name']
-// Below is a basic page
-?>
+<?php  
+     require_once '../app/controllers/home.php';
+     $control = new home();
+    if(!$control->checkAuth()){
+        header("Location: http://localhost/pattywhack/mvc/public/home");
 
+
+} ?>
 <html>
 <!-- BootStrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -31,11 +35,11 @@ hello <?=$data['name']
 
 <body style="display:none;" class="homebody">
 
-    <form method="POST" class="registerform" action="../home/" >
+    <form method="POST" class="registerform" action="../home/matchCategory/" >
         
-        <div class="form-group">
-            <label for=""> </label>
-            <input type="text" required class="form-control" name="" placeholder="" />
+        <div class="form-group well">
+            <label for="test">Test Field: </label>
+            <input type="text" required class="form-control" id="test" name="test" placeholder="Enter your thing to test here pls" />
         </div>
         
         <button type="submit" class="btn btn-default">Submit</button>

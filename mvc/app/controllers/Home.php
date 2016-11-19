@@ -55,6 +55,9 @@ class Home extends Controller{
 		$this->view('home/request');
 	}
 
+        public function devtest(){
+		$this->view('home/devtest');
+	}
 	public function logUser(){
 		if(isset($_POST["UserLogin"])){
 
@@ -310,6 +313,54 @@ class Home extends Controller{
             
 		}
 	}
+    
+    public function matchCategory($toMatch) {
+        $matchedCat = "";
+        $allCats = $this->model('preference')->get();
+        similar_text($allCats->get(0)->preference_category, $toMatch, $matchScore);
+        //print $matchScore;
+        for($i = 1; $i < $allCats->count(); $i++)
+        {
+            //print $allCats->get($i)->preference_category . "<br/><br/>";
+            //print stristr($allCats->get($i)->preference_category, $toMatch);
+            
+            if(stristr($allCats->get($i)->preference_category, $toMatch) !== false)
+            {
+               //print $allCats->get($i)->preference_category;
+                //print stripos($allCats->get($i)->preference_category, $toMatch);
+                print "first if ";
+                similar_text($allCats->get($i)->preference_category, $toMatch, $tmpScore);
+                if($tmpScore > $matchScore)
+                {
+                    $matchedCat = $allCats->get($i)->preference_category;
+                    similar_text($allCats->get($i)->preference_category, $toMatch, $matchScore);
+                }
+                
+                
+            }
+            elseif (stristr($toMatch, $allCats->get($i)->preference_category) !== false)
+            {
+                
+                //similar_text($allCats->get($i)->preference_category, $toMatch, $matchScore);
+                print "second if ";
+                similar_text($allCats->get($i)->preference_category, $toMatch, $tmpScore);
+                
+                if($tmpScore > $matchScore)
+                {
+                    $matchedCat = $allCats->get($i)->preference_category;
+                    similar_text($allCats->get($i)->preference_category, $toMatch, $matchScore);
+                }
+                
+            }
+            
+            
+        }
+        
+        
+        print $matchedCat;
+        return $matchedCat;
+        
+    }
 	
 }
 ?>

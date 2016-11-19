@@ -25,6 +25,7 @@
     }
 ?> 
     <?php include("../public/includes/navbar.php"); ?>
+    <?php include("includes/footer.php"); ?>
     <h1 class="registerhead">Register your Account</h1>
 
 <body style="display:none;" class="homebody">

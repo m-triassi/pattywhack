@@ -18,6 +18,7 @@
     <title>Patty Whack</title>
 </head>
     <?php include("../public/includes/navbar.php"); ?>
+    <?php include("includes/footer.php"); ?>
     <h1 class="registerhead">Confirm your Order</h1>
     
 
