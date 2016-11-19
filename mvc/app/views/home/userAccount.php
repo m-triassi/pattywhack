@@ -40,11 +40,10 @@
         <h2 class="modhead">Modify Account Details</h2>
         <div class="form-group well">
             <label for="emailbxx">Email: </label>
-            <input type="text" disabled required class="form-control" name="emailbxx"/>
+            <input type="text" disabled required class="form-control" name="emailbxx" value="<?php echo $_SESSION['email'];?>"/>
             
             <label for="userNBox">Username: </label>
-            <input type="text" disabled required class="form-control" name="userNBox"/>
-            
+            <input type="text" disabled required class="form-control" name="userNBox" value="<?php echo $_SESSION['user'];?>"/>            
             
             <label for="oldPassBox">Current Password*: </label>
             <input type="password" required class="form-control" name="oldPassBox" placeholder="Current Password" />
