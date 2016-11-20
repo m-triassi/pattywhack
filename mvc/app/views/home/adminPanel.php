@@ -91,7 +91,7 @@
                         echo "</td>";
                         echo "<td>";
                         echo "<a style=\"margin-right:2em;\" href=\"/pattywhack/mvc/public/home/addProduct/$url->request_id\">Insert</a>";
-                        echo "<a href=\"/pattywhack/mvc/public/home/denyProduct/$url->request_id\">Denied</a>";
+                        echo "<a href=\"/pattywhack/mvc/public/home/denyProduct/$url->request_id\">Deny</a>";
                         echo "</td>";                    
                         echo "</tr>";
                   }                   
