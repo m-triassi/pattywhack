@@ -420,6 +420,11 @@ class Home extends Controller{
                 }
                 
             }
+            else 
+            {
+                //$matchedCat = "Random";    
+                
+            }
             
             
         }
