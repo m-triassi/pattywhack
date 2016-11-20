@@ -155,11 +155,48 @@ class Home extends Controller{
         //$userPref = new preference_detail;
         
 
-        $userPref = $this->model('preference_detail')->where('username', $_SESSION["user"]);
-        
-        var_dump($userPref);
+        $userPref = $this->model('preference_detail')->where('username', $_SESSION["user"])->get();
+        echo '<pre>';
+		//var_dump($userPref);
+		var_dump($_POST);
+		echo '</pre>';
+
         for ($i = 0; $i < 24; $i++)
         {
+        	//var_dump($userPref->where('preference_id', $i)->first()->preference_id);
+        	if (isset($_POST[$i])){
+	           $pref = $userPref->where('preference_id', $i)->first();
+	        	if($pref === null){
+					try{
+						$prefToAdd = $this->model('preference_detail');
+						$prefToAdd->username = $_SESSION['user'];
+						$prefToAdd->preference_id = $_POST[$i];
+						$prefToAdd->save();
+					}
+					catch(Exception $e){
+						echo "failed Insert!     <br/><br/><br/>" ;//. $e;
+	                }
+	            }
+            }
+            else{
+            	$pref2 = $userPref->where('preference_id', $i)->first();
+            	if(isset($pref2) && $pref2->exists()){
+					try{
+						$pref2->delete();
+					}
+					catch(Exception $e){
+						echo "failed delete!     <br/><br/><br/>" ;//. $e;
+	                }
+	            }
+            }
+
+            header("Location: http://localhost/pattywhack/mvc/public/home/userAccount");
+
+
+
+
+
+        	/*
             //echo "<br/> __LOOPING HERE!__";
             //$toDel = $userPref->where('preference_id', $_POST[$i])->first();
             $toDel = $userPref->where('preference_id', $i)->first();
@@ -195,9 +232,10 @@ class Home extends Controller{
                 }
             }  
         }
-        
+        */
         
     }
+}
 
 
 	public function addValidURL(){
