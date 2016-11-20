@@ -121,7 +121,7 @@ class Home extends Controller{
     }
     
     public function listAllPref() {
-        //error_reporting(E_ERROR | E_WARNING | E_PARSE);
+        error_reporting(E_ERROR | E_WARNING | E_PARSE);
         $getCat = $this->model('preference')->get();
         $getUserPrefs = $this->model('preference_detail')->where('username', $_SESSION["user"])->get();
         $toReturnStr = "";
@@ -129,18 +129,74 @@ class Home extends Controller{
         {
             $category =  $getCat->get($i)->preference_category;
             $categoryID = $getCat->get($i)->preference_id;
-            
+            $prefExits = $getUserPrefs->where('preference_id', $categoryID)->first()->preference_id;
+             //var_dump($prefExits);
+            //print $prefExits;
             //If any user prefs match the current category ID, make the inputs checked
-            if($getUserPrefs->where('preference_id', $categoryID) == $categoryID)
-            {
-                $toReturnStr = $toReturnStr . "<li>" . "<input type=checkbox value='" . $category . "' checked>" . "<label>" . $category . "</label>" . "</li>";
+            if($prefExits == $categoryID)
+            { 
+                //print "in Checked if Statement";
+                //print $getUserPrefs->where('preference_id', $categoryID);
+                $toReturnStr = $toReturnStr . "<li>" . "<input type=checkbox value=" . $categoryID . " name=" . $categoryID . " checked>" . "<label>" . $category . "</label>" . "</li>";
                 
             }
-            else
+            else 
+            {
             //var_dump($getUserPrefs);
-            $toReturnStr = $toReturnStr . "<li>" . "<input type=checkbox value='" . $categoryID . "'>" . "<label>" . $category . "</label>" . "</li>";
+            $toReturnStr = $toReturnStr . "<li>" . "<input type=checkbox value=" . $categoryID . " name=" . $categoryID . ">" . "<label>" . $category . "</label>" . "</li>";
+            }
         }
         print $toReturnStr;
+    }
+    
+    public function updatePreference() 
+    {
+        //error_reporting(E_ERROR | E_WARNING | E_PARSE);
+        //$userPref = new preference_detail;
+        
+
+        $userPref = $this->model('preference_detail')->where('username', $_SESSION["user"]);
+        
+        var_dump($userPref);
+        for ($i = 0; $i < 24; $i++)
+        {
+            //echo "<br/> __LOOPING HERE!__";
+            //$toDel = $userPref->where('preference_id', $_POST[$i])->first();
+            $toDel = $userPref->where('preference_id', $i)->first();
+            //var_dump($toDel);
+           if (isset($_POST[$i]))
+           {
+               print $i . " in IF <br/><br/><br/>";
+               
+               try 
+               {
+               $userPref->username = $_SESSION['user'];
+               $userPref->preference_id = $_POST[$i];
+               
+               $userPref->save();
+              }
+               catch(Exception $e)
+               {
+                   echo "failed Insert!     <br/><br/><br/>" . $e;
+               }
+            }
+            elseif($userPref->where('preference_id', $i)->first() != null)
+            {
+                try 
+                {
+                    var_dump($toDel);
+                    echo " IN ELSEIF<br/>";
+                    $toDel->delete();
+                    
+                }
+                catch(Exception $e)
+                {
+                    //echo $e;
+                }
+            }  
+        }
+        
+        
     }
 
 
@@ -462,6 +518,8 @@ class Home extends Controller{
         return $matchedCat;
         
     }
+    
+    
 	
 }
 ?>

@@ -97,7 +97,7 @@
                         echo "</tr>";
                   }                   
                 ?>
-
+                </table>
             </div>
 
         </form>

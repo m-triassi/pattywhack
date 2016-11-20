@@ -20,6 +20,10 @@
 </script>
     
     <style>
+        body 
+        {
+            padding-bottom: 80px;    
+        }
         .editAccount{
             margin-left: 60px;
             margin-right: 60px;
@@ -32,6 +36,7 @@
         ul.items {
           text-align: center;
           list-style-type: none;
+            align-content: center;
         }
         ul.items li {
           float:left;
@@ -85,15 +90,17 @@
     
     <form method="POST" class="editaccount" action="../home/updatePreference">
         <h2 class="modhead">Change your Prefences</h2>
-        <div class="form-group well">
+        <div class="form-group well" style="padding-bottom: 100px;">
             <ul class="items">
                 <?php 
                 $control->listAllPref();
 
                 ?>
             </ul>
+            
+            
         </div>
-    
+        <button type="submit" class="btn btn-default">Update Preferences</button>
     </form>
 </body>
 
