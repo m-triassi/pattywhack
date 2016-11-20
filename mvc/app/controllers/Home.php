@@ -335,7 +335,6 @@ class Home extends Controller{
             
 		}
 	}
-<<<<<<< HEAD
 
 
 	public function addProduct($id){
@@ -382,7 +381,6 @@ class Home extends Controller{
 			$this->view('home/index');
 		}
 	}
-=======
     
     public function matchCategory($toMatch) {
         $matchedCat = "";
@@ -432,6 +430,5 @@ class Home extends Controller{
         
     }
 	
->>>>>>> origin/Daniel_MVC
 }
 ?>
