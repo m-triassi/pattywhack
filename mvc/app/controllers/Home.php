@@ -380,9 +380,9 @@ class Home extends Controller{
     public function matchCategory($toMatch) {
         $matchedCat = "";
         $allCats = $this->model('preference')->get();
-        similar_text($allCats->get(0)->preference_category, $toMatch, $matchScore);
+        //similar_text($allCats->get(0)->preference_category, $toMatch, $matchScore);
         //print $matchScore;
-        for($i = 1; $i < $allCats->count(); $i++)
+        /*for($i = 1; $i < $allCats->count(); $i++)
         {
             //print $allCats->get($i)->preference_category . "<br/><br/>";
             //print stristr($allCats->get($i)->preference_category, $toMatch);
@@ -422,9 +422,19 @@ class Home extends Controller{
             }
             
             
+        }*/
+        
+        for($i = 0; $i < $allCats->count(); $i++)
+        {
+            similar_text($allCats->get($i)->preference_category, $toMatch, $matchScore);
+            $scoreArray[] = $matchScore;            
+            
         }
         
+        $j = array_search(max($scoreArray), $scoreArray);
         
+        //print_r ($scoreArray);
+        $matchedCat = $allCats->get($j)->preference_category;
         print $matchedCat;
         return $matchedCat;
         
