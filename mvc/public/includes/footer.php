@@ -13,7 +13,7 @@
     <ul class="nav navbar-nav">
         
            
-            <span class="navbar-brand">Share us On Social Media!</span>
+            <span class="navbar-brand">Share us On Social Media!</span> 
                 <!-- Reddit -->
                 <a class="navbar-brand" href="http://reddit.com/submit?url=https://PattyWhack.com&amp;title=Check Out This cool new e-Store That sells you random Items" target="_blank"> <img class="image" src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" /> </a>
             
@@ -23,7 +23,6 @@
                 <!-- Facebook -->
                 <a class="navbar-brand" href="http://www.facebook.com/sharer.php?u=https://PattyWhack.com" target="_blank"> <img class="image" src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /> </a>
             
-        
     </ul>
      <ul class="nav navbar-nav navbar-right" style="margin-right: 20px;">
             <li><a href="/pattywhack/mvc/public/home/contact">Contact Us!</a></li>

@@ -165,58 +165,61 @@ class Home extends Controller{
 		header("Location: http://localhost/pattywhack/mvc/public/home/request");
 	}
 
+	public function innerHTML(DOMNode $elm) { 
+		  $innerHTML = ''; 
+		  $children  = $elm->childNodes;
+
+		  foreach($children as $child) { 
+		    $innerHTML .= $elm->ownerDocument->saveHTML($child);
+		  }
+
+		  return $innerHTML;
+	}
 
 
-	public function parseAmazon($url){	
+	public function parseAmazon($urlendoed){	
+		$url = urldecode($urlendoed);
 		$providerID = 1;
 		if($url != null){
-			$dom = file_get_contents($url);		
+			$dom = file_get_contents($url);	
 
-			$pattern = "/<span id=\"productTitle\".+>[[:space:]]+(.+)[[:space:]]+<\/span>/";
-			preg_match($pattern, $dom, $title);
+
+
+			$pattern = "/<span class=\"nav-a-content\">(.+)<\/span>/";
+			preg_match($pattern, $dom, $category);
+			$pos = strpos($category[1],"<");
+			$category = substr($category[1], 0, $pos);
+			$catchCat = $this->matchCategory($category);
+
+			$titleSubString = substr($dom, strpos($dom,"<span id=\"productTitle\" class=\"a-size-large\">"));
+			$titleTag = rtrim(substr($titleSubString, 0,strpos($titleSubString,"</span>")), " \t\n\r\0\x0B");
+			//var_dump($titleTag);			
+			$dochtml = new DOMDocument();
+			$dochtml->loadHTML($titleTag);
+			$span = $dochtml->getElementById('productTitle');
+			$title = $this->innerHTML($span);
+			//var_dump(trim($title));
+
+			$priceSubstring = substr($dom, strpos($dom,"<span id=\"priceblock_ourprice\" class=\"a-size-medium a-color-price\">"));
+			$priceTag = rtrim(substr($priceSubstring, 0,strpos($priceSubstring,"</span>")), " \t\n\r\0\x0B");
+			//var_dump($priceSubstring);
 			
-			if(count($title) > 0){
-			$pattern2 = "/<span id=\"priceblock_saleprice\".+>(.+)+<\/span>/";
-			preg_match($pattern2, $dom, $currencyPrice);
-				if(count($currencyPrice) > 0){
-				preg_match("/[0-9]+.[0-9]+/", $currencyPrice[1], $price);
+			$dochtml = new DOMDocument();
+			$dochtml->loadHTML($priceTag);
+			$span = $dochtml->getElementById('priceblock_ourprice');
+			$price = $this->innerHTML($span);
+			preg_match("/[0-9]+.[0-9]+/", $price, $price);
+			var_dump($price[0]);
+			
 
-				$pattern3 = "/<a class=\"a-link-normal a-color-tertiary\".+>[[:space:]]+(.+)[[:space:]]+<\/a>/";
-				preg_match($pattern3, $dom, $category);
-				
-					if(count($currencyPrice) > 0 &&  count($category) > 0){
-						echo $title[1];
-						echo "<br/>";
-						echo $price[0];
-						echo "<br/>";
-						echo $category[1];
-					}
-				
-				}
-				else {
-					$pattern = "/<span id=\"priceblock_ourprice\".+>(.+)+<\/span>/";
-					preg_match($pattern, $dom, $currencyPrice);
-					if(count($currencyPrice) > 0){
-				preg_match("/[0-9]+\.[0-9]+/", $currencyPrice[1], $price);
 
-				$pattern3 = "/<a class=\"a-link-normal a-color-tertiary\".+>+[[:space:]]+(.+)[[:space:]]+<\/a>/";
-				preg_match($pattern3, $dom, $category);				
-					if(count($currencyPrice) > 0 &&  count($category) > 0 ){
-						echo $title[1];
-						echo "<br/>";
-						echo $price[0];
-						echo "<br/>";
-						echo $category[1];
-					}
-				
-				}
-				}
-			}
+
 		}
 	}
 
 
-	public function parseEBAY($url){
+	public function parseEBAY($urlendoed){
+		$url = urldecode($urlendoed);
 		$providerID = 2;
 		if($url != null){
 			$dom = file_get_contents($url);		
@@ -230,18 +233,27 @@ class Home extends Controller{
 			preg_match($pattern3, $dom, $categories);
 			preg_match("/<span itemprop=\"name\">(.+)<\/span>/", $categories[1], $category);
 
-			echo $title[1];
-			echo "<br/>";
-			echo $price[0];
-			echo "<br/>";
-			echo $category[1];
-			//<h1 data-analytics-type=.+>(.+)<\/h1>
+			$product = $this->model('product');
+							$product->product_name = $title[1];
+							$product->url = $url;
+							$product->unit_price = $price[0];
+							$product->item_shipping_cost = ($price[0]*0.10);
+							$product->provider_id = $providerID;
+							$product->category_id = $this->matchCategory($category[1]);
+							$product->save();
+							$request = $this->model('RequestURL')->where('url', $url)->first();
+							if($request->exists()){
+								$request->status_id = 6;
+								$request->save();
+							}			
+							$this->view('home/adminPanel');
 		}
 	}
 
 	
 
-	public function parseEBid($url){
+	public function parseEBid($urlendoed){
+		$url = urldecode($urlendoed);
 		$providerID = 3;
 		if($url != null){
 			$dom = file_get_contents($url);
@@ -254,11 +266,20 @@ class Home extends Controller{
 			preg_match($pattern3, $dom, $categories);
 			$category = substr($categories[1],0,strpos($categories[1],'/'));
 
-			echo $title[1];
-			echo "<br/>";
-			echo $price[0];
-			echo "<br/>";
-			echo $category;
+			$product = $this->model('product');
+							$product->product_name = $title[1];
+							$product->url = $url;
+							$product->unit_price = $price[0];
+							$product->item_shipping_cost = ($price[0]*0.10);
+							$product->provider_id = $providerID;
+							$product->category_id = $this->matchCategory($category[1]);
+							$product->save();
+							$request = $this->model('RequestURL')->where('url', $url)->first();
+							if($request->exists()){
+								$request->status_id = 6;
+								$request->save();
+							}	
+							$this->view('home/adminPanel');
 		}
 	}
 
@@ -341,15 +362,15 @@ class Home extends Controller{
 				$ebay = "ebay.ca";
 				$ebid = "ebid.net";
 				if(strpos($request->url, $amazon) != FALSE){
-					echo $request->url . "      AMAZON"; 
+					//echo $request->url . "      AMAZON"; 
 					$this->parseAmazon($request->url);
 				}
 				elseif(strpos($request->url, $ebay) != FALSE){
-					echo $request->url . "      EBAY"; 
+					//echo $request->url . "      EBAY"; 
 					$this->parseEBAY ($request->url);
 				}
 				elseif(strpos($request->url, $ebid) != FALSE){
-					echo $request->url . "      EBID"; 
+					//echo $request->url . "      EBID"; 
 					$this->parseEBid($request->url);
 				}
 				else
@@ -379,6 +400,8 @@ class Home extends Controller{
     
     public function matchCategory($toMatch) {
         $matchedCat = "";
+        if($toMatch == "" || $toMatch == null)
+        	return 25;
         $allCats = $this->model('preference')->get();
         //similar_text($allCats->get(0)->preference_category, $toMatch, $matchScore);
         //print $matchScore;
@@ -434,8 +457,8 @@ class Home extends Controller{
         $j = array_search(max($scoreArray), $scoreArray);
         
         //print_r ($scoreArray);
-        $matchedCat = $allCats->get($j)->preference_category;
-        print $matchedCat;
+        $matchedCat = $allCats->get($j)->preference_id;
+        //print $matchedCat;
         return $matchedCat;
         
     }

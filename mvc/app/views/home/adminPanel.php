@@ -85,9 +85,10 @@
                   $getURLrequest = $control->getURL();
                   for($index = 0; $index < $getURLrequest->count(); $index++){
                     $url = $getURLrequest->get($index);
+                    $decodedURL = urldecode($url->url);
                         echo "<tr>";
                         echo "<td>";
-                        echo "<a href='$url->url' target='_blank'>$url->url</a>";
+                        echo "<a href='$decodedURL' target='_blank'>$decodedURL</a>";
                         echo "</td>";
                         echo "<td>";
                         echo "<a style=\"margin-right:2em;\" href=\"/pattywhack/mvc/public/home/addProduct/$url->request_id\">Insert</a>";
