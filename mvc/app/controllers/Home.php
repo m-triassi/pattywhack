@@ -157,7 +157,7 @@ class Home extends Controller{
 				$getURLs = $this->model('RequestURL');
 				if(!($getURLs->where('url', $url)->exists())){
 					$itemRequest = $this->model('RequestURL');
-					$itemRequest->url = $url;	
+					$itemRequest->url = urlencode($url);	
 					$itemRequest->save();
 				}		
 			}
@@ -185,13 +185,11 @@ class Home extends Controller{
 				preg_match($pattern3, $dom, $category);
 				
 					if(count($currencyPrice) > 0 &&  count($category) > 0){
-						echo '<pre>';
 						echo $title[1];
 						echo "<br/>";
 						echo $price[0];
 						echo "<br/>";
 						echo $category[1];
-						echo '</pre>';
 					}
 				
 				}
@@ -204,13 +202,11 @@ class Home extends Controller{
 				$pattern3 = "/<a class=\"a-link-normal a-color-tertiary\".+>+[[:space:]]+(.+)[[:space:]]+<\/a>/";
 				preg_match($pattern3, $dom, $category);				
 					if(count($currencyPrice) > 0 &&  count($category) > 0 ){
-						echo '<pre>';
 						echo $title[1];
 						echo "<br/>";
 						echo $price[0];
 						echo "<br/>";
 						echo $category[1];
-						echo '</pre>';
 					}
 				
 				}
@@ -263,7 +259,6 @@ class Home extends Controller{
 			echo $price[0];
 			echo "<br/>";
 			echo $category;
-			//>.+<A HREF='http:\/\/www.ebid.net\/ca\/buy\/.+\/'.>(.+)<\/A>
 		}
 	}
 

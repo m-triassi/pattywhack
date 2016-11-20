@@ -87,7 +87,7 @@
                     $url = $getURLrequest->get($index);
                         echo "<tr>";
                         echo "<td>";
-                        echo $url->url;
+                        echo "<a href='$url->url' target='_blank'>$url->url</a>";
                         echo "</td>";
                         echo "<td>";
                         echo "<a style=\"margin-right:2em;\" href=\"/pattywhack/mvc/public/home/addProduct/$url->request_id\">Insert</a>";
