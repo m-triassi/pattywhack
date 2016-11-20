@@ -96,8 +96,6 @@ class Home extends Controller{
 			}
         }
         else{
-                echo "<br/><br/><br/><br/><br/><br/> Error";
-
         return false;
     	}
 	}
@@ -123,12 +121,13 @@ class Home extends Controller{
 	public function addValidURL(){
 		$url = null;
 		$amazon = "amazon.ca";
-		$wish = "wish.com";
-		$etsy = "etsy.com/ca";
-		$url = filter_var($url, FILTER_SANITIZE_URL);
+		$ebay = "ebay.ca";
+		$ebid = "ebid.net";
+		
 		if(isset($_POST['reqURL'])){
-			$url = $_POST['reqURL'];			
-			if( strpos($url, $amazon) !== FALSE || strpos($url, $wish) !== FALSE  || strpos($url, $etsy) !== FALSE ){
+			$url = $_POST['reqURL'];
+			$url = filter_var($url, FILTER_SANITIZE_URL);			
+			if( strpos($url, $amazon) != FALSE || strpos($url, $ebay) != FALSE || strpos($url, $ebid) != FALSE ){
 				$getURLs = $this->model('RequestURL');
 				if(!($getURLs->where('url', $url)->exists())){
 					$itemRequest = $this->model('RequestURL');
@@ -143,6 +142,7 @@ class Home extends Controller{
 
 
 	public function parseAmazon($url){	
+		$providerID = 1;
 		if($url != null){
 			$dom = file_get_contents($url);		
 
@@ -173,9 +173,9 @@ class Home extends Controller{
 					$pattern = "/<span id=\"priceblock_ourprice\".+>(.+)+<\/span>/";
 					preg_match($pattern, $dom, $currencyPrice);
 					if(count($currencyPrice) > 0){
-				preg_match("/[0-9]+.[0-9]+/", $currencyPrice[1], $price);
+				preg_match("/[0-9]+\.[0-9]+/", $currencyPrice[1], $price);
 
-				$pattern3 = "/<a class=\"a-link-normal a-color-tertiary\".+>[[:space:]]+(.+)[[:space:]]+<\/a>/";
+				$pattern3 = "/<a class=\"a-link-normal a-color-tertiary\".+>+[[:space:]]+(.+)[[:space:]]+<\/a>/";
 				preg_match($pattern3, $dom, $category);				
 					if(count($currencyPrice) > 0 &&  count($category) > 0 ){
 						echo '<pre>';
@@ -194,28 +194,50 @@ class Home extends Controller{
 	}
 
 
-	public function parseEtsy($url){
+	public function parseEBAY($url){
+		$providerID = 2;
 		if($url != null){
 			$dom = file_get_contents($url);		
 
-			$pattern = "/<span itemprop=\"name\">(.+)<\/span>/";
+			$pattern = "/<h1 class=\"it-ttl\" .+ id=\"itemTitle\"><span class=\"g-hdn\">.+<\/span>+(.+)+<\/h1>/";
 			preg_match($pattern, $dom, $title);
-			
-			if(count($title) > 0){
-			$pattern2 = "/<span id=\"listing-price\".+>+[[:space:]]+(.+)/";
-			preg_match($pattern2, $dom, $currencyPrice);
-				if(count($currencyPrice) > 0){
-				preg_match("/[0-9]+.[0-9]+/", $currencyPrice[1], $price);				
-				
-					if(count($currencyPrice) > 0){
-						echo '<pre>';
-						echo $title[1];
-						echo "<br/>";
-						echo $price[0];
-						echo '</pre>';
-					}				
-				}	
-			}
+			$pattern2 = "/<span .+ id=\"prcIsum\" itemprop=\"price\".+>+(.+)+<\/span>/";
+			preg_match($pattern2, $dom, $priceAndCurrency);
+			preg_match("/[0-9]+\.[0-9]+/", $priceAndCurrency[1], $price);
+			$pattern3 = "/<ul .+ itemtype=\"http:\/\/schema.org\/BreadcrumbList\">+[[:space:]]+(.+)/";
+			preg_match($pattern3, $dom, $categories);
+			preg_match("/<span itemprop=\"name\">(.+)<\/span>/", $categories[1], $category);
+
+			echo $title[1];
+			echo "<br/>";
+			echo $price[0];
+			echo "<br/>";
+			echo $category[1];
+			//<h1 data-analytics-type=.+>(.+)<\/h1>
+		}
+	}
+
+	
+
+	public function parseEBid($url){
+		$providerID = 3;
+		if($url != null){
+			$dom = file_get_contents($url);
+			$pattern = "/<h1 itemprop=\"name\">(.+)<\/h1>/";
+			preg_match($pattern, $dom, $title);
+			$pattern2 = "/<span class=\"fs-12\">(.+)<\/span>/";
+			preg_match($pattern2, $dom, $priceAndCurrency);
+			preg_match("/[0-9]+\.[0-9]+/", $priceAndCurrency[1], $price);
+			$pattern3 = "/>.+<A HREF='http:\/\/www.ebid.net\/ca\/buy\/(.+)\/'.>/";
+			preg_match($pattern3, $dom, $categories);
+			$category = substr($categories[1],0,strpos($categories[1],'/'));
+
+			echo $title[1];
+			echo "<br/>";
+			echo $price[0];
+			echo "<br/>";
+			echo $category;
+			//>.+<A HREF='http:\/\/www.ebid.net\/ca\/buy\/.+\/'.>(.+)<\/A>
 		}
 	}
 
@@ -287,6 +309,51 @@ class Home extends Controller{
             
 		}
 	}
-	
+
+
+	public function addProduct($id){
+		if($this->checkAuth()){
+			$requests = $this->model('RequestURL');
+			$request = $requests->where('request_id' , $id)->first();
+			if($request->exists()){
+				$amazon = "amazon.ca";
+				$ebay = "ebay.ca";
+				$ebid = "ebid.net";
+				if(strpos($request->url, $amazon) != FALSE){
+					echo $request->url . "      AMAZON"; 
+					$this->parseAmazon($request->url);
+				}
+				elseif(strpos($request->url, $ebay) != FALSE){
+					echo $request->url . "      EBAY"; 
+					$this->parseEBAY ($request->url);
+				}
+				elseif(strpos($request->url, $ebid) != FALSE){
+					echo $request->url . "      EBID"; 
+					$this->parseEBid($request->url);
+				}
+				else
+					echo "Error...";
+			}
+		}
+		else{
+			$this->view('home/index');
+		}
+	}
+
+
+	public function denyProduct($id){
+		if($this->checkAuth()){
+			$requests = $this->model('RequestURL');
+			$request = $requests->where('request_id' , $id)->first();
+			if($request->exists()){
+				$request->status_id = 7;				
+				$request->save();
+				$this->view('home/adminPanel');
+			}
+		}
+		else{
+			$this->view('home/index');
+		}
+	}
 }
 ?>
