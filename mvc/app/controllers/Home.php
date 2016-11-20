@@ -63,7 +63,7 @@ class Home extends Controller{
         $this->view('home/contact');
     }
 	public function logUser(){
-		if(isset($_POST["UserLogin"])){
+		if(!empty($_POST["UserLogin"])){
 
 			$getUserByUsername = $this->model('user');
 			if($getUserByUsername->where('username' , $_POST["UserLogin"])->exists()){
@@ -269,48 +269,6 @@ class Home extends Controller{
             }
 
             header("Location: http://localhost/pattywhack/mvc/public/home/userAccount");
-
-
-
-
-
-        	/*
-            //echo "<br/> __LOOPING HERE!__";
-            //$toDel = $userPref->where('preference_id', $_POST[$i])->first();
-            $toDel = $userPref->where('preference_id', $i)->first();
-            //var_dump($toDel);
-           if (isset($_POST[$i]))
-           {
-               print $i . " in IF <br/><br/><br/>";
-               
-               try 
-               {
-               $userPref->username = $_SESSION['user'];
-               $userPref->preference_id = $_POST[$i];
-               
-               $userPref->save();
-              }
-               catch(Exception $e)
-               {
-                   echo "failed Insert!     <br/><br/><br/>" . $e;
-               }
-            }
-            elseif($userPref->where('preference_id', $i)->first() != null)
-            {
-                try 
-                {
-                    var_dump($toDel);
-                    echo " IN ELSEIF<br/>";
-                    $toDel->delete();
-                    
-                }
-                catch(Exception $e)
-                {
-                    //echo $e;
-                }
-            }  
-        }
-        */
         
     }
 }
@@ -322,7 +280,7 @@ class Home extends Controller{
 		$ebay = "ebay.ca";
 		$ebid = "ebid.net";
 		
-		if(isset($_POST['reqURL'])){
+		if(!empty($_POST['reqURL'])){
 			$url = $_POST['reqURL'];
 			$url = filter_var($url, FILTER_SANITIZE_URL);			
 			if( strpos($url, $amazon) != FALSE || strpos($url, $ebay) != FALSE || strpos($url, $ebid) != FALSE ){
@@ -337,7 +295,7 @@ class Home extends Controller{
 		header("Location: http://localhost/pattywhack/mvc/public/home/request");
 	}
 
-	public function innerHTML(DOMNode $elm) { 
+	private function innerHTML(DOMNode $elm) { 
 		  $innerHTML = ''; 
 		  $children  = $elm->childNodes;
 
@@ -349,110 +307,153 @@ class Home extends Controller{
 	}
 
 
-	public function parseAmazon($urlendoed){	
-		$url = urldecode($urlendoed);
-		$providerID = 1;
-		if($url != null){
-			$dom = file_get_contents($url);	
+	public function parseAmazon($urlendoed, $changeRequest = true){	
+		if($this->checkAuth()){
+			error_reporting(E_ERROR | E_WARNING | E_PARSE);
+			$url = urldecode($urlendoed);
+			$providerID = 1;
+			if($url != null){
+				$dom = file_get_contents($url);	
 
 
 
-			$pattern = "/<span class=\"nav-a-content\">(.+)<\/span>/";
-			preg_match($pattern, $dom, $category);
-			$pos = strpos($category[1],"<");
-			$category = substr($category[1], 0, $pos);
-			$catchCat = $this->matchCategory($category);
+				$pattern = "/<span class=\"nav-a-content\">(.+)<\/span>/";
+				preg_match($pattern, $dom, $category);
+				$pos = strpos($category[1],"<");
+				$category = substr($category[1], 0, $pos);
+				$catchCat = $this->matchCategory($category);
+				//var_dump($catchCat); print "<br/>";
+				$titleSubString = substr($dom, strpos($dom,"<span id=\"productTitle\" class=\"a-size-large\">"));
+				$titleTag = rtrim(substr($titleSubString, 0,strpos($titleSubString,"</span>")), " \t\n\r\0\x0B");
+				//var_dump($titleTag);			
+				$dochtml = new DOMDocument();
+				$dochtml->loadHTML($titleTag);
+				$span = $dochtml->getElementById('productTitle');
+				$title = $this->innerHTML($span);
+				$title = trim($title);
+				$price = null;
+				if($catchCat !== 13){
+				$priceSubstring = substr($dom, strpos($dom,"<span id=\"priceblock_ourprice\" class=\"a-size-medium a-color-price\">"));
+				$priceTag = rtrim(substr($priceSubstring, 0,strpos($priceSubstring,"</span>")), " \t\n\r\0\x0B");
+					$dochtml = new DOMDocument();
+					$dochtml->loadHTML($priceTag);
+					$span = $dochtml->getElementById('priceblock_ourprice');
+					$price = $this->innerHTML($span);
+					preg_match("/[0-9]+.[0-9]+/", $price, $price);
+					//var_dump($price[0]);
+				}else{
+					$priceSubstring = substr($dom, strpos($dom,"<span class=\"a-size-medium a-color-price offer-price a-text-normal\">"));
+					$priceTag = rtrim(substr($priceSubstring, 0,strpos($priceSubstring,"</span>")), " \t\n\r\0\x0B");
+					preg_match("/[0-9]+.[0-9]+/", $priceTag, $price);
+					//var_dump($price[0]);
+				}
+				if($price[0] !== null){
+				$product = $this->model('product');
+								$product->product_name = $title;
+								$product->url = $urlendoed;
+								$product->unit_price = $price[0];
+								$product->item_shipping_cost = ($price[0]*0.10);
+								$product->provider_id = $providerID;
+								$product->category_id = $catchCat;
+								$product->save();
+								if($changeRequest){
+									$request = $this->model('RequestURL')->where('url', $urlendoed)->first();
+									if($request->exists()){
+										$request->status_id = 6;
+										$request->save();
+									}
+								}
+				}			
+								$this->view('home/adminPanel');
+		/*
+		https://www.amazon.ca/Playtex-Diaper-Genie-Disposal-System/dp/B00LCR1KZO/ref=gbph_img_m-6_7b56_e18c27a8?smid=A3DWYIK6Y9EEQB&pf_rd_p=ef10e933-94dc-4f20-bbee-3a13e9607b56&pf_rd_s=merchandised-search-6&pf_rd_t=101&pf_rd_i=3561346011&pf_rd_m=A3DWYIK6Y9EEQB&pf_rd_r=4YRVC6FCDDMKF52F1B5Z
+		*/
 
-			$titleSubString = substr($dom, strpos($dom,"<span id=\"productTitle\" class=\"a-size-large\">"));
-			$titleTag = rtrim(substr($titleSubString, 0,strpos($titleSubString,"</span>")), " \t\n\r\0\x0B");
-			//var_dump($titleTag);			
-			$dochtml = new DOMDocument();
-			$dochtml->loadHTML($titleTag);
-			$span = $dochtml->getElementById('productTitle');
-			$title = $this->innerHTML($span);
-			//var_dump(trim($title));
-
-			$priceSubstring = substr($dom, strpos($dom,"<span id=\"priceblock_ourprice\" class=\"a-size-medium a-color-price\">"));
-			$priceTag = rtrim(substr($priceSubstring, 0,strpos($priceSubstring,"</span>")), " \t\n\r\0\x0B");
-			//var_dump($priceSubstring);
+			}
 			
-			$dochtml = new DOMDocument();
-			$dochtml->loadHTML($priceTag);
-			$span = $dochtml->getElementById('priceblock_ourprice');
-			$price = $this->innerHTML($span);
-			preg_match("/[0-9]+.[0-9]+/", $price, $price);
-			var_dump($price[0]);
-			
-
-
-
-		}
+		}else{
+				$this->view('home/index');
+			}
 	}
 
 
-	public function parseEBAY($urlendoed){
-		$url = urldecode($urlendoed);
-		$providerID = 2;
-		if($url != null){
-			$dom = file_get_contents($url);		
+	public function parseEBAY($urlendoed, $changeRequest = true){
+		if($this->checkAuth()){
+			$url = urldecode($urlendoed);
+			$providerID = 2;
+			if($url != null){
+				$dom = file_get_contents($url);		
 
-			$pattern = "/<h1 class=\"it-ttl\" .+ id=\"itemTitle\"><span class=\"g-hdn\">.+<\/span>+(.+)+<\/h1>/";
-			preg_match($pattern, $dom, $title);
-			$pattern2 = "/<span .+ id=\"prcIsum\" itemprop=\"price\".+>+(.+)+<\/span>/";
-			preg_match($pattern2, $dom, $priceAndCurrency);
-			preg_match("/[0-9]+\.[0-9]+/", $priceAndCurrency[1], $price);
-			$pattern3 = "/<ul .+ itemtype=\"http:\/\/schema.org\/BreadcrumbList\">+[[:space:]]+(.+)/";
-			preg_match($pattern3, $dom, $categories);
-			preg_match("/<span itemprop=\"name\">(.+)<\/span>/", $categories[1], $category);
+				$pattern = "/<h1 class=\"it-ttl\" .+ id=\"itemTitle\"><span class=\"g-hdn\">.+<\/span>+(.+)+<\/h1>/";
+				preg_match($pattern, $dom, $title);
+				$pattern2 = "/<span .+ id=\"prcIsum\" itemprop=\"price\".+>+(.+)+<\/span>/";
+				preg_match($pattern2, $dom, $priceAndCurrency);
+				preg_match("/[0-9]+\.[0-9]+/", $priceAndCurrency[1], $price);
+				$pattern3 = "/<ul .+ itemtype=\"http:\/\/schema.org\/BreadcrumbList\">+[[:space:]]+(.+)/";
+				preg_match($pattern3, $dom, $categories);
+				preg_match("/<span itemprop=\"name\">(.+)<\/span>/", $categories[1], $category);
 
-			$product = $this->model('product');
-							$product->product_name = $title[1];
-							$product->url = $url;
-							$product->unit_price = $price[0];
-							$product->item_shipping_cost = ($price[0]*0.10);
-							$product->provider_id = $providerID;
-							$product->category_id = $this->matchCategory($category[1]);
-							$product->save();
-							$request = $this->model('RequestURL')->where('url', $url)->first();
-							if($request->exists()){
-								$request->status_id = 6;
-								$request->save();
-							}			
-							$this->view('home/adminPanel');
-		}
+				$product = $this->model('product');
+								$product->product_name = $title[1];
+								$product->url = $urlendoed;
+								$product->unit_price = $price[0];
+								$product->item_shipping_cost = ($price[0]*0.10);
+								$product->provider_id = $providerID;
+								$product->category_id = $this->matchCategory($category[1]);
+								$product->save();
+								if($changeRequest){
+									$request = $this->model('RequestURL')->where('url', $urlendoed)->first();
+									if($request->exists()){
+										$request->status_id = 6;
+										$request->save();
+									}
+								}			
+								$this->view('home/adminPanel');
+							}
+							
+		}else{
+								$this->view('home/index');
+							}
 	}
 
 	
 
-	public function parseEBid($urlendoed){
-		$url = urldecode($urlendoed);
-		$providerID = 3;
-		if($url != null){
-			$dom = file_get_contents($url);
-			$pattern = "/<h1 itemprop=\"name\">(.+)<\/h1>/";
-			preg_match($pattern, $dom, $title);
-			$pattern2 = "/<span class=\"fs-12\">(.+)<\/span>/";
-			preg_match($pattern2, $dom, $priceAndCurrency);
-			preg_match("/[0-9]+\.[0-9]+/", $priceAndCurrency[1], $price);
-			$pattern3 = "/>.+<A HREF='http:\/\/www.ebid.net\/ca\/buy\/(.+)\/'.>/";
-			preg_match($pattern3, $dom, $categories);
-			$category = substr($categories[1],0,strpos($categories[1],'/'));
+	public function parseEBid($urlendoed, $changeRequest = true){
+		if($this->checkAuth()){
+			$url = urldecode($urlendoed);
+			$providerID = 3;
+			if($url != null){
+				$dom = file_get_contents($url);
+				$pattern = "/<h1 itemprop=\"name\">(.+)<\/h1>/";
+				preg_match($pattern, $dom, $title);
+				$pattern2 = "/<span class=\"fs-12\">(.+)<\/span>/";
+				preg_match($pattern2, $dom, $priceAndCurrency);
+				preg_match("/[0-9]+\.[0-9]+/", $priceAndCurrency[1], $price);
+				$pattern3 = "/>.+<A HREF='http:\/\/www.ebid.net\/ca\/buy\/(.+)\/'.>/";
+				preg_match($pattern3, $dom, $categories);
+				$category = substr($categories[1],0,strpos($categories[1],'/'));
 
-			$product = $this->model('product');
-							$product->product_name = $title[1];
-							$product->url = $url;
-							$product->unit_price = $price[0];
-							$product->item_shipping_cost = ($price[0]*0.10);
-							$product->provider_id = $providerID;
-							$product->category_id = $this->matchCategory($category[1]);
-							$product->save();
-							$request = $this->model('RequestURL')->where('url', $url)->first();
-							if($request->exists()){
-								$request->status_id = 6;
-								$request->save();
-							}	
-							$this->view('home/adminPanel');
-		}
+				$product = $this->model('product');
+								$product->product_name = $title[1];
+								$product->url = $urlendoed;
+								$product->unit_price = $price[0];
+								$product->item_shipping_cost = ($price[0]*0.10);
+								$product->provider_id = $providerID;
+								$product->category_id = $this->matchCategory($category[1]);
+								$product->save();
+								if($changeRequest){
+									$request = $this->model('RequestURL')->where('url', $urlendoed)->first();
+									if($request->exists()){
+										$request->status_id = 6;
+										$request->save();
+									}
+								}	
+								$this->view('home/adminPanel');
+							}
+							
+		}else{
+								$this->view('home/index');	
+							}
 	}
 
 
@@ -523,6 +524,48 @@ class Home extends Controller{
             
 		}
 	}
+	public function parseLink(){
+		if($this->checkAuth()){
+			
+			$differentSiteValidationFields =  array('adminProdURL', 'adminProdName', 'adminProdPrice', 'adminProdCategory');
+			$error = false;
+			foreach($differentSiteValidationFields as $field) {
+			  if (empty($_POST[$field])) {
+			    $error = true;
+			  }
+			}
+			if(!empty($_POST['adminProdURL'])){
+				$URLencoded = urlencode($_POST['adminProdURL']);
+				$amazon = "amazon.ca";
+				$ebay = "ebay.ca";
+				$ebid = "ebid.net";
+				$providerID = 4;				
+				if(strpos($URLencoded, $amazon) != FALSE){					
+					$this->parseAmazon($URLencoded, false);
+				}
+				elseif(strpos($URLencoded, $ebay) != FALSE){					
+					$this->parseEBAY ($URLencoded, false);
+				}
+				elseif(strpos($URLencoded, $ebid) != FALSE){
+					$this->parseEBid($URLencoded, false);
+				}
+				elseif (!$error) {
+					
+					$product = $this->model('product');
+							$product->product_name = $_POST['adminProdName'];
+							$product->url = $URLencoded;
+							$product->unit_price = $_POST['adminProdPrice'];
+							$product->item_shipping_cost = ($_POST['adminProdPrice']*0.10);
+							$product->provider_id = $providerID;
+							$product->category_id = $this->matchCategory($_POST['adminProdCategory']);
+							$product->save();
+				}
+			}
+			$this->view('home/adminPanel');
+		}else{
+			$this->view('home/index');
+		}
+	}
 
 
 	public function addProduct($id){
@@ -575,50 +618,7 @@ class Home extends Controller{
         if($toMatch == "" || $toMatch == null)
         	return 25;
         $allCats = $this->model('preference')->get();
-        //similar_text($allCats->get(0)->preference_category, $toMatch, $matchScore);
-        //print $matchScore;
-        /*for($i = 1; $i < $allCats->count(); $i++)
-        {
-            //print $allCats->get($i)->preference_category . "<br/><br/>";
-            //print stristr($allCats->get($i)->preference_category, $toMatch);
-            
-            if(stristr($allCats->get($i)->preference_category, $toMatch) !== false)
-            {
-               //print $allCats->get($i)->preference_category;
-                //print stripos($allCats->get($i)->preference_category, $toMatch);
-                print "first if ";
-                similar_text($allCats->get($i)->preference_category, $toMatch, $tmpScore);
-                if($tmpScore > $matchScore)
-                {
-                    $matchedCat = $allCats->get($i)->preference_category;
-                    similar_text($allCats->get($i)->preference_category, $toMatch, $matchScore);
-                }
-                
-                
-            }
-            elseif (stristr($toMatch, $allCats->get($i)->preference_category) !== false)
-            {
-                
-                //similar_text($allCats->get($i)->preference_category, $toMatch, $matchScore);
-                print "second if ";
-                similar_text($allCats->get($i)->preference_category, $toMatch, $tmpScore);
-                
-                if($tmpScore > $matchScore)
-                {
-                    $matchedCat = $allCats->get($i)->preference_category;
-                    similar_text($allCats->get($i)->preference_category, $toMatch, $matchScore);
-                }
-                
-            }
-            else 
-            {
-                //$matchedCat = "Random";    
-                
-            }
-            
-            
-        }*/
-        
+       
         for($i = 0; $i < $allCats->count(); $i++)
         {
             similar_text($allCats->get($i)->preference_category, $toMatch, $matchScore);
@@ -628,10 +628,12 @@ class Home extends Controller{
         
         $j = array_search(max($scoreArray), $scoreArray);
         
-        //print_r ($scoreArray);
+        if($scoreArray[$j] !== 1 &&  $scoreArray[$j] < 50){
+        	$j = 22;
+        }
         $matchedCat = $allCats->get($j)->preference_id;
-        //print $matchedCat;
-        return $matchedCat;
+        //var_dump($matchedCat);
+	    return $matchedCat;
         
     }
     

@@ -47,21 +47,21 @@
 <body style="display:none;" class="homebody">
     <div>
         <h2 style="color:white;">Add a Product</h2>
-        <form method="POST" action="../public/home/parseLink" >
+        <form method="POST" action="../home/parseLink" >
 
             <div class="well">
-                <label for="adminProdURL">Product Link </label> <br/>
+                <label for="adminProdURL">Product Link</label> <br/>
                 <input type="text" class="form-control urlbox" name="adminProdURL" placeholder="Product URL" /> <br/>
                 
                 <div id="manualControl" style="display:none;">
-                    <label for="adminProdName">Product Name </label> <br/>
+                    <label for="adminProdName">Product Name</label> <br/>
                     <input type="text" class="form-control urlbox" name="adminProdName" placeholder="Product Name" /><br/>
                     
-                    <label for="adminProdPrice">Product Price </label> <br/>
+                    <label for="adminProdPrice">Product Price</label> <br/>
                     <input type="text" class="form-control urlbox" name="adminProdPrice" placeholder="Product Price" /><br/>
                     
-                    <label for="adminProdURL">Product Category </label> <br/>
-                    <select class="form-control">
+                    <label for="adminProdURL">Product Category</label> <br/>
+                    <select class="form-control" name="adminProdCategory">
                     <?php 
                         $control->getCategory();                        
                     ?> 
