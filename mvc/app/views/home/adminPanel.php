@@ -41,7 +41,7 @@
     <h1 class="registerhead">Welcome Admin</h1>
 </head>
     <?php include("../public/includes/navbar.php"); ?>
-      <?php include("includes/footer.php"); ?>
+    <?php include("includes/footer.php"); ?>
     <h1 class="registerhead"></h1>
 
 <body style="display:none;" class="homebody">
@@ -72,9 +72,10 @@
                 <button type="submit" class="btn btn-primary btn-sm">Add Item</button>
                 <br/> <br/> 
                 <input name="manualCheckbox" onclick="revealManual()" type="checkbox">
-                 <label for="manualCheckbox">Enter a Product Manually?</label>
+                <label for="manualCheckbox">Enter a Product Manually?</label>
             </div>
             <br/>
+            <h2 style="color:white;">Manage Product Requests</h2>
             <div class="well" style="height:400px;overflow-y:auto;">
                 <table class="table">
                 <tr>
@@ -101,6 +102,39 @@
             </div>
 
         </form>
+        <h2 style="color:white;">Respond to Questions </h2>    
+        <div class="well">
+        <table class="table">
+            <tr>
+            <th>Id</th><th>User</th><th>Status</th><th>View Question</th>
+            </tr> 
+            
+            <?php 
+            $getQuestions = $control->listQuestions();
+            for($i = 0; $i < $getQuestions->count(); $i++)
+            {
+                $questions = $getQuestions->get($i);
+                echo "<tr>";
+                echo "<td>";
+                echo $questions->question_id;
+                echo "</td>";
+                echo "<td>";
+                echo $questions->username;
+                echo "</td>";
+                echo "<td>";
+                echo $questions->status_id;
+                echo "</td>";
+                echo "<td>";
+                echo "<a href=/pattywhack/mvc/public/home/viewConversation/$questions->question_id> View </a>";
+                echo "</td>";
+                echo "</tr>";
+                
+            }
+                
+            ?>
+        </table>
+        </div>
+        
     </div>
 </body>
 

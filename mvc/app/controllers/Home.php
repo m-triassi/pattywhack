@@ -85,6 +85,30 @@ class Home extends Controller{
 	public function getURL(){
 		return $getURLs = $this->model('RequestURL')->where('status_id', 1)->get();
 	}
+    
+    public function listQuestions(){
+        return $this->model('question')->get();
+        
+    }
+    
+    
+    public function viewConversation($viewable) 
+    {
+        
+        $conversation [] =  $this->model('question')->where('question_id', $viewable)->first();
+        $responses = $this->model('response')->where('question_id', $viewable);
+
+        for ($i = 1; $i =< $responses->count(); $i++)
+        {
+            array_push($conversation , $responses->get($i));
+            //print $responses->get($i);
+            $this->view('home/conversation', ['resp' . $i, $conversation[$i]);
+        }
+        // this works only if there is a question and no responses...
+        //$this->view('home/conversation', ['conv', $conversation]);
+
+        
+    }
 
 
 	public function checkAuth(){
