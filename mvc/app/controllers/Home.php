@@ -47,6 +47,10 @@ class Home extends Controller{
 		$this->view('home/userAccount');
 	}
     
+    public function shippingWorker(){
+		$this->view('home/shippingWorker');
+	}
+    
         public function adminPanel(){
 		$this->view('home/adminPanel');
 	}
