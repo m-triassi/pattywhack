@@ -40,14 +40,6 @@
     </div>
         </form>
 
-        <form method="POST" class="registerform" action="../home/parseCosco" >
-        <div class="form-group">
-            <label for="exampleInputEmail1">url</label>
-            <input type="text" class="form-control" name="website" placeholder="Website URL"  />
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-    </form>
-    
     </body>
 
 </html>
