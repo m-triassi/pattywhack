@@ -55,6 +55,9 @@ class Home extends Controller{
 		$this->view('home/request');
 	}
 
+        public function devtest(){
+		$this->view('home/devtest');
+	}
 	public function logUser(){
 		if(isset($_POST["UserLogin"])){
 
@@ -113,6 +116,29 @@ class Home extends Controller{
         {
             $category =  $getCat->get($i)->preference_category;
             $toReturnStr = $toReturnStr . "<option value='" . $category . "'>" . $category . "</option>";
+        }
+        print $toReturnStr;
+    }
+    
+    public function listAllPref() {
+        //error_reporting(E_ERROR | E_WARNING | E_PARSE);
+        $getCat = $this->model('preference')->get();
+        $getUserPrefs = $this->model('preference_detail')->where('username', $_SESSION["user"])->get();
+        $toReturnStr = "";
+        for ($i = 0; $i < $getCat->count(); $i++)
+        {
+            $category =  $getCat->get($i)->preference_category;
+            $categoryID = $getCat->get($i)->preference_id;
+            
+            //If any user prefs match the current category ID, make the inputs checked
+            if($getUserPrefs->where('preference_id', $categoryID) == $categoryID)
+            {
+                $toReturnStr = $toReturnStr . "<li>" . "<input type=checkbox value='" . $category . "' checked>" . "<label>" . $category . "</label>" . "</li>";
+                
+            }
+            else
+            //var_dump($getUserPrefs);
+            $toReturnStr = $toReturnStr . "<li>" . "<input type=checkbox value='" . $categoryID . "'>" . "<label>" . $category . "</label>" . "</li>";
         }
         print $toReturnStr;
     }
@@ -309,6 +335,7 @@ class Home extends Controller{
             
 		}
 	}
+<<<<<<< HEAD
 
 
 	public function addProduct($id){
@@ -355,5 +382,56 @@ class Home extends Controller{
 			$this->view('home/index');
 		}
 	}
+=======
+    
+    public function matchCategory($toMatch) {
+        $matchedCat = "";
+        $allCats = $this->model('preference')->get();
+        similar_text($allCats->get(0)->preference_category, $toMatch, $matchScore);
+        //print $matchScore;
+        for($i = 1; $i < $allCats->count(); $i++)
+        {
+            //print $allCats->get($i)->preference_category . "<br/><br/>";
+            //print stristr($allCats->get($i)->preference_category, $toMatch);
+            
+            if(stristr($allCats->get($i)->preference_category, $toMatch) !== false)
+            {
+               //print $allCats->get($i)->preference_category;
+                //print stripos($allCats->get($i)->preference_category, $toMatch);
+                print "first if ";
+                similar_text($allCats->get($i)->preference_category, $toMatch, $tmpScore);
+                if($tmpScore > $matchScore)
+                {
+                    $matchedCat = $allCats->get($i)->preference_category;
+                    similar_text($allCats->get($i)->preference_category, $toMatch, $matchScore);
+                }
+                
+                
+            }
+            elseif (stristr($toMatch, $allCats->get($i)->preference_category) !== false)
+            {
+                
+                //similar_text($allCats->get($i)->preference_category, $toMatch, $matchScore);
+                print "second if ";
+                similar_text($allCats->get($i)->preference_category, $toMatch, $tmpScore);
+                
+                if($tmpScore > $matchScore)
+                {
+                    $matchedCat = $allCats->get($i)->preference_category;
+                    similar_text($allCats->get($i)->preference_category, $toMatch, $matchScore);
+                }
+                
+            }
+            
+            
+        }
+        
+        
+        print $matchedCat;
+        return $matchedCat;
+        
+    }
+	
+>>>>>>> origin/Daniel_MVC
 }
 ?>

@@ -25,6 +25,7 @@
 
 <body style="display:none;" class="homebody">
     <?php include("includes/navbar.php"); ?>
+    <?php include("includes/footer.php"); ?>
     <h1 class="topbanner">Welcome to Patty Whack.com<br />
         <small>Add some variety to your life</small>
     </h1>

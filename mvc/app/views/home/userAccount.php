@@ -1,3 +1,8 @@
+<?php  
+     require_once '../app/controllers/home.php';
+     $control = new home();
+?>
+
 <html>
 <!-- BootStrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -23,12 +28,25 @@
         .modhead {
             color: white;
         }
+        
+        ul.items {
+          text-align: center;
+          list-style-type: none;
+        }
+        ul.items li {
+          float:left;
+        }
+        ul.items li:nth-child(3n+4) {
+          clear:left;
+          float:left;
+        }
     </style>
 
 <head>
     <title>Patty Whack</title>
 </head>
     <?php include("../public/includes/navbar.php"); ?>
+      <?php include("includes/footer.php"); ?>
     <h1 class="registerhead"></h1>
 
 <body style="display:none;" class="homebody">
@@ -65,10 +83,15 @@
     </form>
     
     
-    <form method="POST" class="editaccount" action="../home/">
+    <form method="POST" class="editaccount" action="../home/updatePreference">
         <h2 class="modhead">Change your Prefences</h2>
         <div class="form-group well">
-            
+            <ul class="items">
+                <?php 
+                $control->listAllPref();
+
+                ?>
+            </ul>
         </div>
     
     </form>

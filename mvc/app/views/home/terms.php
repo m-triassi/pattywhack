@@ -9,6 +9,8 @@
 </head>
 
 <body>
+    
+      <?php include("includes/footer.php"); ?>
     <br /><br /><br /><br /><br /><br />
     <p class="text-center" style="font-size: 50px;">No one actually reads these, why did you even bother clicking???</p>
     <br /> <br /><br />

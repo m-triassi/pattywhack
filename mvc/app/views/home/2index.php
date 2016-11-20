@@ -1,3 +1,7 @@
+hello <?=$data['name']
+// Below is a basic page
+?>
+
 <html>
 <!-- BootStrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -8,6 +12,11 @@
 <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet">
 <!-- Style Sheets -->
 <link rel="stylesheet" type="text/css" href="/pattywhack/mvc/public/stylesheets/registerStyles.css">
+<!-- Includes -->
+    <?php include("../public/includes/navbar.php"); ?>
+    <?php include("includes/footer.php"); ?>
+    
+    
 <script>
     window.onload = function () {
         $("body").fadeIn(950);
@@ -17,26 +26,19 @@
 <head>
     <title>Patty Whack</title>
 </head>
-        <?php include("../public/includes/navbar.php"); ?>
-      <?php include("includes/footer.php"); ?>
-    
-    <h1 class="registerhead">Login</h1>
+
+    <h1 class="registerhead"></h1>
 
 <body style="display:none;" class="homebody">
-    <?php 
-    if(isset($data['message'])) { 
-        echo "<div class='alert alert-danger' style='margin-top: 4%; font-size: 2em;'>$data[message]</div>";
-     }?>
-    <form method="POST" class="registerform" action="../home/logUser" >
+
+    <form method="POST" class="registerform" action="../home/" >
+        
         <div class="form-group">
-            <label for="exampleInputEmail1">Username</label>
-            <input type="text" class="form-control" name="UserLogin" placeholder="Username"  />
+            <label for=""> </label>
+            <input type="text" required class="form-control" name="" placeholder="" />
         </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Password</label>
-            <input type="password" class="form-control" name="PasswordLogin" placeholder="Password"  />
-        </div>
-        <button type="submit" class="btn btn-default">Login</button>
+        
+        <button type="submit" class="btn btn-default">Submit</button>
     </form>
 </body>
 
