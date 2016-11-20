@@ -58,6 +58,10 @@ class Home extends Controller{
         public function devtest(){
 		$this->view('home/devtest');
 	}
+    
+    public function contact() {
+        $this->view('home/contact');
+    }
 	public function logUser(){
 		if(isset($_POST["UserLogin"])){
 
@@ -95,19 +99,69 @@ class Home extends Controller{
     public function viewConversation($viewable) 
     {
         
-        $conversation [] =  $this->model('question')->where('question_id', $viewable)->first();
-        $responses = $this->model('response')->where('question_id', $viewable);
-
-        for ($i = 1; $i =< $responses->count(); $i++)
+        $masterQuestion []  = $this->model('question')->where('question_id', $viewable)->first();
+        $conversation = array();
+        $responses = $this->model('response')->where('question_id', $viewable)->get();
+        
+        if ($responses->get(0)->answer !== null)
         {
+            $question = $this->model('question')->where('question_id', $viewable)->first();
+            $question->status_id = 2;
+            $question->save();
+            
+        }
+        else
+        {
+            $question = $this->model('question')->where('question_id', $viewable)->first();
+            $question->status_id = 1;
+            $question->save();
+        }
+            
+
+        for ($i = 0; $i < $responses->count(); $i++)
+        {
+            //var_dump($responses);
             array_push($conversation , $responses->get($i));
             //print $responses->get($i);
-            $this->view('home/conversation', ['resp' . $i, $conversation[$i]);
+            //$this->view('home/conversation', ['resp' . $i, $conversation[$i]]);
         }
-        // this works only if there is a question and no responses...
-        //$this->view('home/conversation', ['conv', $conversation]);
+        //this works only if there is a question and no responses...
+        //var_dump($conversation);
+        $_SESSION['converse'] = $conversation;
+        $this->view('home/conversation', ['conv'=>$masterQuestion]);
 
         
+    }
+    
+    public function addResponse() 
+    {
+        
+        $sentBy = $_SESSION['user'];
+        $message = $_POST['newMessage'];
+        $questionID = $_POST['questID'];
+        
+        $respToAdd = $this->model('response');
+        $respToAdd->question_id = $questionID;
+        $respToAdd->username = $sentBy;
+        $respToAdd->answer = $message;
+        //print_r ($respToAdd);
+        
+        $respToAdd->save();
+        header("Location: http://localhost/pattywhack/mvc/public/home/viewConversation/" . $questionID);
+        
+        
+    }
+    
+    public function addQuestion()
+    {
+        $quesToAdd = $this->model('question');
+        
+        $quesToAdd->username = $_SESSION['user'];
+        $quesToAdd->question = $_POST['qBox'];
+        $quesToAdd->status_id = 1;
+        
+        $quesToAdd->save();
+        header("Location: http://localhost/pattywhack/mvc/public/home/contact");
     }
 
 

@@ -102,6 +102,51 @@
         </div>
         <button type="submit" class="btn btn-default">Update Preferences</button>
     </form>
+    
+    
+        <h2 style="color:white;" class="editaccount">Your Questions to the Admins </h2>    
+        <div class="well editaccount">
+        <table class="table">
+            <tr>
+            <th>Id</th><th>Question</th><th>Status</th><th>View Question</th>
+            </tr> 
+            
+            <?php 
+            //error_reporting(0);
+            $getQuestions = $this->model('question')->where('username', $_SESSION['user'])->get();
+            //var_dump($getQuestions->get());
+            //$getQuestions->where('username', $_SESSION['user']);
+            for($i = 0; $i < $getQuestions->count(); $i++)
+            {
+                $questions = $getQuestions->get($i);
+                if($questions->status_id == 1)
+                    $status = "Pending...";
+                elseif($questions->status_id == 2)
+                    $status = "Answered!";
+                else
+                    $status = "Unknown.";
+                
+               
+                echo "<tr>";
+                echo "<td>";
+                echo $questions->question_id;
+                echo "</td>";
+                echo "<td>";
+                echo $questions->question;
+                echo "</td>";
+                echo "<td>";
+                echo $status;
+                echo "</td>";
+                echo "<td>";
+                echo "<a href=/pattywhack/mvc/public/home/viewConversation/$questions->question_id> View </a>";
+                echo "</td>";
+                echo "</tr>";
+                
+            }
+                
+            ?>
+        </table>
+        </div>
 </body>
 
 </html>

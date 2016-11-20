@@ -110,10 +110,19 @@
             </tr> 
             
             <?php 
+            error_reporting(0);
             $getQuestions = $control->listQuestions();
             for($i = 0; $i < $getQuestions->count(); $i++)
             {
                 $questions = $getQuestions->get($i);
+                if($questions->status_id == 1)
+                    $status = "Pending...";
+                elseif($questions->status_id == 2)
+                    $status = "Answered!";
+                else
+                    $status = "Unknown.";
+                
+               
                 echo "<tr>";
                 echo "<td>";
                 echo $questions->question_id;
@@ -122,7 +131,7 @@
                 echo $questions->username;
                 echo "</td>";
                 echo "<td>";
-                echo $questions->status_id;
+                echo $status;
                 echo "</td>";
                 echo "<td>";
                 echo "<a href=/pattywhack/mvc/public/home/viewConversation/$questions->question_id> View </a>";
