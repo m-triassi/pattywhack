@@ -21,12 +21,10 @@ $params = array('start_date' => date('Y-m-d', strtotime('-15 years')), 'end_date
 try {
     $result = Agreement::searchTransactions($agreementId, $params, $apiContext);
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Search for Transactions", "AgreementTransaction", $agreementId, null, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Search for Transactions", "AgreementTransaction", $agreementId, $params, $result);
+ResultPrinter::printResult("Search for Transactions", "AgreementTransaction", $agreementId, $params, $result);
 
 return $agreement;

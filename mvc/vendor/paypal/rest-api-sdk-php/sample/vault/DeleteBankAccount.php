@@ -14,10 +14,8 @@ try {
     // (See bootstrap.php for more on `ApiContext`)
     $bankAccount->delete($apiContext);
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Delete Bank Account", "Bank Account", null, null, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Delete Bank Account", "Bank Account", $bankAccount->getId(), null, null);
+ResultPrinter::printResult("Delete Bank Account", "Bank Account", $bankAccount->getId(), null, null);

@@ -2,6 +2,9 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
+use PayPal\Converter\FormatConverter;
+use PayPal\Validation\NumericValidator;
 use PayPal\Api\Details;
 
 /**
@@ -13,7 +16,6 @@ class DetailsTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Gets Json String of Object Details
-     *
      * @return string
      */
     public static function getJson()
@@ -23,7 +25,6 @@ class DetailsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Gets Object Instance with Json data filled in
-     *
      * @return Details
      */
     public static function getObject()
@@ -34,7 +35,6 @@ class DetailsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests for Serialization and Deserialization Issues
-     *
      * @return Details
      */
     public function testSerializationDeserialization()

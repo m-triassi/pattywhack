@@ -2,6 +2,9 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
+use PayPal\Converter\FormatConverter;
+use PayPal\Validation\NumericValidator;
 use PayPal\Api\Amount;
 
 /**
@@ -17,7 +20,7 @@ class AmountTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"currency":"TestSample","total":"12.34","details":' . DetailsTest::getJson() . '}';
+        return '{"currency":"TestSample","total":"12.34","details":' .DetailsTest::getJson() . '}';
     }
 
     /**
@@ -55,4 +58,5 @@ class AmountTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getTotal(), "12.34");
         $this->assertEquals($obj->getDetails(), DetailsTest::getObject());
     }
+
 }

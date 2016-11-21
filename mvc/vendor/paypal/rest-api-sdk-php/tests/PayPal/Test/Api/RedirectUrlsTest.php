@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\RedirectUrls;
 
 /**
@@ -52,24 +53,5 @@ class RedirectUrlsTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($obj->getReturnUrl(), "http://www.google.com");
         $this->assertEquals($obj->getCancelUrl(), "http://www.google.com");
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage ReturnUrl is not a fully qualified URL
-     */
-    public function testUrlValidationForReturnUrl()
-    {
-        $obj = new RedirectUrls();
-        $obj->setReturnUrl(null);
-    }
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage CancelUrl is not a fully qualified URL
-     */
-    public function testUrlValidationForCancelUrl()
-    {
-        $obj = new RedirectUrls();
-        $obj->setCancelUrl(null);
     }
 }

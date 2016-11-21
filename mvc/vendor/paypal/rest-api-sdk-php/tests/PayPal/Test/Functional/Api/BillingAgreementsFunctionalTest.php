@@ -228,4 +228,5 @@ class BillingAgreementsFunctionalTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Cancelled', $get->getState());
         return $get;
     }
+
 }

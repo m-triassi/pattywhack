@@ -4,7 +4,10 @@ namespace PayPal\Api;
 
 use PayPal\Common\PayPalResourceModel;
 use PayPal\Validation\ArgumentValidator;
+use PayPal\Api\Capture;
+use PayPal\Api\Authorization;
 use PayPal\Rest\ApiContext;
+use PayPal\Transport\PayPalRestCall;
 
 /**
  * Class Order
@@ -14,7 +17,7 @@ use PayPal\Rest\ApiContext;
  * @package PayPal\Api
  *
  * @property string id
- * @property string reference_id
+ * @property string purchase_unit_reference_id
  * @property \PayPal\Api\Amount amount
  * @property string payment_mode
  * @property string state
@@ -26,7 +29,6 @@ use PayPal\Rest\ApiContext;
  * @property \PayPal\Api\FmfDetails fmf_details
  * @property string create_time
  * @property string update_time
- * @property \PayPal\Api\Links[] links
  */
 class Order extends PayPalResourceModel
 {
@@ -56,10 +58,8 @@ class Order extends PayPalResourceModel
     /**
      * Identifier to the purchase unit associated with this object. Obsolete. Use one in cart_base.
      *
-     * @deprecated Use #setReferenceId instead
-     *
      * @param string $purchase_unit_reference_id
-     *
+     * 
      * @return $this
      */
     public function setPurchaseUnitReferenceId($purchase_unit_reference_id)
@@ -70,36 +70,12 @@ class Order extends PayPalResourceModel
 
     /**
      * Identifier to the purchase unit associated with this object. Obsolete. Use one in cart_base.
-     * @deprecated Use #getReferenceId instead
      *
      * @return string
      */
     public function getPurchaseUnitReferenceId()
     {
         return $this->purchase_unit_reference_id;
-    }
-
-    /**
-     * Identifier to the purchase unit associated with this object. Obsolete. Use one in cart_base.
-     *
-     * @param string $reference_id
-     *
-     * @return $this
-     */
-    public function setReferenceId($reference_id)
-    {
-        $this->reference_id = $reference_id;
-        return $this;
-    }
-
-    /**
-     * Identifier to the purchase unit associated with this object. Obsolete. Use one in cart_base.
-     *
-     * @return string
-     */
-    public function getReferenceId()
-    {
-        return $this->reference_id;
     }
 
     /**
@@ -151,7 +127,7 @@ class Order extends PayPalResourceModel
 
     /**
      * State of the order transaction.
-     * Valid Values: ["pending", "completed", "voided", "authorized", "captured"]
+     * Valid Values: ["pending", "completed", "refunded", "partially_refunded", "voided"]
      *
      * @param string $state
      * 
@@ -174,7 +150,7 @@ class Order extends PayPalResourceModel
     }
 
     /**
-     * Reason code for the transaction state being Pending or Reversed. This field will replace pending_reason field eventually. Only supported when the `payment_method` is set to `paypal`.
+     * Reason code for the transaction state being Pending or Reversed. This field will replace pending_reason field eventually
      * Valid Values: ["PAYER_SHIPPING_UNCONFIRMED", "MULTI_CURRENCY", "RISK_REVIEW", "REGULATORY_REVIEW", "VERIFICATION_REQUIRED", "ORDER", "OTHER"]
      *
      * @param string $reason_code
@@ -188,7 +164,7 @@ class Order extends PayPalResourceModel
     }
 
     /**
-     * Reason code for the transaction state being Pending or Reversed. This field will replace pending_reason field eventually. Only supported when the `payment_method` is set to `paypal`.
+     * Reason code for the transaction state being Pending or Reversed. This field will replace pending_reason field eventually
      *
      * @return string
      */
@@ -198,7 +174,7 @@ class Order extends PayPalResourceModel
     }
 
     /**
-     * [DEPRECATED] Reason code for the transaction state being Pending. Obsolete. Retained for backward compatability. Use reason_code field above instead. 
+     * Reason code for the transaction state being Pending. Obsolete. Retained for backward compatability. Use reason_code field above instead. 
      * Valid Values: ["payer_shipping_unconfirmed", "multi_currency", "risk_review", "regulatory_review", "verification_required", "order", "other"]
      *
      * @param string $pending_reason
@@ -212,7 +188,7 @@ class Order extends PayPalResourceModel
     }
 
     /**
-     * @deprecated  [DEPRECATED] Reason code for the transaction state being Pending. Obsolete. Retained for backward compatability. Use reason_code field above instead. 
+     * Reason code for the transaction state being Pending. Obsolete. Retained for backward compatability. Use reason_code field above instead. 
      *
      * @return string
      */
@@ -222,7 +198,7 @@ class Order extends PayPalResourceModel
     }
 
     /**
-     * The level of seller protection in force for the transaction.
+     * Protection Eligibility of the Payer 
      * Valid Values: ["ELIGIBLE", "PARTIALLY_ELIGIBLE", "INELIGIBLE"]
      *
      * @param string $protection_eligibility
@@ -231,23 +207,23 @@ class Order extends PayPalResourceModel
      */
     public function setProtectionEligibility($protection_eligibility)
     {
-        $this->protection_eligibility = $protection_eligibility;
+        $this->{"protection-eligibility"} = $protection_eligibility;
         return $this;
     }
 
     /**
-     * The level of seller protection in force for the transaction.
+     * Protection Eligibility of the Payer 
      *
      * @return string
      */
     public function getProtectionEligibility()
     {
-        return $this->protection_eligibility;
+        return $this->{"protection-eligibility"};
     }
 
     /**
-     * The kind of seller protection in force for the transaction. This property is returned only when the `protection_eligibility` property is set to `ELIGIBLE`or `PARTIALLY_ELIGIBLE`. Only supported when the `payment_method` is set to `paypal`. Allowed values:<br> `ITEM_NOT_RECEIVED_ELIGIBLE`- Sellers are protected against claims for items not received.<br> `UNAUTHORIZED_PAYMENT_ELIGIBLE`- Sellers are protected against claims for unauthorized payments.<br> One or both of the allowed values can be returned.
-     * Valid Values: ["ITEM_NOT_RECEIVED_ELIGIBLE", "UNAUTHORIZED_PAYMENT_ELIGIBLE", "ITEM_NOT_RECEIVED_ELIGIBLE,UNAUTHORIZED_PAYMENT_ELIGIBLE"]
+     * Protection Eligibility Type of the Payer 
+     * Valid Values: ["ELIGIBLE", "ITEM_NOT_RECEIVED_ELIGIBLE", "INELIGIBLE", "UNAUTHORIZED_PAYMENT_ELIGIBLE"]
      *
      * @param string $protection_eligibility_type
      * 
@@ -255,18 +231,18 @@ class Order extends PayPalResourceModel
      */
     public function setProtectionEligibilityType($protection_eligibility_type)
     {
-        $this->protection_eligibility_type = $protection_eligibility_type;
+        $this->{"protection-eligibility_type"} = $protection_eligibility_type;
         return $this;
     }
 
     /**
-     * The kind of seller protection in force for the transaction. This property is returned only when the `protection_eligibility` property is set to `ELIGIBLE`or `PARTIALLY_ELIGIBLE`. Only supported when the `payment_method` is set to `paypal`. Allowed values:<br> `ITEM_NOT_RECEIVED_ELIGIBLE`- Sellers are protected against claims for items not received.<br> `UNAUTHORIZED_PAYMENT_ELIGIBLE`- Sellers are protected against claims for unauthorized payments.<br> One or both of the allowed values can be returned.
+     * Protection Eligibility Type of the Payer 
      *
      * @return string
      */
     public function getProtectionEligibilityType()
     {
-        return $this->protection_eligibility_type;
+        return $this->{"protection-eligibility_type"};
     }
 
     /**
@@ -362,7 +338,7 @@ class Order extends PayPalResourceModel
     }
 
     /**
-     * Shows details for an order, by ID.
+     * Retrieve details about an order by passing the order_id in the request URI.
      *
      * @param string $orderId
      * @param ApiContext $apiContext is the APIContext for this call. It can be used to pass dynamic configuration and credentials.
@@ -387,7 +363,7 @@ class Order extends PayPalResourceModel
     }
 
     /**
-     * Captures a payment for an order, by ID. To use this call, the original payment call must specify an intent of `order`. In the JSON request body, include the payment amount and indicate whether this capture is the final capture for the authorization.
+     * Capture a payment on an order by passing the order_id in the request URI. In addition, include the amount of the payment and indicate whether this is a final capture for the given authorization in the body of the request JSON. To issue this request, an original payment call must specify an intent of order.
      *
      * @param Capture $capture
      * @param ApiContext $apiContext is the APIContext for this call. It can be used to pass dynamic configuration and credentials.
@@ -413,7 +389,7 @@ class Order extends PayPalResourceModel
     }
 
     /**
-     * Voids, or cancels, an order, by ID. You cannot void an order if a payment has already been partially or fully captured.
+     * Void (cancel) an order by passing the order_id in the request URI. Note that an order cannot be voided if payment has already been partially or fully captured.
      *
      * @param ApiContext $apiContext is the APIContext for this call. It can be used to pass dynamic configuration and credentials.
      * @param PayPalRestCall $restCall is the Rest Call Service that is used to make rest calls
@@ -436,7 +412,7 @@ class Order extends PayPalResourceModel
     }
 
     /**
-     * Authorizes an order, by ID. Include an `amount` object in the JSON request body.
+     * Authorize an order by passing the order_id in the request URI. In addition, include an amount object in the body of the request JSON.
      *
      * @param Authorization $authorization Authorization Object with Amount value to be authorized
      * @param ApiContext $apiContext is the APIContext for this call. It can be used to pass dynamic configuration and credentials.

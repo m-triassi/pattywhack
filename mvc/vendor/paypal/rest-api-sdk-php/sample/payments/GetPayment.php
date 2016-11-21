@@ -23,12 +23,10 @@ $paymentId = $createdPayment->getId();
 try {
     $payment = Payment::get($paymentId, $apiContext);
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Get Payment", "Payment", null, null, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Get Payment", "Payment", $payment->getId(), null, $payment);
+ResultPrinter::printResult("Get Payment", "Payment", $payment->getId(), null, $payment);
 
 return $payment;

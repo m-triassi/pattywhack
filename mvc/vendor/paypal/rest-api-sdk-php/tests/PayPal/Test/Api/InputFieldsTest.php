@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\InputFields;
 
 /**
@@ -17,7 +18,7 @@ class InputFieldsTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"allow_note":true,"no_shipping":123,"address_override":123}';
+        return json_encode(json_decode('{"allow_note":true,"no_shipping":123,"address_override":123}'));
     }
 
     /**
@@ -55,6 +56,5 @@ class InputFieldsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getNoShipping(), 123);
         $this->assertEquals($obj->getAddressOverride(), 123);
     }
-
 
 }

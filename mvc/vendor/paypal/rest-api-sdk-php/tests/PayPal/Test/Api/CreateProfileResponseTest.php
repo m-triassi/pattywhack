@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\CreateProfileResponse;
 
 /**
@@ -51,4 +52,5 @@ class CreateProfileResponseTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($obj->getId(), "TestSample");
     }
+
 }

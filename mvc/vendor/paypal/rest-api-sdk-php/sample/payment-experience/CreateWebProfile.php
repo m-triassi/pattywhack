@@ -13,10 +13,6 @@ $flowConfig = new \PayPal\Api\FlowConfig();
 $flowConfig->setLandingPageType("Billing");
 // The URL on the merchant site for transferring to after a bank transfer payment.
 $flowConfig->setBankTxnPendingUrl("http://www.yeowza.com/");
-// When set to "commit", the buyer is shown an amount, and the button text will read "Pay Now" on the checkout page.
-$flowConfig->setUserAction("commit");
-// Defines the HTTP method to use to redirect the user to a return URL. A valid value is `GET` or `POST`.
-$flowConfig->setReturnUriHttpMethod("GET");
 
 // Parameters for style and presentation.
 $presentation = new \PayPal\Api\Presentation();
@@ -26,11 +22,7 @@ $presentation->setLogoImage("http://www.yeowza.com/favico.ico")
 //	A label that overrides the business name in the PayPal account on the PayPal pages.
     ->setBrandName("YeowZa! Paypal")
 //  Locale of pages displayed by PayPal payment experience.
-    ->setLocaleCode("US")
-// A label to use as hypertext for the return to merchant link.
-    ->setReturnUrlLabel("Return")
-// A label to use as the title for the note to seller field. Used only when `allow_note` is `1`.
-    ->setNoteToSellerLabel("Thanks!");
+    ->setLocaleCode("US");
 
 // Parameters for input fields customization.
 $inputFields = new \PayPal\Api\InputFields();
@@ -51,9 +43,7 @@ $webProfile->setName("YeowZa! T-Shirt Shop" . uniqid())
     // Parameters for style and presentation.
     ->setPresentation($presentation)
     // Parameters for input field customization.
-    ->setInputFields($inputFields)
-    // Indicates whether the profile persists for three hours or permanently. Set to `false` to persist the profile permanently. Set to `true` to persist the profile for three hours.
-    ->setTemporary(true);
+    ->setInputFields($inputFields);
 
 // For Sample Purposes Only.
 $request = clone $webProfile;
@@ -62,12 +52,10 @@ try {
     // Use this call to create a profile.
     $createProfileResponse = $webProfile->create($apiContext);
 } catch (\PayPal\Exception\PayPalConnectionException $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Created Web Profile", "Web Profile", null, $request, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Created Web Profile", "Web Profile", $createProfileResponse->getId(), $request, $createProfileResponse);
+ResultPrinter::printResult("Created Web Profile", "Web Profile", $createProfileResponse->getId(), $request, $createProfileResponse);
 
 return $createProfileResponse;

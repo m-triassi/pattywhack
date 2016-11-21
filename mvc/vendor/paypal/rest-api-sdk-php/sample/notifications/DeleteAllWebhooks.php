@@ -15,12 +15,10 @@ try {
         $webhook->delete($apiContext);
     }
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Deleted all Webhooks", "WebhookList", null, null, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Delete all Webhook, as it may have exceed the maximum count.", "WebhookList", null, null, null);
+ResultPrinter::printResult("Delete all Webhook, as it may have exceed the maximum count.", "WebhookList", null, null, null);
 
 return $output;

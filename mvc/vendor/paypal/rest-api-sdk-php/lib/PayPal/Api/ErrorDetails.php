@@ -13,6 +13,8 @@ use PayPal\Common\PayPalModel;
  *
  * @property string field
  * @property string issue
+ * @property string purchase_unit_reference_id
+ * @property string code
  */
 class ErrorDetails extends PayPalModel
 {
@@ -64,7 +66,7 @@ class ErrorDetails extends PayPalModel
 
     /**
      * Reference ID of the purchase_unit associated with this error
-     * @deprecated Not publicly available
+     *
      * @param string $purchase_unit_reference_id
      * 
      * @return $this
@@ -77,7 +79,7 @@ class ErrorDetails extends PayPalModel
 
     /**
      * Reference ID of the purchase_unit associated with this error
-     * @deprecated Not publicly available
+     *
      * @return string
      */
     public function getPurchaseUnitReferenceId()
@@ -87,7 +89,7 @@ class ErrorDetails extends PayPalModel
 
     /**
      * PayPal internal error code.
-     * @deprecated Not publicly available
+     *
      * @param string $code
      * 
      * @return $this
@@ -100,7 +102,7 @@ class ErrorDetails extends PayPalModel
 
     /**
      * PayPal internal error code.
-     * @deprecated Not publicly available
+     *
      * @return string
      */
     public function getCode()

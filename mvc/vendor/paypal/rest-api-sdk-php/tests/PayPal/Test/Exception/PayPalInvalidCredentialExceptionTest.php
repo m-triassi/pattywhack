@@ -38,3 +38,5 @@ class PayPalInvalidCredentialExceptionTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('Error on line', $msg);
     }
 }
+
+?>

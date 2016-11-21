@@ -2,6 +2,7 @@
 
 namespace PayPal\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Rest\ApiContext;
 use PayPal\Transport\PayPalRestCall;
 
@@ -60,4 +61,16 @@ class FuturePayment extends Payment
         return $credential->getRefreshToken($apiContext->getConfig(), $authorizationCode);
     }
 
+    /**
+     * Updates Access Token using long lived refresh token
+     *
+     * @param string|null $refreshToken
+     * @param ApiContext $apiContext
+     * @return void
+     */
+    public function updateAccessToken($refreshToken, $apiContext)
+    {
+        $apiContext = $apiContext ? $apiContext : new ApiContext(self::$credential);
+        $apiContext->getCredential()->updateAccessToken($apiContext->getConfig(), $refreshToken);
+    }
 }

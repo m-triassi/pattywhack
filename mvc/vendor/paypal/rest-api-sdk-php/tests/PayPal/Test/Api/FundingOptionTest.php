@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\FundingOption;
 
 /**
@@ -17,7 +18,7 @@ class FundingOptionTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"id":"TestSample","funding_sources":' . FundingSourceTest::getJson() . ',"backup_funding_instrument":' . FundingInstrumentTest::getJson() . ',"currency_conversion":' . CurrencyConversionTest::getJson() . ',"installment_info":' . InstallmentInfoTest::getJson() . ',"links":' . LinksTest::getJson() . '}';
+        return '{"id":"TestSample","funding_sources":' .FundingSourceTest::getJson() . ',"backup_funding_instrument":' .FundingInstrumentTest::getJson() . ',"currency_conversion":' .CurrencyConversionTest::getJson() . ',"installment_info":' .InstallmentInfoTest::getJson() . ',"links":' .LinksTest::getJson() . '}';
     }
 
     /**

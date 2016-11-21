@@ -5,6 +5,7 @@ namespace PayPal\Api;
 use PayPal\Common\PayPalResourceModel;
 use PayPal\Validation\ArgumentValidator;
 use PayPal\Rest\ApiContext;
+use PayPal\Transport\PayPalRestCall;
 
 /**
  * Class Refund
@@ -14,23 +15,21 @@ use PayPal\Rest\ApiContext;
  * @package PayPal\Api
  *
  * @property string id
+ * @property string create_time
+ * @property string update_time
  * @property \PayPal\Api\Amount amount
  * @property string state
  * @property string reason
- * @property string invoice_number
  * @property string sale_id
  * @property string capture_id
  * @property string parent_payment
  * @property string description
- * @property string create_time
- * @property string update_time
- * @property string reason_code
  * @property \PayPal\Api\Links[] links
  */
 class Refund extends PayPalResourceModel
 {
     /**
-     * ID of the refund transaction. 17 characters max.
+     * Identifier of the refund transaction in UTC ISO8601 format.
      *
      * @param string $id
      * 
@@ -43,7 +42,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * ID of the refund transaction. 17 characters max.
+     * Identifier of the refund transaction in UTC ISO8601 format.
      *
      * @return string
      */
@@ -53,7 +52,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * Details including both refunded amount (to payer) and refunded fee (to payee). 10 characters max.
+     * Details including both refunded amount (to Payer) and refunded fee (to Payee).If amount is not specified, it's assumed to be full refund.
      *
      * @param \PayPal\Api\Amount $amount
      * 
@@ -66,7 +65,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * Details including both refunded amount (to payer) and refunded fee (to payee). 10 characters max.
+     * Details including both refunded amount (to Payer) and refunded fee (to Payee).If amount is not specified, it's assumed to be full refund.
      *
      * @return \PayPal\Api\Amount
      */
@@ -76,7 +75,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * State of the refund.
+     * State of the refund transaction.
      * Valid Values: ["pending", "completed", "failed"]
      *
      * @param string $state
@@ -90,7 +89,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * State of the refund.
+     * State of the refund transaction.
      *
      * @return string
      */
@@ -123,29 +122,6 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * Your own invoice or tracking ID number. Character length and limitations: 127 single-byte alphanumeric characters.
-     *
-     * @param string $invoice_number
-     * 
-     * @return $this
-     */
-    public function setInvoiceNumber($invoice_number)
-    {
-        $this->invoice_number = $invoice_number;
-        return $this;
-    }
-
-    /**
-     * Your own invoice or tracking ID number. Character length and limitations: 127 single-byte alphanumeric characters.
-     *
-     * @return string
-     */
-    public function getInvoiceNumber()
-    {
-        return $this->invoice_number;
-    }
-
-    /**
      * ID of the Sale transaction being refunded. 
      *
      * @param string $sale_id
@@ -169,7 +145,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * ID of the sale transaction being refunded.
+     * ID of the Capture transaction being refunded. 
      *
      * @param string $capture_id
      * 
@@ -182,7 +158,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * ID of the sale transaction being refunded.
+     * ID of the Capture transaction being refunded. 
      *
      * @return string
      */
@@ -192,7 +168,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * ID of the payment resource on which this transaction is based.
+     * ID of the Payment resource that this transaction is based on.
      *
      * @param string $parent_payment
      * 
@@ -205,7 +181,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * ID of the payment resource on which this transaction is based.
+     * ID of the Payment resource that this transaction is based on.
      *
      * @return string
      */
@@ -238,7 +214,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * Time of refund as defined in [RFC 3339 Section 5.6](http://tools.ietf.org/html/rfc3339#section-5.6).
+     * Time the resource was created in UTC ISO8601 format.
      *
      * @param string $create_time
      * 
@@ -251,7 +227,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * Time of refund as defined in [RFC 3339 Section 5.6](http://tools.ietf.org/html/rfc3339#section-5.6).
+     * Time the resource was created in UTC ISO8601 format.
      *
      * @return string
      */
@@ -261,7 +237,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * Time that the resource was last updated.
+     * Time the resource was last updated in UTC ISO8601 format.
      *
      * @param string $update_time
      * 
@@ -274,7 +250,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * Time that the resource was last updated.
+     * Time the resource was last updated in UTC ISO8601 format.
      *
      * @return string
      */
@@ -284,31 +260,7 @@ class Refund extends PayPalResourceModel
     }
 
     /**
-     * The reason code for the refund state being pending
-     * Valid Values: ["ECHECK"]
-     *
-     * @param string $reason_code
-     * 
-     * @return $this
-     */
-    public function setReasonCode($reason_code)
-    {
-        $this->reason_code = $reason_code;
-        return $this;
-    }
-
-    /**
-     * The reason code for the refund state being pending
-     *
-     * @return string
-     */
-    public function getReasonCode()
-    {
-        return $this->reason_code;
-    }
-
-    /**
-     * Shows details for a refund, by ID.
+     * Retrieve details about a specific refund by passing the refund_id in the request URI.
      *
      * @param string $refundId
      * @param ApiContext $apiContext is the APIContext for this call. It can be used to pass dynamic configuration and credentials.

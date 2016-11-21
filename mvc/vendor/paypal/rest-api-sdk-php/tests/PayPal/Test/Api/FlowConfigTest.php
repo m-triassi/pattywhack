@@ -18,7 +18,7 @@ class FlowConfigTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"landing_page_type":"TestSample","bank_txn_pending_url":"http://www.google.com","user_action":"TestSample","return_uri_http_method":"TestSample"}';
+        return '{"landing_page_type":"TestSample","bank_txn_pending_url":"http://www.google.com"}';
     }
 
     /**
@@ -41,8 +41,6 @@ class FlowConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($obj);
         $this->assertNotNull($obj->getLandingPageType());
         $this->assertNotNull($obj->getBankTxnPendingUrl());
-        $this->assertNotNull($obj->getUserAction());
-        $this->assertNotNull($obj->getReturnUriHttpMethod());
         $this->assertEquals(self::getJson(), $obj->toJson());
         return $obj;
     }
@@ -55,8 +53,6 @@ class FlowConfigTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($obj->getLandingPageType(), "TestSample");
         $this->assertEquals($obj->getBankTxnPendingUrl(), "http://www.google.com");
-        $this->assertEquals($obj->getUserAction(), "TestSample");
-        $this->assertEquals($obj->getReturnUriHttpMethod(), "TestSample");
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\ItemList;
 
 /**
@@ -17,7 +18,7 @@ class ItemListTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"items":' . ItemTest::getJson() . ',"shipping_address":' . ShippingAddressTest::getJson() . ',"shipping_method":"TestSample","shipping_phone_number":"TestSample"}';
+        return '{"items":' .ItemTest::getJson() . ',"shipping_address":' .ShippingAddressTest::getJson() . ',"shipping_method":"TestSample"}';
     }
 
     /**
@@ -41,7 +42,6 @@ class ItemListTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($obj->getItems());
         $this->assertNotNull($obj->getShippingAddress());
         $this->assertNotNull($obj->getShippingMethod());
-        $this->assertNotNull($obj->getShippingPhoneNumber());
         $this->assertEquals(self::getJson(), $obj->toJson());
         return $obj;
     }
@@ -55,6 +55,6 @@ class ItemListTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getItems(), ItemTest::getObject());
         $this->assertEquals($obj->getShippingAddress(), ShippingAddressTest::getObject());
         $this->assertEquals($obj->getShippingMethod(), "TestSample");
-        $this->assertEquals($obj->getShippingPhoneNumber(), "TestSample");
     }
+
 }

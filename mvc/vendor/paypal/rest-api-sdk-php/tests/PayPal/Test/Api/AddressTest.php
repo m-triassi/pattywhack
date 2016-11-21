@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\Address;
 
 /**
@@ -17,7 +18,7 @@ class AddressTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"line1":"TestSample","line2":"TestSample","city":"TestSample","country_code":"TestSample","postal_code":"TestSample","state":"TestSample","phone":"TestSample","normalization_status":"TestSample","status":"TestSample","type":"TestSample"}';
+        return '{"line1":"TestSample","line2":"TestSample","city":"TestSample","country_code":"TestSample","postal_code":"TestSample","state":"TestSample","phone":"TestSample","normalization_status":"TestSample","status":"TestSample"}';
     }
 
     /**
@@ -47,7 +48,6 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($obj->getPhone());
         $this->assertNotNull($obj->getNormalizationStatus());
         $this->assertNotNull($obj->getStatus());
-        $this->assertNotNull($obj->getType());
         $this->assertEquals(self::getJson(), $obj->toJson());
         return $obj;
     }
@@ -67,6 +67,6 @@ class AddressTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getPhone(), "TestSample");
         $this->assertEquals($obj->getNormalizationStatus(), "TestSample");
         $this->assertEquals($obj->getStatus(), "TestSample");
-        $this->assertEquals($obj->getType(), "TestSample");
     }
+
 }

@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\InstallmentInfo;
 
 /**
@@ -17,7 +18,7 @@ class InstallmentInfoTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"installment_id":"TestSample","network":"TestSample","issuer":"TestSample","installment_options":' . InstallmentOptionTest::getJson() . '}';
+        return '{"installment_id":"TestSample","network":"TestSample","issuer":"TestSample","installment_options":' .InstallmentOptionTest::getJson() . '}';
     }
 
     /**

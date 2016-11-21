@@ -225,37 +225,12 @@ if (PHP_SAPI == 'cli') {
                     <li><a href="#experience">Payment Experience</a></li>
                     <li><a href="#notifications">Notifications</a></li>
                     <li><a href="#invoice">Invoice</a></li>
-                    <li><a href="#invoice-templates">Invoice Templates</a></li>
                     <li><a href="#identity">Identity (LIPP)</a></li>
                 </ul>
 
             </div>
         </div>
         <div class="col-md-9 samples">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 id="tls" class="panel-title"><a
-                            href="https://developer.paypal.com/webapps/developer/docs/api/#payments"
-                            target="_blank">TLS CHECK</a></h3>
-                </div>
-                <!-- List group -->
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-8"><h5>Check if your system supports TLSv1.2<h5></div>
-                            <div class="col-md-4">
-                                <a href="tls/TlsCheck.php" class="btn btn-primary pull-left execute"> Try It <i
-                                        class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/tls/TlsCheck.html" class="btn btn-default pull-right">Source <i
-                                        class="fa fa-file-code-o"></i></a>
-                                <a href="https://github.com/paypal/tls-update#php" class="btn btn-default pull-right">Read More <i
-                                        class="fa fa-exclamation"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 id="payments" class="panel-title"><a
@@ -299,17 +274,6 @@ if (PHP_SAPI == 'cli') {
                                 <a href="payments/CreatePayment.php" class="btn btn-primary pull-left execute"> Try It <i
                                         class="fa fa-play-circle-o"></i></a>
                                 <a href="doc/payments/CreatePayment.html" class="btn btn-default pull-right">Source <i
-                                        class="fa fa-file-code-o"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-8"><h5>Payments to a 3rd-Party Payee</h5></div>
-                            <div class="col-md-4">
-                                <a href="payments/CreateThirdPartyPayment.php" class="btn btn-primary pull-left execute"> Try It <i
-                                        class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/payments/CreateThirdPartyPayment.html" class="btn btn-default pull-right">Source <i
                                         class="fa fa-file-code-o"></i></a>
                             </div>
                         </div>
@@ -431,7 +395,7 @@ if (PHP_SAPI == 'cli') {
                     </li>
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-md-8"><h5>Cancel Unclaimed Payout Item</h5></div>
+                            <div class="col-md-8"><h5>Cancel Uncliamed Payout Item</h5></div>
                             <div class="col-md-4">
                                 <a href="payouts/CancelPayoutItem.php" class="btn btn-primary pull-left execute"> Try It <i
                                         class="fa fa-play-circle-o"></i></a>
@@ -462,17 +426,16 @@ if (PHP_SAPI == 'cli') {
                                         class="fa fa-file-code-o"></i></a>
                             </div>
                         </div>
+                    </li>
+                    <li class="list-group-item">
                         <div class="row">
-                            <div class="col-md-8">
-                                <h6>Step II: Execute after Success
-                                    <small>(required step after user approval)</small></h6>
-                            </div>
+                            <div class="col-md-8"><h5>Authorize Payment Using PayPal</h5></div>
                             <div class="col-md-4">
-                                <a
-                                    href="doc/payments/ExecutePayment.html"
-                                    class="btn btn-default pull-right">Part II : Source <i
+                                <a href="payments/AuthorizePaymentUsingPayPal.php" class="btn btn-primary pull-left execute"> Try It
+                                    <i
+                                        class="fa fa-play-circle-o"></i></a>
+                                <a href="doc/payments/AuthorizePaymentUsingPayPal.html" class="btn btn-default pull-right">Source <i
                                         class="fa fa-file-code-o"></i></a>
-
                             </div>
                         </div>
                     </li>
@@ -918,17 +881,6 @@ if (PHP_SAPI == 'cli') {
                     </li>
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-md-8"><h5>Credit Card - List All</h5></div>
-                            <div class="col-md-4">
-                                <a href="vault/ListCreditCards.php" class="btn btn-primary pull-left execute"> Try It <i
-                                        class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/vault/ListCreditCards.html" class="btn btn-default pull-right">Source <i
-                                        class="fa fa-file-code-o"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
                             <div class="col-md-8"><h5>Credit Card - Update</h5></div>
                             <div class="col-md-4">
                                 <a href="vault/UpdateCreditCard.php" class="btn btn-primary pull-left execute"> Try It <i
@@ -953,9 +905,9 @@ if (PHP_SAPI == 'cli') {
                         <div class="row">
                             <div class="col-md-8"><h5>Bank Account - Save</h5></div>
                             <div class="col-md-4">
-                                <a href="vault/CreateBankAccount.php" class="btn btn-primary pull-left execute"> Try It <i
+                                <a href="vault/CreateCreditCard.php" class="btn btn-primary pull-left execute"> Try It <i
                                         class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/vault/CreateBankAccount.html" class="btn btn-default pull-right">Source <i
+                                <a href="doc/vault/CreateCreditCard.html" class="btn btn-default pull-right">Source <i
                                         class="fa fa-file-code-o"></i></a>
                             </div>
                         </div>
@@ -964,9 +916,9 @@ if (PHP_SAPI == 'cli') {
                         <div class="row">
                             <div class="col-md-8"><h5>Bank Account - Retrieve</h5></div>
                             <div class="col-md-4">
-                                <a href="vault/GetBankAccount.php" class="btn btn-primary pull-left execute"> Try It <i
+                                <a href="vault/CreateBankAccount.php" class="btn btn-primary pull-left execute"> Try It <i
                                         class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/vault/GetBankAccount.html" class="btn btn-default pull-right">Source <i
+                                <a href="doc/vault/CreateBankAccount.html" class="btn btn-default pull-right">Source <i
                                         class="fa fa-file-code-o"></i></a>
                             </div>
                         </div>
@@ -977,7 +929,7 @@ if (PHP_SAPI == 'cli') {
                             <div class="col-md-4">
                                 <a href="vault/DeleteBankAccount.php" class="btn btn-primary pull-left execute"> Try It <i
                                         class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/vault/DeleteBankAccount.html" class="btn btn-default pull-right">Source <i
+                                <a href="doc/vault/GetBankAccount.html" class="btn btn-default pull-right">Source <i
                                         class="fa fa-file-code-o"></i></a>
                             </div>
                         </div>
@@ -1187,17 +1139,6 @@ if (PHP_SAPI == 'cli') {
                             </div>
                         </div>
                     </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-8"><h5>Validate Webhook Event</h5></div>
-                            <div class="col-md-4">
-                                <a href="notifications/ValidateWebhookEvent.php" class="btn btn-primary pull-left execute"> Try It <i
-                                        class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/notifications/ValidateWebhookEvent.html" class="btn btn-default pull-right">Source <i
-                                        class="fa fa-file-code-o"></i></a>
-                            </div>
-                        </div>
-                    </li>
                 </ul>
             </div>
 
@@ -1211,33 +1152,11 @@ if (PHP_SAPI == 'cli') {
                 <ul class="list-group">
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-md-8"><h5>Generate Next Invoice Number</h5></div>
-                            <div class="col-md-4">
-                                <a href="invoice/GetNextInvoiceNumber.php" class="btn btn-primary pull-left execute"> Try It <i
-                                        class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/invoice/GetNextInvoiceNumber.html" class="btn btn-default pull-right">Source <i
-                                        class="fa fa-file-code-o"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
                             <div class="col-md-8"><h5>Create an Invoice</h5></div>
                             <div class="col-md-4">
                                 <a href="invoice/CreateInvoice.php" class="btn btn-primary pull-left execute"> Try It <i
                                         class="fa fa-play-circle-o"></i></a>
                                 <a href="doc/invoice/CreateInvoice.html" class="btn btn-default pull-right">Source <i
-                                        class="fa fa-file-code-o"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-8"><h5>Create Third Party Invoice</h5></div>
-                            <div class="col-md-4">
-                                <a href="invoice/CreateThirdPartyInvoice.php" class="btn btn-primary pull-left execute"> Try It <i
-                                        class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/invoice/CreateThirdPartyInvoice.html" class="btn btn-default pull-right">Source <i
                                         class="fa fa-file-code-o"></i></a>
                             </div>
                         </div>
@@ -1363,73 +1282,6 @@ if (PHP_SAPI == 'cli') {
                             </div>
                         </div>
                     </li>
-                </ul>
-            </div>
-
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 id="invoice-templates" class="panel-title"><a
-                            href="https://developer.paypal.com/docs/api/invoicing/#templates"
-                            target="_blank">Invoice Templates</a></h3>
-                </div>
-                <!-- List group -->
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-8"><h5>Create Invoice Template</h5></div>
-                            <div class="col-md-4">
-                                <a href="invoice-templates/CreateInvoiceTemplate.php" class="btn btn-primary pull-left execute"> Try It <i
-                                        class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/invoice-templates/CreateInvoiceTemplate.html" class="btn btn-default pull-right">Source <i
-                                        class="fa fa-file-code-o"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-8"><h5>Get Invoice Template</h5></div>
-                            <div class="col-md-4">
-                                <a href="invoice-templates/GetInvoiceTemplate.php" class="btn btn-primary pull-left execute"> Try It <i
-                                        class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/invoice-templates/GetInvoiceTemplate.html" class="btn btn-default pull-right">Source <i
-                                        class="fa fa-file-code-o"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-8"><h5>Update Invoice Template</h5></div>
-                            <div class="col-md-4">
-                                <a href="invoice-templates/UpdateInvoiceTemplate.php" class="btn btn-primary pull-left execute"> Try It <i
-                                        class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/invoice-templates/UpdateInvoiceTemplate.html" class="btn btn-default pull-right">Source <i
-                                        class="fa fa-file-code-o"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-8"><h5>Delete an Invoice Template</h5></div>
-                            <div class="col-md-4">
-                                <a href="invoice-templates/DeleteInvoiceTemplate.php" class="btn btn-primary pull-left execute"> Try It <i
-                                        class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/invoice-templates/DeleteInvoiceTemplate.html" class="btn btn-default pull-right">Source <i
-                                        class="fa fa-file-code-o"></i></a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md-8"><h5>Get All Invoice Templates</h5></div>
-                            <div class="col-md-4">
-                                <a href="invoice-templates/GetAllInvoiceTemplates.php" class="btn btn-primary pull-left execute"> Try It <i
-                                        class="fa fa-play-circle-o"></i></a>
-                                <a href="doc/invoice-templates/GetAllInvoiceTemplates.html" class="btn btn-default pull-right">Source <i
-                                        class="fa fa-file-code-o"></i></a>
-                            </div>
-                        </div>
-                    </li>
-
                 </ul>
             </div>
 

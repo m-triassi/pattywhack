@@ -2,7 +2,7 @@
 
 namespace PayPal\Api;
 
-use PayPal\Common\PayPalResourceModel;
+use PayPal\Common\PayPalModel;
 
 /**
  * Class CreditCardList
@@ -11,23 +11,22 @@ use PayPal\Common\PayPalResourceModel;
  *
  * @package PayPal\Api
  *
- * @property \PayPal\Api\CreditCard[] items
- * @property \PayPal\Api\Links[] links
- * @property int total_items
- * @property int total_pages
+ * @property \PayPal\Api\CreditCard[] credit_cards
+ * @property int count
+ * @property string next_id
  */
-class CreditCardList extends PayPalResourceModel
+class CreditCardList extends PayPalModel
 {
     /**
      * A list of credit card resources
      *
-     * @param \PayPal\Api\CreditCard[] $items
+     * @param \PayPal\Api\CreditCard[] $credit_cards
      * 
      * @return $this
      */
-    public function setItems($items)
+    public function setCreditCards($credit_cards)
     {
-        $this->items = $items;
+        $this->{"credit-cards"} = $credit_cards;
         return $this;
     }
 
@@ -36,85 +35,85 @@ class CreditCardList extends PayPalResourceModel
      *
      * @return \PayPal\Api\CreditCard[]
      */
-    public function getItems()
+    public function getCreditCards()
     {
-        return $this->items;
+        return $this->{"credit-cards"};
     }
 
     /**
-     * Append Items to the list.
+     * Append CreditCards to the list.
      *
      * @param \PayPal\Api\CreditCard $creditCard
      * @return $this
      */
-    public function addItem($creditCard)
+    public function addCreditCard($creditCard)
     {
-        if (!$this->getItems()) {
-            return $this->setItems(array($creditCard));
+        if (!$this->getCreditCards()) {
+            return $this->setCreditCards(array($creditCard));
         } else {
-            return $this->setItems(
-                array_merge($this->getItems(), array($creditCard))
+            return $this->setCreditCards(
+                array_merge($this->getCreditCards(), array($creditCard))
             );
         }
     }
 
     /**
-     * Remove Items from the list.
+     * Remove CreditCards from the list.
      *
      * @param \PayPal\Api\CreditCard $creditCard
      * @return $this
      */
-    public function removeItem($creditCard)
+    public function removeCreditCard($creditCard)
     {
-        return $this->setItems(
-            array_diff($this->getItems(), array($creditCard))
+        return $this->setCreditCards(
+            array_diff($this->getCreditCards(), array($creditCard))
         );
     }
 
     /**
-     * Total number of items present in the given list. Note that the number of items might be larger than the records in the current page.
+     * Number of items returned in each range of results. Note that the last results range could have fewer items than the requested number of items.
      *
-     * @param int $total_items
+     * @param int $count
      * 
      * @return $this
      */
-    public function setTotalItems($total_items)
+    public function setCount($count)
     {
-        $this->total_items = $total_items;
+        $this->count = $count;
         return $this;
     }
 
     /**
-     * Total number of items present in the given list. Note that the number of items might be larger than the records in the current page.
+     * Number of items returned in each range of results. Note that the last results range could have fewer items than the requested number of items.
      *
      * @return int
      */
-    public function getTotalItems()
+    public function getCount()
     {
-        return $this->total_items;
+        return $this->count;
     }
 
     /**
-     * Total number of pages that exist, for the total number of items, with the given page size.
+     * Identifier of the next element to get the next range of results.
      *
-     * @param int $total_pages
+     * @param string $next_id
      * 
      * @return $this
      */
-    public function setTotalPages($total_pages)
+    public function setNextId($next_id)
     {
-        $this->total_pages = $total_pages;
+        $this->next_id = $next_id;
         return $this;
     }
 
     /**
-     * Total number of pages that exist, for the total number of items, with the given page size.
+     * Identifier of the next element to get the next range of results.
      *
-     * @return int
+     * @return string
      */
-    public function getTotalPages()
+    public function getNextId()
     {
-        return $this->total_pages;
+        return $this->next_id;
     }
 
 }

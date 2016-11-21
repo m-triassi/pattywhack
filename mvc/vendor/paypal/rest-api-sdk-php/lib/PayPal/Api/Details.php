@@ -25,7 +25,7 @@ use PayPal\Validation\NumericValidator;
 class Details extends PayPalModel
 {
     /**
-     * Amount of the subtotal of the items. **Required** if line items are specified. 10 characters max, with support for 2 decimal places.
+     * Sub-total (amount) of items being paid for.
      *
      * @param string|double $subtotal
      * 
@@ -40,7 +40,7 @@ class Details extends PayPalModel
     }
 
     /**
-     * Amount of the subtotal of the items. **Required** if line items are specified. 10 characters max, with support for 2 decimal places.
+     * Sub-total (amount) of items being paid for.
      *
      * @return string
      */
@@ -50,7 +50,7 @@ class Details extends PayPalModel
     }
 
     /**
-     * Amount charged for shipping. 10 characters max with support for 2 decimal places.
+     * Amount being charged for shipping.
      *
      * @param string|double $shipping
      * 
@@ -65,7 +65,7 @@ class Details extends PayPalModel
     }
 
     /**
-     * Amount charged for shipping. 10 characters max with support for 2 decimal places.
+     * Amount being charged for shipping.
      *
      * @return string
      */
@@ -75,7 +75,7 @@ class Details extends PayPalModel
     }
 
     /**
-     * Amount charged for tax. 10 characters max with support for 2 decimal places.
+     * Amount being charged as tax.
      *
      * @param string|double $tax
      * 
@@ -90,7 +90,7 @@ class Details extends PayPalModel
     }
 
     /**
-     * Amount charged for tax. 10 characters max with support for 2 decimal places.
+     * Amount being charged as tax.
      *
      * @return string
      */
@@ -100,9 +100,9 @@ class Details extends PayPalModel
     }
 
     /**
-     * Amount being charged for the handling fee. Only supported when the `payment_method` is set to `paypal`.
+     * Amount being charged as handling fee.
      *
-     * @param string|double $handling_fee
+     * @param string $handling_fee
      * 
      * @return $this
      */
@@ -115,7 +115,7 @@ class Details extends PayPalModel
     }
 
     /**
-     * Amount being charged for the handling fee. Only supported when the `payment_method` is set to `paypal`.
+     * Amount being charged as handling fee.
      *
      * @return string
      */
@@ -125,9 +125,9 @@ class Details extends PayPalModel
     }
 
     /**
-     * Amount being discounted for the shipping fee. Only supported when the `payment_method` is set to `paypal`.
+     * Amount being charged as shipping discount.
      *
-     * @param string|double $shipping_discount
+     * @param string $shipping_discount
      * 
      * @return $this
      */
@@ -140,7 +140,7 @@ class Details extends PayPalModel
     }
 
     /**
-     * Amount being discounted for the shipping fee. Only supported when the `payment_method` is set to `paypal`.
+     * Amount being charged as shipping discount.
      *
      * @return string
      */
@@ -150,7 +150,7 @@ class Details extends PayPalModel
     }
 
     /**
-     * Amount being charged for the insurance fee. Only supported when the `payment_method` is set to `paypal`.
+     * Amount being charged as insurance.
      *
      * @param string|double $insurance
      * 
@@ -165,7 +165,7 @@ class Details extends PayPalModel
     }
 
     /**
-     * Amount being charged for the insurance fee. Only supported when the `payment_method` is set to `paypal`.
+     * Amount being charged as insurance.
      *
      * @return string
      */
@@ -177,7 +177,7 @@ class Details extends PayPalModel
     /**
      * Amount being charged as gift wrap fee.
      *
-     * @param string|double $gift_wrap
+     * @param string $gift_wrap
      * 
      * @return $this
      */

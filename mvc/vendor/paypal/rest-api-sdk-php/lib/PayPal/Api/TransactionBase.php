@@ -2,6 +2,9 @@
 
 namespace PayPal\Api;
 
+use PayPal\Common\PayPalModel;
+use PayPal\Rest\ApiContext;
+
 /**
  * Class TransactionBase
  *
@@ -17,7 +20,7 @@ class TransactionBase extends CartBase
      * List of financial transactions (Sale, Authorization, Capture, Refund) related to the payment.
      * 
      *
-     * @param \PayPal\Api\RelatedResources[] $related_resources
+     * @param \PayPal\Api\RelatedResources $related_resources
      * 
      * @return $this
      */

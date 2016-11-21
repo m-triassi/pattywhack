@@ -4,13 +4,7 @@ namespace PayPal\Api;
 use PayPal\Common\PayPalModel;
 
 /**
- * Class OpenIdError
- *
  * Error resource
- *
- * @property string error
- * @property string error_description
- * @property string error_uri
  */
 class OpenIdError extends PayPalModel
 {

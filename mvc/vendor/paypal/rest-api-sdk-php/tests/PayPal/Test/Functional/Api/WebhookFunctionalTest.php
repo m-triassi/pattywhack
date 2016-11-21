@@ -2,15 +2,27 @@
 
 namespace PayPal\Test\Functional\Api;
 
+use PayPal\Api\Amount;
 use PayPal\Api\Patch;
 use PayPal\Api\PatchRequest;
+use PayPal\Api\Payment;
+use PayPal\Api\PaymentExecution;
+use PayPal\Api\Refund;
+use PayPal\Api\Sale;
 use PayPal\Api\Webhook;
 use PayPal\Api\WebhookEvent;
+use PayPal\Api\WebhookEventList;
 use PayPal\Api\WebhookEventType;
 use PayPal\Api\WebhookEventTypeList;
 use PayPal\Api\WebhookList;
+use PayPal\Common\PayPalModel;
 use PayPal\Exception\PayPalConnectionException;
+use PayPal\Rest\ApiContext;
+use PayPal\Rest\IResource;
+use PayPal\Api\CreateProfileResponse;
 use PayPal\Test\Functional\Setup;
+use PayPal\Transport\PayPalRestCall;
+use PayPal\Api\WebProfile;
 
 /**
  * Class WebhookFunctionalTest
@@ -61,7 +73,7 @@ class WebhookFunctionalTest extends \PHPUnit_Framework_TestCase
             $result = $obj->create($this->apiContext, $this->mockPayPalRestCall);
         } catch (PayPalConnectionException $ex) {
             $data = $ex->getData();
-            if (strpos($data, 'WEBHOOK_NUMBER_LIMIT_EXCEEDED') !== false) {
+            if (strpos($data,'WEBHOOK_NUMBER_LIMIT_EXCEEDED') !== false) {
                 $this->deleteAll();
                 $result = $obj->create($this->apiContext, $this->mockPayPalRestCall);
             } else {
@@ -90,6 +102,7 @@ class WebhookFunctionalTest extends \PHPUnit_Framework_TestCase
         $result = Webhook::get($webhook->getId(), $this->apiContext, $this->mockPayPalRestCall);
         $this->assertNotNull($result);
         $this->assertEquals($webhook->getId(), $result->getId());
+        $this->assertEquals($webhook, $result, "", 0, 10, true);
         return $result;
     }
 
@@ -124,7 +137,7 @@ class WebhookFunctionalTest extends \PHPUnit_Framework_TestCase
                 break;
             }
         }
-        $this->assertTrue($found, "The Created Webhook was not found in the get list");
+        $this->assertTrue($found, "The Created Web Profile was not found in the get list");
         $this->assertEquals($webhook->getId(), $foundObject->getId());
         return $result;
     }
@@ -176,7 +189,7 @@ class WebhookFunctionalTest extends \PHPUnit_Framework_TestCase
 
     public function testEventSearch()
     {
-        $result = WebhookEvent::all(array(), $this->apiContext, $this->mockPayPalRestCall);
+        $result = WebhookEvent::all(array(),$this->apiContext, $this->mockPayPalRestCall);
         $this->assertNotNull($result);
         return $result;
     }

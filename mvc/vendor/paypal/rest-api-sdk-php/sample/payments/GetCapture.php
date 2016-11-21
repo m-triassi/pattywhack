@@ -8,6 +8,8 @@
 $request = require 'AuthorizationCapture.php';
 
 use PayPal\Api\Capture;
+use PayPal\Api\Amount;
+use PayPal\Api\Authorization;
 
 // ### Retrieve Capture details
 // You can look up a capture by invoking the Capture::get method 
@@ -15,10 +17,8 @@ use PayPal\Api\Capture;
 try {
     $capture = Capture::get($request->getId(), $apiContext);
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Get Captured Payment", "Capture", $request->getId(), null, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Get Captured Payment", "Capture", $capture->getId(), null, $capture);
+ResultPrinter::printResult("Get Captured Payment", "Capture", $capture->getId(), null, $capture);

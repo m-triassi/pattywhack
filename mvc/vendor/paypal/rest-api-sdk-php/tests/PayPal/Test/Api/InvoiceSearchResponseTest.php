@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\InvoiceSearchResponse;
 
 /**
@@ -53,4 +54,5 @@ class InvoiceSearchResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getTotalCount(), 123);
         $this->assertEquals($obj->getInvoices(), InvoiceTest::getObject());
     }
+
 }

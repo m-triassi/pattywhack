@@ -16,12 +16,10 @@ $payoutBatchId = $payoutBatch->getBatchHeader()->getPayoutBatchId();
 try {
     $output = \PayPal\Api\Payout::get($payoutBatchId, $apiContext);
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Get Payout Batch Status", "PayoutBatch", null, $payoutBatchId, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Get Payout Batch Status", "PayoutBatch", $output->getBatchHeader()->getPayoutBatchId(), null, $output);
+ResultPrinter::printResult("Get Payout Batch Status", "PayoutBatch", $output->getBatchHeader()->getPayoutBatchId(), null, $output);
 
 return $output;

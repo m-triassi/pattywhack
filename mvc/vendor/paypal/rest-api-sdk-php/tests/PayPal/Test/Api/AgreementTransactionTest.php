@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\AgreementTransaction;
 
 /**
@@ -69,4 +70,5 @@ class AgreementTransactionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getTimeStamp(), "TestSample");
         $this->assertEquals($obj->getTimeZone(), "TestSample");
     }
+
 }

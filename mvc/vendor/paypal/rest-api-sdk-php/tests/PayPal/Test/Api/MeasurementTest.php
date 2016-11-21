@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\Measurement;
 
 /**
@@ -53,4 +54,5 @@ class MeasurementTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getValue(), "TestSample");
         $this->assertEquals($obj->getUnit(), "TestSample");
     }
+
 }

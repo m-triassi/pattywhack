@@ -8,8 +8,8 @@
 
 /** @var Payment $payment */
 $payment = require __DIR__ . '/../payments/CreatePayment.php';
-use PayPal\Api\Payment;
 use PayPal\Api\Sale;
+use PayPal\Api\Payment;
 
 // ### Get Sale From Created Payment
 // You can retrieve the sale Id from Related Resources for each transactions.
@@ -24,12 +24,10 @@ try {
     // transaction from your payment resource.
     $sale = Sale::get($saleId, $apiContext);
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Look Up A Sale", "Sale", $sale->getId(), null, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Look Up A Sale", "Sale", $sale->getId(), null, $sale);
+ResultPrinter::printResult("Look Up A Sale", "Sale", $sale->getId(), null, $sale);
 
 return $sale;

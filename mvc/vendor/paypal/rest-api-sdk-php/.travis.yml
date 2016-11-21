@@ -1,11 +1,9 @@
-sudo: false
 language: php
 php:
 - 5.3
 - 5.4
 - 5.5
 - 5.6
-- 7.0
 - hhvm
 matrix:
   allow_failures:
@@ -25,7 +23,7 @@ after_success:
 notifications:
   email:
     recipients:
-    - DL-PP-PHP-SDK@paypal.com
+    - DL-PP-PHP-SDK@ebay.com
     on_success: change
 env:
   global:

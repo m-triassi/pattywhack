@@ -51,4 +51,5 @@ class PatchRequestTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($obj->getPatches(), PatchTest::getObject());
     }
+
 }

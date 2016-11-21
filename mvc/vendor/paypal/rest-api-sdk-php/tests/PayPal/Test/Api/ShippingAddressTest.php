@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\ShippingAddress;
 
 /**
@@ -55,4 +56,5 @@ class ShippingAddressTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getRecipientName(), "TestSample");
         $this->assertEquals($obj->getDefaultAddress(), true);
     }
+
 }

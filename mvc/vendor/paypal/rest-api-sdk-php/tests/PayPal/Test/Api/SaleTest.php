@@ -2,6 +2,11 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalResourceModel;
+use PayPal\Validation\ArgumentValidator;
+use PayPal\Api\Refund;
+use PayPal\Rest\ApiContext;
+use PayPal\Transport\PPRestCall;
 use PayPal\Api\Sale;
 
 /**
@@ -17,7 +22,7 @@ class SaleTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"id":"TestSample","purchase_unit_reference_id":"TestSample","amount":' . AmountTest::getJson() . ',"payment_mode":"TestSample","state":"TestSample","reason_code":"TestSample","protection_eligibility":"TestSample","protection_eligibility_type":"TestSample","clearing_time":"TestSample","payment_hold_status":"TestSample","payment_hold_reasons":"TestSample","transaction_fee":' . CurrencyTest::getJson() . ',"receivable_amount":' . CurrencyTest::getJson() . ',"exchange_rate":"TestSample","fmf_details":' . FmfDetailsTest::getJson() . ',"receipt_id":"TestSample","parent_payment":"TestSample","processor_response":' . ProcessorResponseTest::getJson() . ',"billing_agreement_id":"TestSample","create_time":"TestSample","update_time":"TestSample","links":' . LinksTest::getJson() . '}';
+        return '{"id":"TestSample","purchase_unit_reference_id":"TestSample","amount":' .AmountTest::getJson() . ',"payment_mode":"TestSample","state":"TestSample","reason_code":"TestSample","protection_eligibility":"TestSample","protection_eligibility_type":"TestSample","clearing_time":"TestSample","recipient_fund_status":"TestSample","hold_reason":"TestSample","transaction_fee":' .CurrencyTest::getJson() . ',"receivable_amount":' .CurrencyTest::getJson() . ',"exchange_rate":"TestSample","fmf_details":' .FmfDetailsTest::getJson() . ',"receipt_id":"TestSample","parent_payment":"TestSample","create_time":"TestSample","update_time":"TestSample","links":' .LinksTest::getJson() . '}';
     }
 
     /**
@@ -47,16 +52,14 @@ class SaleTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($obj->getProtectionEligibility());
         $this->assertNotNull($obj->getProtectionEligibilityType());
         $this->assertNotNull($obj->getClearingTime());
-        $this->assertNotNull($obj->getPaymentHoldStatus());
-        $this->assertNotNull($obj->getPaymentHoldReasons());
+        $this->assertNotNull($obj->getRecipientFundStatus());
+        $this->assertNotNull($obj->getHoldReason());
         $this->assertNotNull($obj->getTransactionFee());
         $this->assertNotNull($obj->getReceivableAmount());
         $this->assertNotNull($obj->getExchangeRate());
         $this->assertNotNull($obj->getFmfDetails());
         $this->assertNotNull($obj->getReceiptId());
         $this->assertNotNull($obj->getParentPayment());
-        $this->assertNotNull($obj->getProcessorResponse());
-        $this->assertNotNull($obj->getBillingAgreementId());
         $this->assertNotNull($obj->getCreateTime());
         $this->assertNotNull($obj->getUpdateTime());
         $this->assertNotNull($obj->getLinks());
@@ -79,16 +82,14 @@ class SaleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getProtectionEligibility(), "TestSample");
         $this->assertEquals($obj->getProtectionEligibilityType(), "TestSample");
         $this->assertEquals($obj->getClearingTime(), "TestSample");
-        $this->assertEquals($obj->getPaymentHoldStatus(), "TestSample");
-        $this->assertEquals($obj->getPaymentHoldReasons(), "TestSample");
+        $this->assertEquals($obj->getRecipientFundStatus(), "TestSample");
+        $this->assertEquals($obj->getHoldReason(), "TestSample");
         $this->assertEquals($obj->getTransactionFee(), CurrencyTest::getObject());
         $this->assertEquals($obj->getReceivableAmount(), CurrencyTest::getObject());
         $this->assertEquals($obj->getExchangeRate(), "TestSample");
         $this->assertEquals($obj->getFmfDetails(), FmfDetailsTest::getObject());
         $this->assertEquals($obj->getReceiptId(), "TestSample");
         $this->assertEquals($obj->getParentPayment(), "TestSample");
-        $this->assertEquals($obj->getProcessorResponse(), ProcessorResponseTest::getObject());
-        $this->assertEquals($obj->getBillingAgreementId(), "TestSample");
         $this->assertEquals($obj->getCreateTime(), "TestSample");
         $this->assertEquals($obj->getUpdateTime(), "TestSample");
         $this->assertEquals($obj->getLinks(), LinksTest::getObject());
@@ -126,7 +127,7 @@ class SaleTest extends \PHPUnit_Framework_TestCase
         $mockPPRestCall->expects($this->any())
             ->method('execute')
             ->will($this->returnValue(
-                RefundTest::getJson()
+                    RefundTest::getJson()
             ));
         $refund = RefundTest::getObject();
 
@@ -138,8 +139,8 @@ class SaleTest extends \PHPUnit_Framework_TestCase
     {
         $obj = self::getObject();
         $mockApiContext = $this->getMockBuilder('ApiContext')
-            ->disableOriginalConstructor()
-            ->getMock();
+                    ->disableOriginalConstructor()
+                    ->getMock();
         return array(
             array($obj, $mockApiContext),
             array($obj, null)

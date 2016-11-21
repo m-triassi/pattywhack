@@ -2,6 +2,9 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
+use PayPal\Converter\FormatConverter;
+use PayPal\Validation\NumericValidator;
 use PayPal\Api\Cost;
 
 /**
@@ -53,4 +56,5 @@ class CostTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getPercent(), "12.34");
         $this->assertEquals($obj->getAmount(), CurrencyTest::getObject());
     }
+    
 }

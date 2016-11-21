@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\CancelNotification;
 
 /**
@@ -57,4 +58,5 @@ class CancelNotificationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getSendToMerchant(), true);
         $this->assertEquals($obj->getSendToPayer(), true);
     }
+
 }

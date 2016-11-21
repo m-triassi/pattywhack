@@ -16,12 +16,10 @@ $bankAccount = require 'CreateBankAccount.php';
 try {
     $bankAccount = \PayPal\Api\BankAccount::get($bankAccount->getId(), $apiContext);
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Get Bank Account", "Bank Account", $bankAccount->getId(), null, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Get Bank Account", "Bank Account", $bankAccount->getId(), null, $bankAccount);
+ResultPrinter::printResult("Get Bank Account", "Bank Account", $bankAccount->getId(), null, $bankAccount);
 
 return $bankAccount;

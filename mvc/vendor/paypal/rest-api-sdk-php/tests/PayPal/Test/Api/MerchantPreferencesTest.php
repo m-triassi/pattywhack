@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\MerchantPreferences;
 
 /**
@@ -116,4 +117,5 @@ class MerchantPreferencesTest extends \PHPUnit_Framework_TestCase
         $obj->setNotifyUrl(null);
         $this->assertNull($obj->getNotifyUrl());
     }
+
 }

@@ -35,6 +35,7 @@ class PayPalLoggingManagerTest extends \PHPUnit_Framework_TestCase
     public function testError()
     {
         $this->object->error('Test Error Message');
+
     }
 
     /**
@@ -61,3 +62,5 @@ class PayPalLoggingManagerTest extends \PHPUnit_Framework_TestCase
         $this->object->fine('Test fine Message');
     }
 }
+
+?>

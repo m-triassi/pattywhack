@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\PaymentHistory;
 
 /**
@@ -17,7 +18,7 @@ class PaymentHistoryTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"payments":' . PaymentTest::getJson() . ',"count":123,"next_id":"TestSample"}';
+        return '{"payments":' .PaymentTest::getJson() . ',"count":123,"next_id":"TestSample"}';
     }
 
     /**

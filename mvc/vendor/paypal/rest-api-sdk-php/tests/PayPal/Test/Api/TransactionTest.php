@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\Transaction;
 
 /**
@@ -13,7 +14,6 @@ class TransactionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Gets Json String of Object Transaction
-     *
      * @return string
      */
     public static function getJson()

@@ -47,4 +47,5 @@ class ArgumentValidatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue(ArgumentValidator::validate($input, "Name"));
     }
+
 }

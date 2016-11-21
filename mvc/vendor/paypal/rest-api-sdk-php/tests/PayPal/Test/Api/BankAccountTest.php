@@ -2,6 +2,10 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalResourceModel;
+use PayPal\Validation\ArgumentValidator;
+use PayPal\Rest\ApiContext;
+use PayPal\Transport\PayPalRestCall;
 use PayPal\Api\BankAccount;
 
 /**
@@ -96,5 +100,95 @@ class BankAccountTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getUpdateTime(), "TestSample");
         $this->assertEquals($obj->getValidUntil(), "TestSample");
         $this->assertEquals($obj->getLinks(), LinksTest::getObject());
+    }
+
+    /**
+     * @dataProvider mockProvider
+     * @param BankAccount $obj
+     */
+    public function testCreate($obj, $mockApiContext)
+    {
+        $mockPayPalRestCall = $this->getMockBuilder('\PayPal\Transport\PayPalRestCall')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockPayPalRestCall->expects($this->any())
+            ->method('execute')
+            ->will($this->returnValue(
+                    self::getJson()
+            ));
+
+        $result = $obj->create($mockApiContext, $mockPayPalRestCall);
+        $this->assertNotNull($result);
+    }
+    /**
+     * @dataProvider mockProvider
+     * @param BankAccount $obj
+     */
+    public function testGet($obj, $mockApiContext)
+    {
+        $mockPayPalRestCall = $this->getMockBuilder('\PayPal\Transport\PayPalRestCall')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockPayPalRestCall->expects($this->any())
+            ->method('execute')
+            ->will($this->returnValue(
+                    BankAccountTest::getJson()
+            ));
+
+        $result = $obj->get("bankAccountId", $mockApiContext, $mockPayPalRestCall);
+        $this->assertNotNull($result);
+    }
+    /**
+     * @dataProvider mockProvider
+     * @param BankAccount $obj
+     */
+    public function testDelete($obj, $mockApiContext)
+    {
+        $mockPayPalRestCall = $this->getMockBuilder('\PayPal\Transport\PayPalRestCall')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockPayPalRestCall->expects($this->any())
+            ->method('execute')
+            ->will($this->returnValue(
+                    true
+            ));
+
+        $result = $obj->delete($mockApiContext, $mockPayPalRestCall);
+        $this->assertNotNull($result);
+    }
+    /**
+     * @dataProvider mockProvider
+     * @param BankAccount $obj
+     */
+    public function testUpdate($obj, $mockApiContext)
+    {
+        $mockPayPalRestCall = $this->getMockBuilder('\PayPal\Transport\PayPalRestCall')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockPayPalRestCall->expects($this->any())
+            ->method('execute')
+            ->will($this->returnValue(
+                    self::getJson()
+            ));
+        $patchRequest = PatchRequestTest::getObject();
+
+        $result = $obj->update($patchRequest, $mockApiContext, $mockPayPalRestCall);
+        $this->assertNotNull($result);
+    }
+
+    public function mockProvider()
+    {
+        $obj = self::getObject();
+        $mockApiContext = $this->getMockBuilder('ApiContext')
+                    ->disableOriginalConstructor()
+                    ->getMock();
+        return array(
+            array($obj, $mockApiContext),
+            array($obj, null)
+        );
     }
 }

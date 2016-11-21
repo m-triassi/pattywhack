@@ -29,13 +29,11 @@ $item1 = new Item();
 $item1->setName('Ground Coffee 40 oz')
     ->setCurrency('USD')
     ->setQuantity(1)
-    ->setSku("123123") // Similar to `item_number` in Classic API
     ->setPrice(7.5);
 $item2 = new Item();
 $item2->setName('Granola bars')
     ->setCurrency('USD')
     ->setQuantity(5)
-    ->setSku("321321") // Similar to `item_number` in Classic API
     ->setPrice(2);
 
 $itemList = new ItemList();
@@ -100,7 +98,6 @@ $request = clone $payment;
 try {
     $payment->create($apiContext);
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", null, $request, $ex);
     exit(1);
 }
@@ -111,7 +108,6 @@ try {
 // method
 $approvalUrl = $payment->getApprovalLink();
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", "<a href='$approvalUrl' >$approvalUrl</a>", $request, $payment);
+ResultPrinter::printResult("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", "<a href='$approvalUrl' >$approvalUrl</a>", $request, $payment);
 
 return $payment;

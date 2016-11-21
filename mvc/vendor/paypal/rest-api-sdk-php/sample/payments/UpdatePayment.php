@@ -81,20 +81,18 @@ $patchRequest->setPatches(array($patchReplace, $patchAdd));
 // (See bootstrap.php for more on `ApiContext`)
 try {
     $result = $createdPayment->update($patchRequest, $apiContext);
+
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Update Payment", "PatchRequest", null, $patchRequest, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Update Payment", "PatchRequest", $payment->getId(), $patchRequest, null);
+ResultPrinter::printResult("Update Payment", "PatchRequest", $payment->getId(), $patchRequest, null);
 
 // ### Getting Updated Payment Object
 if ($result == true) {
     $result = Payment::get($createdPayment->getId(), $apiContext);
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Get Payment", "Payment", $result->getId(), null, $result);
+    ResultPrinter::printResult("Get Payment", "Payment", $result->getId(), null, $result);
 
 
 // ### Get redirect url
@@ -108,8 +106,7 @@ foreach ($result->getLinks() as $link) {
     }
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", "<a href='$approvalUrl' >$approvalUrl</a>", $request, $result);
+ResultPrinter::printResult("Created Payment Using PayPal. Please visit the URL to Approve.", "Payment", "<a href='$approvalUrl' >$approvalUrl</a>", $request, $result);
 }
 
 return $result;

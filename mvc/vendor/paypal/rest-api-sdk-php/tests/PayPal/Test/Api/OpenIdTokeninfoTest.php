@@ -53,6 +53,7 @@ class OpenIdTokeninfoTest extends \PHPUnit_Framework_TestCase
      */
     public function t1estOperations()
     {
+
         $clientId = 'AQkquBDf1zctJOWGKWUEtKXm6qVhueUEMvXO_-MCI4DQQ4-LWvkDLIN2fGsd';
         $clientSecret = 'ELtVxAjhT7cJimnz5-Nsx9k2reTKSVfErNQF-CmrwJgxRtylkGTKlU4RvrX';
 
@@ -73,4 +74,5 @@ class OpenIdTokeninfoTest extends \PHPUnit_Framework_TestCase
         $accessToken = $accessToken->createFromRefreshToken($params);
         $this->assertNotNull($accessToken);
     }
+
 }

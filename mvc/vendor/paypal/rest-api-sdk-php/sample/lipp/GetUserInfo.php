@@ -3,8 +3,8 @@
 // ### Obtain Access Token From Refresh Token
 require __DIR__ . '/../bootstrap.php';
 
-use PayPal\Api\OpenIdTokeninfo;
 use PayPal\Api\OpenIdUserinfo;
+use PayPal\Api\OpenIdTokeninfo;
 
 // To obtain User Info, you have to follow three steps in general.
 // First, you need to obtain user's consent to retrieve the information you want.
@@ -21,16 +21,16 @@ use PayPal\Api\OpenIdUserinfo;
 $refreshToken = 'W1JmxG-Cogm-4aSc5Vlen37XaQTj74aQcQiTtXax5UgY7M_AJ--kLX8xNVk8LtCpmueFfcYlRK6UgQLJ-XHsxpw6kZzPpKKccRQeC4z2ldTMfXdIWajZ6CHuebs';
 
 try {
+
     $tokenInfo = new OpenIdTokeninfo();
     $tokenInfo = $tokenInfo->createFromRefreshToken(array('refresh_token' => $refreshToken), $apiContext);
 
     $params = array('access_token' => $tokenInfo->getAccessToken());
     $userInfo = OpenIdUserinfo::getUserinfo($params, $apiContext);
+
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("User Information", "User Info", null, $params, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("User Information", "User Info", $userInfo->getUserId(), $params, $userInfo);
+ResultPrinter::printResult("User Information", "User Info", $userInfo->getUserId(), $params, $userInfo);

@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\InvoiceAddress;
 
 /**
@@ -63,4 +64,5 @@ class InvoiceAddressTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getState(), "TestSample");
         $this->assertEquals($obj->getPhone(), PhoneTest::getObject());
     }
+
 }

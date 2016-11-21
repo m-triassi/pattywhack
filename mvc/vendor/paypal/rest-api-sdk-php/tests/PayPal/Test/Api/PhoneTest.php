@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\Phone;
 
 /**
@@ -55,4 +56,5 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getNationalNumber(), "TestSample");
         $this->assertEquals($obj->getExtension(), "TestSample");
     }
+
 }

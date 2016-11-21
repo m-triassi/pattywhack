@@ -1,10 +1,11 @@
 <?php
 
 namespace PayPal\Common;
-
+use PayPal\Handler\IPayPalHandler;
 use PayPal\Rest\ApiContext;
 use PayPal\Rest\IResource;
 use PayPal\Transport\PayPalRestCall;
+
 
 /**
  * Class PayPalResourceModel
@@ -102,17 +103,4 @@ class PayPalResourceModel extends PayPalModel implements IResource
         $json = $restCall->execute($handlers, $url, $method, $payLoad, $headers);
         return $json;
     }
-
-    /**
-     * Updates Access Token using long lived refresh token
-     *
-     * @param string|null $refreshToken
-     * @param ApiContext $apiContext
-     * @return void
-     */
-    public function updateAccessToken($refreshToken, $apiContext)
-    {
-        $apiContext = $apiContext ? $apiContext : new ApiContext(self::$credential);
-        $apiContext->getCredential()->updateAccessToken($apiContext->getConfig(), $refreshToken);
-    }
-}
+} 

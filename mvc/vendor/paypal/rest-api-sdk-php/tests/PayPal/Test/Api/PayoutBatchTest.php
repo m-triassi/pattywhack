@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\PayoutBatch;
 
 /**
@@ -53,4 +54,5 @@ class PayoutBatchTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getBatchHeader(), PayoutBatchHeaderTest::getObject());
         $this->assertEquals($obj->getItems(), PayoutItemDetailsTest::getObject());
     }
+
 }

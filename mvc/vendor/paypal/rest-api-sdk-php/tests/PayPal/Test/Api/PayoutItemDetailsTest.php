@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\PayoutItemDetails;
 
 /**
@@ -28,6 +29,7 @@ class PayoutItemDetailsTest extends \PHPUnit_Framework_TestCase
     {
         return new PayoutItemDetails(self::getJson());
     }
+
 
     /**
      * Tests for Serialization and Deserialization Issues
@@ -68,4 +70,5 @@ class PayoutItemDetailsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getErrors(), ErrorTest::getObject());
         $this->assertEquals($obj->getLinks(), LinksTest::getObject());
     }
+
 }

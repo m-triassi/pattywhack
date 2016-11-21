@@ -13,14 +13,11 @@ $baseUrl = getBaseUrl() . '/UserConsentRedirect.php?success=true';
 $redirectUrl = OpenIdSession::getAuthorizationUrl(
     $baseUrl,
     array('openid', 'profile', 'address', 'email', 'phone',
-        'https://uri.paypal.com/services/paypalattributes',
-        'https://uri.paypal.com/services/expresscheckout',
-        'https://uri.paypal.com/services/invoicing'),
+        'https://uri.paypal.com/services/paypalattributes', 'https://uri.paypal.com/services/expresscheckout'),
     null,
     null,
     null,
     $apiContext
 );
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Generated the User Consent URL", "URL", '<a href="'. $redirectUrl . '" >Click Here to Obtain User Consent</a>', $baseUrl, $redirectUrl);
+ResultPrinter::printResult("Generated the User Consent URL", "URL", '<a href="'. $redirectUrl . '" >Click Here to Obtain User Consent</a>', $baseUrl, $redirectUrl);

@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\OverrideChargeModel;
 
 /**
@@ -53,4 +54,5 @@ class OverrideChargeModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getChargeId(), "TestSample");
         $this->assertEquals($obj->getAmount(), CurrencyTest::getObject());
     }
+
 }

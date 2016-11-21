@@ -2,10 +2,14 @@
 
 namespace PayPal\Test\Functional\Api;
 
-use PayPal\Api\CreateProfileResponse;
 use PayPal\Api\Patch;
-use PayPal\Api\WebProfile;
+use PayPal\Common\PayPalModel;
+use PayPal\Rest\ApiContext;
+use PayPal\Rest\IResource;
+use PayPal\Api\CreateProfileResponse;
 use PayPal\Test\Functional\Setup;
+use PayPal\Transport\PayPalRestCall;
+use PayPal\Api\WebProfile;
 
 /**
  * Class WebProfile
@@ -96,6 +100,7 @@ class WebProfileFunctionalTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->operation['response']['body'][0]['presentation']['logo_image'], $foundObject->getPresentation()->getLogoImage());
         $this->assertEquals($this->operation['response']['body'][0]['input_fields']['no_shipping'], $foundObject->getInputFields()->getNoShipping());
         $this->assertEquals($this->operation['response']['body'][0]['input_fields']['address_override'], $foundObject->getInputFields()->getAddressOverride());
+
     }
 
     /**
@@ -144,4 +149,5 @@ class WebProfileFunctionalTest extends \PHPUnit_Framework_TestCase
         $result = $webProfile->delete($this->apiContext, $this->mockPayPalRestCall);
         $this->assertTrue($result);
     }
+
 }

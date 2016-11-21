@@ -12,6 +12,7 @@
 require 'CreatePayment.php';
 use PayPal\Api\Payment;
 
+
 // ### Retrieve payment
 // Retrieve the PaymentHistory object by calling the
 // static `get` method on the Payment class, 
@@ -20,14 +21,13 @@ use PayPal\Api\Payment;
 // Refer the method doc for valid values for keys
 // (See bootstrap.php for more on `ApiContext`)
 try {
+
     $params = array('count' => 10, 'start_index' => 5);
 
     $payments = Payment::all($params, $apiContext);
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("List Payments", "Payment", null, $params, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("List Payments", "Payment", null, $params, $payments);
+ResultPrinter::printResult("List Payments", "Payment", null, $params, $payments);

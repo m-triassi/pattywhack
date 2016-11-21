@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\Payer;
 
 /**
@@ -17,7 +18,7 @@ class PayerTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"payment_method":"TestSample","status":"TestSample","account_type":"TestSample","account_age":"TestSample","funding_instruments":' .FundingInstrumentTest::getJson() . ',"funding_option_id":"TestSample","funding_option":' .FundingOptionTest::getJson() . ',"external_selected_funding_instrument_type":"TestSample","related_funding_option":' .FundingOptionTest::getJson() . ',"payer_info":' .PayerInfoTest::getJson() . '}';
+        return '{"payment_method":"TestSample","status":"TestSample","account_type":"TestSample","account_age":"TestSample","funding_instruments":' .FundingInstrumentTest::getJson() . ',"funding_option_id":"TestSample","funding_option":' .FundingOptionTest::getJson() . ',"related_funding_option":' .FundingOptionTest::getJson() . ',"payer_info":' .PayerInfoTest::getJson() . '}';
     }
 
     /**
@@ -45,7 +46,6 @@ class PayerTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($obj->getFundingInstruments());
         $this->assertNotNull($obj->getFundingOptionId());
         $this->assertNotNull($obj->getFundingOption());
-        $this->assertNotNull($obj->getExternalSelectedFundingInstrumentType());
         $this->assertNotNull($obj->getRelatedFundingOption());
         $this->assertNotNull($obj->getPayerInfo());
         $this->assertEquals(self::getJson(), $obj->toJson());
@@ -65,8 +65,8 @@ class PayerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getFundingInstruments(), FundingInstrumentTest::getObject());
         $this->assertEquals($obj->getFundingOptionId(), "TestSample");
         $this->assertEquals($obj->getFundingOption(), FundingOptionTest::getObject());
-        $this->assertEquals($obj->getExternalSelectedFundingInstrumentType(), "TestSample");
         $this->assertEquals($obj->getRelatedFundingOption(), FundingOptionTest::getObject());
         $this->assertEquals($obj->getPayerInfo(), PayerInfoTest::getObject());
     }
+
 }

@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\PaymentDetail;
 
 /**
@@ -17,7 +18,7 @@ class PaymentDetailTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"type":"TestSample","transaction_id":"TestSample","transaction_type":"TestSample","date":"TestSample","method":"TestSample","note":"TestSample","amount":' .CurrencyTest::getJson() . '}';
+        return '{"type":"TestSample","transaction_id":"TestSample","transaction_type":"TestSample","date":"TestSample","method":"TestSample","note":"TestSample"}';
     }
 
     /**
@@ -44,7 +45,6 @@ class PaymentDetailTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($obj->getDate());
         $this->assertNotNull($obj->getMethod());
         $this->assertNotNull($obj->getNote());
-        $this->assertNotNull($obj->getAmount());
         $this->assertEquals(self::getJson(), $obj->toJson());
         return $obj;
     }
@@ -61,6 +61,6 @@ class PaymentDetailTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getDate(), "TestSample");
         $this->assertEquals($obj->getMethod(), "TestSample");
         $this->assertEquals($obj->getNote(), "TestSample");
-        $this->assertEquals($obj->getAmount(), CurrencyTest::getObject());
     }
+
 }

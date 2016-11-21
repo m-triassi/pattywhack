@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\AgreementStateDescriptor;
 
 /**
@@ -53,4 +54,5 @@ class AgreementStateDescriptorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getNote(), "TestSample");
         $this->assertEquals($obj->getAmount(), CurrencyTest::getObject());
     }
+
 }

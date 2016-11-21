@@ -5,7 +5,15 @@ namespace PayPal\Test\Functional\Api;
 use PayPal\Api\Patch;
 use PayPal\Api\PatchRequest;
 use PayPal\Api\Plan;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Common\PayPalModel;
+use PayPal\Core\PayPalCredentialManager;
+use PayPal\Rest\ApiContext;
+use PayPal\Rest\IResource;
+use PayPal\Api\CreateProfileResponse;
 use PayPal\Test\Functional\Setup;
+use PayPal\Transport\PayPalRestCall;
+use PayPal\Api\WebProfile;
 
 /**
  * Class Billing Plans
@@ -128,10 +136,12 @@ class BillingPlansFunctionalTest extends \PHPUnit_Framework_TestCase
             }
             if (!$found) {
                 $result = Plan::all(array('page' => --$totalPages, 'page_size' => '20', 'total_required' => 'yes'), $this->apiContext, $this->mockPayPalRestCall);
+
             }
         } while ($totalPages > 0 && $found == false);
         $this->assertTrue($found, "The Created Plan was not found in the get list");
         $this->assertEquals($plan->getId(), $foundObject->getId());
+
     }
 
     /**

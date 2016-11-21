@@ -27,11 +27,12 @@ use PayPal\Common\PayPalModel;
  * @property string tax_id_type
  * @property string country_code
  * @property \PayPal\Api\Address billing_address
+ * @property \PayPal\Api\ShippingAddress shipping_address
  */
 class PayerInfo extends PayPalModel
 {
     /**
-     * Email address representing the payer. 127 characters max.
+     * Email address representing the Payer.
      *
      * @param string $email
      * 
@@ -44,7 +45,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Email address representing the payer. 127 characters max.
+     * Email address representing the Payer.
      *
      * @return string
      */
@@ -54,7 +55,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * External Remember Me id representing the payer
+     * External Remember Me id representing the Payer
      *
      * @param string $external_remember_me_id
      * 
@@ -67,40 +68,13 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * External Remember Me id representing the payer
+     * External Remember Me id representing the Payer
      *
      * @return string
      */
     public function getExternalRememberMeId()
     {
         return $this->external_remember_me_id;
-    }
-
-    /**
-     * Account Number representing the Payer
-     *
-     * @deprecated Use #setBuyerAccountNumberInstead
-     * @param string $account_number
-     *
-     * @return $this
-     */
-    public function setAccountNumber($account_number)
-    {
-        $this->account_number = $account_number;
-        return $this;
-    }
-
-    /**
-     * Account Number representing the Payer
-     *
-     * @deprecated Use #getBuyerAccountNumberInstead
-     *
-     * @deprecated Not publicly available
-     * @return string
-     */
-    public function getAccountNumber()
-    {
-        return $this->account_number;
     }
 
     /**
@@ -127,7 +101,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Salutation of the payer.
+     * Salutation of the Payer.
      *
      * @param string $salutation
      * 
@@ -140,7 +114,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Salutation of the payer.
+     * Salutation of the Payer.
      *
      * @return string
      */
@@ -150,7 +124,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * First name of the payer.
+     * First Name of the Payer.
      *
      * @param string $first_name
      * 
@@ -163,7 +137,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * First name of the payer.
+     * First Name of the Payer.
      *
      * @return string
      */
@@ -173,7 +147,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Middle name of the payer.
+     * Middle Name of the Payer.
      *
      * @param string $middle_name
      * 
@@ -186,7 +160,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Middle name of the payer.
+     * Middle Name of the Payer.
      *
      * @return string
      */
@@ -196,7 +170,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Last name of the payer.
+     * Last Name of the Payer.
      *
      * @param string $last_name
      * 
@@ -209,7 +183,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Last name of the payer.
+     * Last Name of the Payer.
      *
      * @return string
      */
@@ -219,7 +193,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Suffix of the payer.
+     * Suffix of the Payer.
      *
      * @param string $suffix
      * 
@@ -232,7 +206,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Suffix of the payer.
+     * Suffix of the Payer.
      *
      * @return string
      */
@@ -242,7 +216,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * PayPal assigned encrypted Payer ID.
+     * PayPal assigned Payer ID.
      *
      * @param string $payer_id
      * 
@@ -255,7 +229,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * PayPal assigned encrypted Payer ID.
+     * PayPal assigned Payer ID.
      *
      * @return string
      */
@@ -265,7 +239,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Phone number representing the payer. 20 characters max.
+     * Phone number representing the Payer.
      *
      * @param string $phone
      * 
@@ -278,7 +252,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Phone number representing the payer. 20 characters max.
+     * Phone number representing the Payer.
      *
      * @return string
      */
@@ -335,7 +309,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Payer’s tax ID. Only supported when the `payment_method` is set to `paypal`.
+     * Payer's tax ID.
      *
      * @param string $tax_id
      * 
@@ -348,7 +322,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Payer’s tax ID. Only supported when the `payment_method` is set to `paypal`.
+     * Payer's tax ID.
      *
      * @return string
      */
@@ -358,7 +332,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Payer’s tax ID type. Allowed values: `BR_CPF` or `BR_CNPJ`. Only supported when the `payment_method` is set to `paypal`.
+     * Payer's tax ID type.
      * Valid Values: ["BR_CPF", "BR_CNPJ"]
      *
      * @param string $tax_id_type
@@ -372,7 +346,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Payer’s tax ID type. Allowed values: `BR_CPF` or `BR_CNPJ`. Only supported when the `payment_method` is set to `paypal`.
+     * Payer's tax ID type.
      *
      * @return string
      */
@@ -382,7 +356,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Two-letter registered country code of the payer to identify the buyer country.
+     * 2 letter registered country code of the payer to identify the buyer country
      *
      * @param string $country_code
      * 
@@ -395,7 +369,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * Two-letter registered country code of the payer to identify the buyer country.
+     * 2 letter registered country code of the payer to identify the buyer country
      *
      * @return string
      */
@@ -428,7 +402,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * @deprecated [DEPRECATED] Use shipping address present in purchase unit or at root level of checkout Session.
+     * Obsolete. Use shipping address present in purchase unit.
      *
      * @param \PayPal\Api\ShippingAddress $shipping_address
      * 
@@ -441,7 +415,7 @@ class PayerInfo extends PayPalModel
     }
 
     /**
-     * @deprecated  [DEPRECATED] Use shipping address present in purchase unit or at root level of checkout Session.
+     * Obsolete. Use shipping address present in purchase unit.
      *
      * @return \PayPal\Api\ShippingAddress
      */

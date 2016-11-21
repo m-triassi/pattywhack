@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\ShippingInfo;
 
 /**
@@ -57,4 +58,5 @@ class ShippingInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getBusinessName(), "TestSample");
         $this->assertEquals($obj->getAddress(), AddressTest::getObject());
     }
+
 }

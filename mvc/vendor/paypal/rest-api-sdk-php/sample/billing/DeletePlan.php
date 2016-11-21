@@ -15,12 +15,10 @@ use PayPal\Api\Plan;
 try {
     $result = $createdPlan->delete($apiContext);
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Deleted a Plan", "Plan", $createdPlan->getId(), null, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Deleted a Plan", "Plan", $createdPlan->getId(), null, null);
+ResultPrinter::printResult("Deleted a Plan", "Plan", $createdPlan->getId(), null, null);
 
 return $createdPlan;

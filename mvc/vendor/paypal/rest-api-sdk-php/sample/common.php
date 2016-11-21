@@ -1,8 +1,16 @@
 <?php
 
 /*
-    Common functions used across samples
+	Common functions used across samples
 */
+
+use PayPal\Api\Address;
+use PayPal\Api\CreditCard;
+use PayPal\Api\Amount;
+use PayPal\Api\Payer;
+use PayPal\Api\Payment;
+use PayPal\Api\Transaction;
+use PayPal\Api\FundingInstrument;
 
 /**
  * Helper Class for Printing Results
@@ -41,6 +49,7 @@ class ResultPrinter
             self::printConsoleObject($response, $errorMessage);
             printf("\n-------------------------------------------------------------\n\n");
         } else {
+
             if (self::$printResultCounter == 0) {
                 include "header.html";
                 echo '

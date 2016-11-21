@@ -24,6 +24,7 @@ class PayPalHttpConfigTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+
     }
 
     /**
@@ -134,3 +135,5 @@ class PayPalHttpConfigTest extends \PHPUnit_Framework_TestCase
         $o->setHttpProxy('invalid string');
     }
 }
+
+?>

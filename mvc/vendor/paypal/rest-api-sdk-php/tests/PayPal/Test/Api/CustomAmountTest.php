@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\CustomAmount;
 
 /**
@@ -53,4 +54,5 @@ class CustomAmountTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getLabel(), "TestSample");
         $this->assertEquals($obj->getAmount(), CurrencyTest::getObject());
     }
+
 }

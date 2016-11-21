@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\BillingInfo;
 
 /**
@@ -67,4 +68,5 @@ class BillingInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getNotificationChannel(), "TestSample");
         $this->assertEquals($obj->getPhone(), PhoneTest::getObject());
     }
+
 }

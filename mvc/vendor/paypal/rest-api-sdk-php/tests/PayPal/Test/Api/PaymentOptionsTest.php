@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\PaymentOptions;
 
 /**
@@ -17,7 +18,7 @@ class PaymentOptionsTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"allowed_payment_method":"TestSample","recurring_flag":true,"skip_fmf":true}';
+        return '{"allowed_payment_method":"TestSample"}';
     }
 
     /**
@@ -39,8 +40,6 @@ class PaymentOptionsTest extends \PHPUnit_Framework_TestCase
         $obj = new PaymentOptions(self::getJson());
         $this->assertNotNull($obj);
         $this->assertNotNull($obj->getAllowedPaymentMethod());
-        $this->assertNotNull($obj->getRecurringFlag());
-        $this->assertNotNull($obj->getSkipFmf());
         $this->assertEquals(self::getJson(), $obj->toJson());
         return $obj;
     }
@@ -52,7 +51,5 @@ class PaymentOptionsTest extends \PHPUnit_Framework_TestCase
     public function testGetters($obj)
     {
         $this->assertEquals($obj->getAllowedPaymentMethod(), "TestSample");
-        $this->assertEquals($obj->getRecurringFlag(), true);
-        $this->assertEquals($obj->getSkipFmf(), true);
     }
 }

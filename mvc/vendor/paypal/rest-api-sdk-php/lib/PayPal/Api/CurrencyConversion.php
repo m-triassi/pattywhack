@@ -19,6 +19,7 @@ use PayPal\Validation\UrlValidator;
  * @property string to_amount
  * @property string conversion_type
  * @property bool conversion_type_changeable
+ * @property string web_url
  * @property \PayPal\Api\Links[] links
  */
 class CurrencyConversion extends PayPalModel
@@ -188,7 +189,7 @@ class CurrencyConversion extends PayPalModel
     /**
      * Base URL to web applications endpoint
      * Valid Values: ["https://www.paypal.com/{country_code}/webapps/xocspartaweb/webflow/sparta/proxwebflow", "https://www.paypal.com/{country_code}/proxflow"]
-     * @deprecated Not publicly available
+     *
      * @param string $web_url
      * @throws \InvalidArgumentException
      * @return $this
@@ -202,7 +203,7 @@ class CurrencyConversion extends PayPalModel
 
     /**
      * Base URL to web applications endpoint
-     * @deprecated Not publicly available
+     *
      * @return string
      */
     public function getWebUrl()

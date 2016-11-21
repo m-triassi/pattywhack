@@ -72,12 +72,10 @@ $request = clone $bankAccount;
 try {
     $bankAccount->create($apiContext);
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Create Bank Account", "Bank Account", null, $request, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Create Bank Account", "Bank Account", $bankAccount->getId(), $request, $bankAccount);
+ResultPrinter::printResult("Create Bank Account", "Bank Account", $bankAccount->getId(), $request, $bankAccount);
 
 return $bankAccount;

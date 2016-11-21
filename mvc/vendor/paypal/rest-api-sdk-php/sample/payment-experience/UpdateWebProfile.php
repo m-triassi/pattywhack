@@ -21,10 +21,8 @@ try {
         $updatedWebProfile = \PayPal\Api\WebProfile::get($webProfile->getId(), $apiContext);
     }
 } catch (\Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Updated Web Profile", "Web Profile", $webProfile->getId(), $webProfile, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Updated Web Profile", "Web Profile", $updatedWebProfile->getId(), $webProfile, $updatedWebProfile);
+ResultPrinter::printResult("Updated Web Profile", "Web Profile", $updatedWebProfile->getId(), $webProfile, $updatedWebProfile);

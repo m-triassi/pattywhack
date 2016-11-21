@@ -7,6 +7,7 @@
 $invoice = require 'SendInvoice.php';
 
 use PayPal\Api\Invoice;
+use PayPal\Api\Notification;
 
 try {
 
@@ -23,17 +24,18 @@ try {
     // 'saveToFile' method with proper file name.
     // This will save the image as /samples/invoice/images/sample.png
     $path = $image->saveToFile("images/sample.png");
+
+
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Retrieved QR Code for Invoice", "Invoice", $invoice->getId(), null, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Retrieved QR Code for Invoice", "Invoice", $invoice->getId(), null, $image);
+ResultPrinter::printResult("Retrieved QR Code for Invoice", "Invoice", $invoice->getId(), null, $image);
 
 // ### Show the Image
 // In PHP, there are many ways to present an images.
 // One of the ways, you could directly inject the base64-encoded string
 // with proper image information in front of it.
 echo '<img src="data:image/png;base64,'. $image->getImage() . '" alt="Invoice QR Code" />';
+

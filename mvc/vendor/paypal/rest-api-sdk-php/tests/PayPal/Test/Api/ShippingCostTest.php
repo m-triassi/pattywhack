@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\ShippingCost;
 
 /**
@@ -53,4 +54,5 @@ class ShippingCostTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getAmount(), CurrencyTest::getObject());
         $this->assertEquals($obj->getTax(), TaxTest::getObject());
     }
+
 }

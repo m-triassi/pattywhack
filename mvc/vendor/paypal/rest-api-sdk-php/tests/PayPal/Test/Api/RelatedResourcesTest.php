@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\RelatedResources;
 
 /**
@@ -17,7 +18,7 @@ class RelatedResourcesTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"sale":' . SaleTest::getJson() . ',"authorization":' . AuthorizationTest::getJson() . ',"order":' . OrderTest::getJson() . ',"capture":' . CaptureTest::getJson() . ',"refund":' . RefundTest::getJson() . '}';
+        return '{}';
     }
 
     /**
@@ -38,11 +39,6 @@ class RelatedResourcesTest extends \PHPUnit_Framework_TestCase
     {
         $obj = new RelatedResources(self::getJson());
         $this->assertNotNull($obj);
-        $this->assertNotNull($obj->getSale());
-        $this->assertNotNull($obj->getAuthorization());
-        $this->assertNotNull($obj->getOrder());
-        $this->assertNotNull($obj->getCapture());
-        $this->assertNotNull($obj->getRefund());
         $this->assertEquals(self::getJson(), $obj->toJson());
         return $obj;
     }
@@ -53,10 +49,6 @@ class RelatedResourcesTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetters($obj)
     {
-        $this->assertEquals($obj->getSale(), SaleTest::getObject());
-        $this->assertEquals($obj->getAuthorization(), AuthorizationTest::getObject());
-        $this->assertEquals($obj->getOrder(), OrderTest::getObject());
-        $this->assertEquals($obj->getCapture(), CaptureTest::getObject());
-        $this->assertEquals($obj->getRefund(), RefundTest::getObject());
     }
+
 }

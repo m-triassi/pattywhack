@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\Payee;
 
 /**
@@ -17,7 +18,7 @@ class PayeeTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"email":"TestSample","merchant_id":"TestSample","first_name":"TestSample","last_name":"TestSample","account_number":"TestSample","phone":' .PhoneTest::getJson() . '}';
+        return '{"email":"TestSample","merchant_id":"TestSample"}';
     }
 
     /**
@@ -40,10 +41,6 @@ class PayeeTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($obj);
         $this->assertNotNull($obj->getEmail());
         $this->assertNotNull($obj->getMerchantId());
-        $this->assertNotNull($obj->getFirstName());
-        $this->assertNotNull($obj->getLastName());
-        $this->assertNotNull($obj->getAccountNumber());
-        $this->assertNotNull($obj->getPhone());
         $this->assertEquals(self::getJson(), $obj->toJson());
         return $obj;
     }
@@ -56,9 +53,5 @@ class PayeeTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($obj->getEmail(), "TestSample");
         $this->assertEquals($obj->getMerchantId(), "TestSample");
-        $this->assertEquals($obj->getFirstName(), "TestSample");
-        $this->assertEquals($obj->getLastName(), "TestSample");
-        $this->assertEquals($obj->getAccountNumber(), "TestSample");
-        $this->assertEquals($obj->getPhone(), PhoneTest::getObject());
     }
 }

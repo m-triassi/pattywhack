@@ -18,7 +18,7 @@ class PatchTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"op":"TestSample","path":"TestSample","value":"TestSample","from":"TestSample"}';
+        return '{"op":"TestSample","path":"TestSample","value":"TestSampleObject","from":"TestSample"}';
     }
 
     /**
@@ -55,9 +55,8 @@ class PatchTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals($obj->getOp(), "TestSample");
         $this->assertEquals($obj->getPath(), "TestSample");
-        $this->assertEquals($obj->getValue(), "TestSample");
+        $this->assertEquals($obj->getValue(), "TestSampleObject");
         $this->assertEquals($obj->getFrom(), "TestSample");
     }
-
 
 }

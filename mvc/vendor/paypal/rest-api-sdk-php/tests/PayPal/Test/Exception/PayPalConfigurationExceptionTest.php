@@ -34,3 +34,5 @@ class PayPalConfigurationExceptionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Test PayPalConfigurationException', $this->object->getMessage());
     }
 }
+
+?>

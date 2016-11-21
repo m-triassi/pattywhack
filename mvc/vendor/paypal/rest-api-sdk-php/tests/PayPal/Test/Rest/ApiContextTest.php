@@ -21,16 +21,17 @@ class ApiContextTest extends PHPUnit_Framework_TestCase
 
     public function testGetRequestId()
     {
-        $requestId = $this->apiContext->getRequestId();
+        $requestId = $this->apiContext->getrequestId();
         $this->assertNotNull($requestId);
-        $this->assertEquals($requestId, $this->apiContext->getRequestId());
+        $this->assertEquals($requestId, $this->apiContext->getrequestId());
     }
 
     public function testResetRequestId()
     {
-        $requestId = $this->apiContext->getRequestId();
+        $requestId = $this->apiContext->getrequestId();
         $newRequestId = $this->apiContext->resetRequestId();
         $this->assertNotNull($newRequestId);
         $this->assertNotEquals($newRequestId, $requestId);
     }
+
 }

@@ -1,7 +1,6 @@
 <?php
 
 namespace PayPal\Common;
-
 use PayPal\Validation\JsonValidator;
 use PayPal\Validation\ModelAccessorValidator;
 
@@ -59,7 +58,7 @@ class PayPalModel
     }
 
     /**
-     * Returns a list of Object from Array or Json String. It is generally used when your json
+     * Returns a list of Object from Array or Json String. It is generally used when you json
      * contains an array of this object
      *
      * @param mixed $data Array object or json string representation
@@ -67,40 +66,21 @@ class PayPalModel
      */
     public static function getList($data)
     {
-        // Return Null if Null
-        if ($data === null) {
-            return null;
+        if (!is_array($data) && JsonValidator::validate($data)) {
+            //Convert to Array if Json Data Sent
+            $data = json_decode($data, true);
         }
-
-        if (is_a($data, get_class(new \stdClass()))) {
-            //This means, root element is object
-            return new static(json_encode($data));
-        }
-
-        $list = array();
-
-        if (is_array($data)) {
-            $data = json_encode($data);
-        }
-
-        if (JsonValidator::validate($data)) {
-            // It is valid JSON
-            $decoded = json_decode($data);
-            if ($decoded === null) {
-                return $list;
+        if (!ArrayUtil::isAssocArray($data)) {
+            $list = array();
+            //This means, root element is array
+            foreach ($data as $k => $v) {
+                $obj = new static;
+                $obj->fromArray($v);
+                $list[] = $obj;
             }
-            if (is_array($decoded)) {
-                foreach ($decoded as $k => $v) {
-                    $list[] = self::getList($v);
-                }
-            }
-            if (is_a($decoded, get_class(new \stdClass()))) {
-                //This means, root element is object
-                $list[] = new static(json_encode($decoded));
-            }
+            return $list;
         }
-
-        return $list;
+        return array();
     }
 
     /**
@@ -125,7 +105,8 @@ class PayPalModel
      */
     public function __set($key, $value)
     {
-        if (!is_array($value) && $value === null) {
+        ModelAccessorValidator::validate($this, $this->convertToCamelCase($key));
+        if (!is_array($value) && $value == null) {
             $this->__unset($key);
         } else {
             $this->_propMap[$key] = $value;
@@ -176,9 +157,9 @@ class PayPalModel
         foreach ($param as $k => $v) {
             if ($v instanceof PayPalModel) {
                 $ret[$k] = $v->toArray();
-            } elseif (sizeof($v) <= 0 && is_array($v)) {
+            } else if (sizeof($v) <= 0 && is_array($v)) {
                 $ret[$k] = array();
-            } elseif (is_array($v)) {
+            } else if (is_array($v)) {
                 $ret[$k] = $this->_convertToArray($v);
             } else {
                 $ret[$k] = $v;
@@ -207,9 +188,9 @@ class PayPalModel
                 // If the value is an array, it means, it is an object after conversion
                 if (is_array($v)) {
                     // Determine the class of the object
-                    if (($clazz = ReflectionUtil::getPropertyClass(get_class($this), $k)) != null) {
+                    if (($clazz = ReflectionUtil::getPropertyClass(get_class($this), $k)) != null){
                         // If the value is an associative array, it means, its an object. Just make recursive call to it.
-                        if (empty($v)) {
+                        if (empty($v)){
                             if (ReflectionUtil::isPropertyClassArray(get_class($this), $k)) {
                                 // It means, it is an array of objects.
                                 $this->assignValue($k, array());
@@ -251,9 +232,9 @@ class PayPalModel
 
     private function assignValue($key, $value)
     {
-        $setter = 'set'. $this->convertToCamelCase($key);
-        // If we find the setter, use that, otherwise use magic method.
-        if (method_exists($this, $setter)) {
+        // If we find the getter setter, use that, otherwise use magic method.
+        if (ModelAccessorValidator::validate($this, $this->convertToCamelCase($key))) {
+            $setter = "set" . $this->convertToCamelCase($key);
             $this->$setter($value);
         } else {
             $this->__set($key, $value);

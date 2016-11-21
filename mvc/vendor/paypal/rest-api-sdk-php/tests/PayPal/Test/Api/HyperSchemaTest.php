@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\HyperSchema;
 
 /**
@@ -61,4 +62,5 @@ class HyperSchemaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getPathStart(), "TestSample");
         $this->assertEquals($obj->getMediaType(), "TestSample");
     }
+
 }

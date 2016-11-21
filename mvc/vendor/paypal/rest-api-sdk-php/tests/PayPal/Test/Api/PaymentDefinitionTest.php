@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\PaymentDefinition;
 
 /**
@@ -65,4 +66,5 @@ class PaymentDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getAmount(), CurrencyTest::getObject());
         $this->assertEquals($obj->getChargeModels(), ChargeModelTest::getObject());
     }
+
 }

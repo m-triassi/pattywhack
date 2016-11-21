@@ -12,12 +12,10 @@ $apiContext = require __DIR__ . '/../bootstrap.php';
 try {
     $output = \PayPal\Api\WebhookEventType::availableEventTypes($apiContext);
 } catch (Exception $ex) {
-    // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
     ResultPrinter::printError("Get List of All Webhook Event Types", "WebhookEventTypeList", null, null, $ex);
     exit(1);
 }
 
-// NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
- ResultPrinter::printResult("Get List of All Webhook Event Types", "WebhookEventTypeList", null, null, $output);
+ResultPrinter::printResult("Get List of All Webhook Event Types", "WebhookEventTypeList", null, null, $output);
 
 return $output;

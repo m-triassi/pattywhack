@@ -2,7 +2,12 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalResourceModel;
+use PayPal\Validation\ArgumentValidator;
+use PayPal\Api\Capture;
 use PayPal\Api\Authorization;
+use PayPal\Rest\ApiContext;
+use PayPal\Transport\PPRestCall;
 use PayPal\Api\Order;
 
 /**
@@ -18,7 +23,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
      */
     public static function getJson()
     {
-        return '{"id":"TestSample","reference_id":"TestSample","amount":' .AmountTest::getJson() . ',"payment_mode":"TestSample","state":"TestSample","reason_code":"TestSample","pending_reason":"TestSample","protection_eligibility":"TestSample","protection_eligibility_type":"TestSample","parent_payment":"TestSample","fmf_details":' .FmfDetailsTest::getJson() . ',"create_time":"TestSample","update_time":"TestSample","links":' .LinksTest::getJson() . '}';
+        return '{"id":"TestSample","purchase_unit_reference_id":"TestSample","amount":' .AmountTest::getJson() . ',"payment_mode":"TestSample","state":"TestSample","reason_code":"TestSample","pending_reason":"TestSample","protection-eligibility":"TestSample","protection-eligibility_type":"TestSample","parent_payment":"TestSample","fmf_details":' .FmfDetailsTest::getJson() . ',"create_time":"TestSample","update_time":"TestSample","links":' .LinksTest::getJson() . '}';
     }
 
     /**
@@ -40,7 +45,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $obj = new Order(self::getJson());
         $this->assertNotNull($obj);
         $this->assertNotNull($obj->getId());
-        $this->assertNotNull($obj->getReferenceId());
+        $this->assertNotNull($obj->getPurchaseUnitReferenceId());
         $this->assertNotNull($obj->getAmount());
         $this->assertNotNull($obj->getPaymentMode());
         $this->assertNotNull($obj->getState());
@@ -64,7 +69,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
     public function testGetters($obj)
     {
         $this->assertEquals($obj->getId(), "TestSample");
-        $this->assertEquals($obj->getReferenceId(), "TestSample");
+        $this->assertEquals($obj->getPurchaseUnitReferenceId(), "TestSample");
         $this->assertEquals($obj->getAmount(), AmountTest::getObject());
         $this->assertEquals($obj->getPaymentMode(), "TestSample");
         $this->assertEquals($obj->getState(), "TestSample");
@@ -78,6 +83,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getUpdateTime(), "TestSample");
         $this->assertEquals($obj->getLinks(), LinksTest::getObject());
     }
+
 
     /**
      * @dataProvider mockProvider

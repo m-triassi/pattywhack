@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\Links;
 
 /**
@@ -61,4 +62,5 @@ class LinksTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getEnctype(), "TestSample");
         $this->assertEquals($obj->getSchema(), HyperSchemaTest::getObject());
     }
+
 }

@@ -28,7 +28,7 @@ class ApiContext
      * This is a placeholder for holding credential for the request
      * If the value is not set, it would get the value from @\PayPal\Core\PayPalCredentialManager
      *
-     * @var \PayPal\Auth\OAuthTokenCredential
+     * @var \Paypal\Auth\OAuthTokenCredential
      */
     private $credential;
 
@@ -83,7 +83,7 @@ class ApiContext
      *
      * @return string
      */
-    public function getRequestId()
+    public function getrequestId()
     {
         if ($this->requestId == null) {
             $this->requestId = $this->generateRequestId();
@@ -102,7 +102,7 @@ class ApiContext
     public function resetRequestId()
     {
         $this->requestId = $this->generateRequestId();
-        return $this->getRequestId();
+        return $this->getrequestId();
     }
 
     /**

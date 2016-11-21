@@ -23,6 +23,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
         $newO = new SimpleClass();
         $newO->fromJson($json);
         $this->assertEquals($o, $newO);
+
     }
 
     public function testConstructorJSON()
@@ -67,6 +68,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals("test", $obj->getName());
         $this->assertEquals("description", $obj->getDescription());
+
     }
 
     public function testSimpleClassObjectInvalidConversion()
@@ -81,6 +83,20 @@ class ModelTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals("description", $obj->getDescription());
         } catch (\PHPUnit_Framework_Error_Notice $ex) {
             // No need to do anything
+        }
+    }
+
+    public function testInvalidMagicMethod()
+    {
+        $obj = new SimpleClass();
+        try {
+            $obj->invalid = "value2";
+            $this->assertEquals($obj->invalid, "value2");
+            if (PayPalConfigManager::getInstance()->get('validation.level') == 'strict') {
+                $this->fail("It should have thrown a Notice Error");
+            }
+        } catch (\PHPUnit_Framework_Error_Notice $ex) {
+
         }
     }
 

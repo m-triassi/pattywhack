@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\ErrorDetails;
 
 /**
@@ -13,7 +14,6 @@ class ErrorDetailsTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Gets Json String of Object ErrorDetails
-     *
      * @return string
      */
     public static function getJson()
@@ -23,7 +23,6 @@ class ErrorDetailsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Gets Object Instance with Json data filled in
-     *
      * @return ErrorDetails
      */
     public static function getObject()
@@ -34,7 +33,6 @@ class ErrorDetailsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests for Serialization and Deserialization Issues
-     *
      * @return ErrorDetails
      */
     public function testSerializationDeserialization()
@@ -60,4 +58,5 @@ class ErrorDetailsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getPurchaseUnitReferenceId(), "TestSample");
         $this->assertEquals($obj->getCode(), "TestSample");
     }
+
 }

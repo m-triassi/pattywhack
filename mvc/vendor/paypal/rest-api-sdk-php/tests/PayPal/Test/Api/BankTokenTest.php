@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\BankToken;
 
 /**
@@ -55,4 +56,5 @@ class BankTokenTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getExternalCustomerId(), "TestSample");
         $this->assertEquals($obj->getMandateReferenceNumber(), "TestSample");
     }
+
 }

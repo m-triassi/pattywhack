@@ -2,6 +2,7 @@
 
 namespace PayPal\Test\Api;
 
+use PayPal\Common\PayPalModel;
 use PayPal\Api\Tax;
 
 /**
@@ -57,4 +58,5 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($obj->getPercent(), "12.34");
         $this->assertEquals($obj->getAmount(), CurrencyTest::getObject());
     }
+
 }
