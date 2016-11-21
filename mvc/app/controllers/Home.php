@@ -31,7 +31,11 @@ class Home extends Controller{
 	}
     
     public function shipping(){
-		$this->view('home/shipping');
+        
+        $_SESSION['budget'] = $_POST['budget'];
+        $_SESSION['MPPI']  = $_POST['points'];
+        $this->view('home/shipping');
+        
 	}
 
     public function confirmOrder(){
