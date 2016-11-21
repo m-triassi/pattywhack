@@ -24,7 +24,7 @@
 
 <body style="display:none;" class="homebody">
 
-    <form method="POST" class="registerform" action="../home/insertOrder" >
+    <form method="POST" class="registerformclose" action="../home/insertOrder" >
         
         <div class="well table-responsive"  style="color: black;">
             <h2>Your Invoice</h2> <br/>
