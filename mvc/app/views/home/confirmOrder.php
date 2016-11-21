@@ -31,7 +31,7 @@
             <table class="table">
                 <tr>
                     <th><p>Username:</p></th> 
-                    <td><span name="user">#VALUE</span></td>
+                    <td><span name="user" ><?php if(!empty($_SESSION['user']))echo $_SESSION['user']; ?></span></td>
                 </tr>
                 
                 <tr>

@@ -336,9 +336,10 @@ class Home extends Controller{
 				$title = $this->innerHTML($span);
 				$title = trim($title);
 				$price = null;
-				if($catchCat !== 13){
+				if($catchCat !== 11){
 				$priceSubstring = substr($dom, strpos($dom,"<span id=\"priceblock_ourprice\" class=\"a-size-medium a-color-price\">"));
 				$priceTag = rtrim(substr($priceSubstring, 0,strpos($priceSubstring,"</span>")), " \t\n\r\0\x0B");
+
 					$dochtml = new DOMDocument();
 					$dochtml->loadHTML($priceTag);
 					$span = $dochtml->getElementById('priceblock_ourprice');

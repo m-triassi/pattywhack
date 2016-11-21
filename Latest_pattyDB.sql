@@ -116,7 +116,7 @@ CREATE TABLE `preference` (
   `preference_id` int(11) NOT NULL AUTO_INCREMENT,
   `preference_category` varchar(50) COLLATE latin1_bin NOT NULL,
   PRIMARY KEY (`preference_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -125,6 +125,7 @@ CREATE TABLE `preference` (
 
 LOCK TABLES `preference` WRITE;
 /*!40000 ALTER TABLE `preference` DISABLE KEYS */;
+INSERT INTO `preference` VALUES (1,'Appliances'),(2,'Automotive'),(3,'Baby'),(4,'Electronics'),(5,'Furniture'),(6,'Beauty'),(7,'Home'),(8,'Jewellery'),(9,'Office'),(10,'Fitness'),(11,'Books'),(12,'Software'),(13,'Video Games'),(14,'Clothing'),(15,'Sports'),(16,'Automotive'),(17,'Cameras'),(18,'Cell Phones'),(19,'Collectibles'),(20,'Movies'),(21,'Instruments'),(22,'Toys'),(23,'Random');
 /*!40000 ALTER TABLE `preference` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,10 +168,10 @@ CREATE TABLE `product` (
   `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_name` varchar(50) COLLATE latin1_bin NOT NULL,
   `url` varchar(4000) COLLATE latin1_bin NOT NULL,
-  `unit_price` int(11) NOT NULL,
-  `product_size` varchar(30) COLLATE latin1_bin NOT NULL,
-  `item_shipping_cost` int(11) NOT NULL,
-  `availability` int(11) NOT NULL,
+  `unit_price` double(11,2) NOT NULL,
+  `product_size` varchar(30) COLLATE latin1_bin DEFAULT NULL,
+  `item_shipping_cost` double(11,2) NOT NULL,
+  `availability` int(11) NOT NULL DEFAULT '4',
   `category_id` int(11) NOT NULL,
   `provider_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`),
@@ -180,7 +181,7 @@ CREATE TABLE `product` (
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`availability`) REFERENCES `status` (`status_id`),
   CONSTRAINT `product_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `preference` (`preference_id`),
   CONSTRAINT `product_ibfk_3` FOREIGN KEY (`provider_id`) REFERENCES `provider` (`provider_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,6 +190,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (3,'The Legend of Zelda: Art &amp; Artifacts','https%3A%2F%2Fwww.amazon.ca%2Fgp%2Fproduct%2F1506703356%2Fref%3Ds9_zwish_hd_bw_b3qQa_g14_i1%3Fpf_rd_m%3DA3DWYIK6Y9EEQB%26pf_rd_s%3Dmerchandised-search-6%26pf_rd_r%3DJGVTC5Z1GKNYAEX8EV6S%26pf_rd_t%3D101%26pf_rd_p%3D3fd3ec9d-e1cb-5f5f-86ac-9d461300eccc%26pf_rd_i%3D916520',32.00,NULL,3.00,4,11,1);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,7 +205,7 @@ CREATE TABLE `provider` (
   `provider_id` int(11) NOT NULL AUTO_INCREMENT,
   `provider_name` varchar(30) COLLATE latin1_bin NOT NULL,
   PRIMARY KEY (`provider_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,6 +214,7 @@ CREATE TABLE `provider` (
 
 LOCK TABLES `provider` WRITE;
 /*!40000 ALTER TABLE `provider` DISABLE KEYS */;
+INSERT INTO `provider` VALUES (1,'Amazon'),(2,'EBAY'),(3,'EBid'),(4,'RandomProvider');
 /*!40000 ALTER TABLE `provider` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +263,7 @@ CREATE TABLE `request` (
   PRIMARY KEY (`request_id`),
   KEY `status_id` (`status_id`),
   CONSTRAINT `request_ibfk_1` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,7 +272,7 @@ CREATE TABLE `request` (
 
 LOCK TABLES `request` WRITE;
 /*!40000 ALTER TABLE `request` DISABLE KEYS */;
-INSERT INTO `request` VALUES (1,'https://www.amazon.ca/Asus-Transformer-T100HA-DH11T-CA-10-1-Inch-Laptop/dp/B0186SN2PC/ref=sr_1_1?s=pc&ie=UTF8&qid=1479486615&sr=1-1&keywords=convertible',2);
+INSERT INTO `request` VALUES (1,'https://www.amazon.ca/Asus-Transformer-T100HA-DH11T-CA-10-1-Inch-Laptop/dp/B0186SN2PC/ref=sr_1_1?s=pc&ie=UTF8&qid=1479486615&sr=1-1&keywords=convertible',2),(2,'https%3A%2F%2Fwww.amazon.ca%2Fgp%2Fproduct%2F1506703356%2Fref%3Ds9_zwish_hd_bw_b3qQa_g14_i1%3Fpf_rd_m%3DA3DWYIK6Y9EEQB%26pf_rd_s%3Dmerchandised-search-6%26pf_rd_r%3DJGVTC5Z1GKNYAEX8EV6S%26pf_rd_t%3D101%26pf_rd_p%3D3fd3ec9d-e1cb-5f5f-86ac-9d461300eccc%26pf_rd_i%3D916520',6),(3,'https%3A%2F%2Fwww.amazon.ca%2FPlaytex-Diaper-Genie-Disposal-System%2Fdp%2FB00LCR1KZO%2Fref%3Dgbph_img_m-6_7b56_e18c27a8%3Fsmid%3DA3DWYIK6Y9EEQB%26pf_rd_p%3Def10e933-94dc-4f20-bbee-3a13e9607b56%26pf_rd_s%3Dmerchandised-search-6%26pf_rd_t%3D101%26pf_rd_i%3D3561346011%26pf_rd_m%3DA3DWYIK6Y9EEQB%26pf_rd_r%3D4YRVC6FCDDMKF52F1B5Z',1);
 /*!40000 ALTER TABLE `request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,7 +320,7 @@ CREATE TABLE `status` (
   UNIQUE KEY `status_name_uq` (`status_name`),
   UNIQUE KEY `status_name` (`status_name`),
   UNIQUE KEY `status_name_2` (`status_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -326,7 +329,7 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` VALUES (2,'COMPLETE'),(1,'PENDING');
+INSERT INTO `status` VALUES (6,'ADDED'),(4,'AVAILABLE'),(2,'COMPLETE'),(7,'DENIED'),(1,'PENDING'),(5,'UNAVAILABLE');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -369,4 +372,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-21 15:42:55
+-- Dump completed on 2016-11-21 16:19:57
