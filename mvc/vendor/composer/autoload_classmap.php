@@ -6,5 +6,17 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Model\\Traits\\HasCompositePrimaryKey' => $baseDir . '/app/models/Traits/HasCompositePrimaryKey.php',
+    'Authorization' => $baseDir . '/app/models/authorization.php',
+    'Order_detail' => $baseDir . '/app/models/order_detail.php',
+    'Orders' => $baseDir . '/app/models/orders.php',
+    'Preference' => $baseDir . '/app/models/preference.php',
+    'Preference_detail' => $baseDir . '/app/models/preference_detail.php',
+    'Product' => $baseDir . '/app/models/product.php',
+    'Provider' => $baseDir . '/app/models/provider.php',
+    'Question' => $baseDir . '/app/models/question.php',
+    'RequestURL' => $baseDir . '/app/models/requestURL.php',
+    'Response' => $baseDir . '/app/models/response.php',
+    'Status' => $baseDir . '/app/models/status.php',
     'User' => $baseDir . '/app/models/user.php',
 );

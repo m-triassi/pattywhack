@@ -18,6 +18,10 @@ class ComposerStaticInit272f7f255f47fccc4eb5b1f7482a75e2
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Translation\\' => 30,
         ),
+        'P' => 
+        array (
+            'Psr\\Log\\' => 8,
+        ),
         'I' => 
         array (
             'Illuminate\\Support\\' => 19,
@@ -39,6 +43,10 @@ class ComposerStaticInit272f7f255f47fccc4eb5b1f7482a75e2
         'Symfony\\Component\\Translation\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/translation',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
         'Illuminate\\Support\\' => 
         array (
@@ -63,6 +71,13 @@ class ComposerStaticInit272f7f255f47fccc4eb5b1f7482a75e2
     );
 
     public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'PayPal' => 
+            array (
+                0 => __DIR__ . '/..' . '/paypal/rest-api-sdk-php/lib',
+            ),
+        ),
         'D' => 
         array (
             'Doctrine\\Common\\Inflector\\' => 
@@ -73,6 +88,18 @@ class ComposerStaticInit272f7f255f47fccc4eb5b1f7482a75e2
     );
 
     public static $classMap = array (
+        'App\\Model\\Traits\\HasCompositePrimaryKey' => __DIR__ . '/../..' . '/app/models/Traits/HasCompositePrimaryKey.php',
+        'Authorization' => __DIR__ . '/../..' . '/app/models/authorization.php',
+        'Order_detail' => __DIR__ . '/../..' . '/app/models/order_detail.php',
+        'Orders' => __DIR__ . '/../..' . '/app/models/orders.php',
+        'Preference' => __DIR__ . '/../..' . '/app/models/preference.php',
+        'Preference_detail' => __DIR__ . '/../..' . '/app/models/preference_detail.php',
+        'Product' => __DIR__ . '/../..' . '/app/models/product.php',
+        'Provider' => __DIR__ . '/../..' . '/app/models/provider.php',
+        'Question' => __DIR__ . '/../..' . '/app/models/question.php',
+        'RequestURL' => __DIR__ . '/../..' . '/app/models/requestURL.php',
+        'Response' => __DIR__ . '/../..' . '/app/models/response.php',
+        'Status' => __DIR__ . '/../..' . '/app/models/status.php',
         'User' => __DIR__ . '/../..' . '/app/models/user.php',
     );
 
