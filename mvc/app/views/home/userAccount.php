@@ -90,7 +90,7 @@
     
     <form method="POST" class="editaccount" action="../home/updatePreference">
         <h2 class="modhead">Change your Prefences</h2>
-        <div class="form-group well" style="padding-bottom: 100px;">
+        <div class="form-group well" style="padding-bottom: 250px;">
             <ul class="items">
                 <?php 
                 $control->listAllPref();
