@@ -19,7 +19,11 @@
 </head>
     
     <?php include("../public/includes/navbar.php"); ?>
-      <?php include("includes/footer.php"); ?>
+      <?php include("includes/footer.php");
+      echo "<br/><br/><br/><br/>"; 
+      var_dump($data['email']);
+      ?>
+
     <h1 class="registerhead">Enter Your Shipping Details</h1>
 
 <body style="display:none;" class="homebody">
@@ -28,19 +32,19 @@
         
         <div class="form-group">
             <label for="email">Email </label>
-            <input type="text" required class="form-control" name="email" placeholder="Email" />
+            <input type="text" required class="form-control" name="email" placeholder="Email" value="<?php echo $data['email']; ?>" />
         </div>
         
         
         <div class="form-group">
             <label for="ShipAddr">Shipping Address </label>
-            <input type="text" required class="form-control" name="ShipAddr" placeholder="Shipping Address" />
+            <input type="text" required class="form-control" name="ShipAddr" placeholder="Shipping Address" value="<?php echo $data['address']; ?>" />
         </div>
         
         
         <div class="form-group">
             <label for="postalCode">Postal/Zip Code </label>
-            <input type="text" required class="form-control" name="postalCode" placeholder="Postal/Zip Code" />
+            <input type="text" required class="form-control" name="postalCode" placeholder="Postal/Zip Code" value="<?php echo $data['postalCode']; ?>"/>
         </div>
         
         
@@ -61,10 +65,7 @@
             <input type="text" required class="form-control" name="contry" placeholder="Country" />
         </div>
         
-        <div class="form-group">
-            <label for="shipCost">Total Shipping Cost: </label>
-            <input name="shipCost" type="number" disabled style="float: right;">
-        </div>
+       
                 
         <button type="submit" class="btn btn-default">Confirm</button>
     </form>

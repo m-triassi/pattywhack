@@ -43,6 +43,7 @@ function revealMPPI() {
 </head>
     <?php include("../public/includes/navbar.php"); ?>
     <?php include("includes/footer.php"); ?>
+    <?php var_dump($data); ?>
     <h1 class="registerhead">Place your order</h1>
 
 <body style="display:none;" class="homebody">

@@ -32,13 +32,22 @@ class Home extends Controller{
     
     public function shipping(){
         
-        $_SESSION['budget'] = $_POST['budget'];
+        $_SESSION['budget'] = $_POST['budgetBox'];
         $_SESSION['MPPI']  = $_POST['points'];
+        $getUserByUsername = $this->model('user');
+        $user = $getUserByUsername->where('username' , $_SESSION["user"])->first();
+        if(!empty($user)) 
+        	$this->view('home/shipping',['email'=>$user->email,'address'=>"$user->address",'postalCode'=>"$user->postal_code"]);
         $this->view('home/shipping');
         
 	}
 
     public function confirmOrder(){
+    	$product = $this->prepareOrder();
+    	//echo "<br/><br/><br/><br/>";
+    	//print_r($product);
+
+
 		$this->view('home/confirmOrder');
 	}
     
@@ -360,7 +369,7 @@ class Home extends Controller{
 				$product = $this->model('product');
 								$product->product_name = $title;
 								$product->url = $urlendoed;
-								$product->unit_price = $price[0];
+								$product->unit_price = $price[0]*1.20;
 								$product->item_shipping_cost = ($price[0]*0.10);
 								$product->provider_id = $providerID;
 								$product->category_id = $catchCat;
@@ -405,7 +414,7 @@ class Home extends Controller{
 				$product = $this->model('product');
 								$product->product_name = $title[1];
 								$product->url = $urlendoed;
-								$product->unit_price = $price[0];
+								$product->unit_price = $price[0]*1.20;
 								$product->item_shipping_cost = ($price[0]*0.10);
 								$product->provider_id = $providerID;
 								$product->category_id = $this->matchCategory($category[1]);
@@ -445,7 +454,7 @@ class Home extends Controller{
 				$product = $this->model('product');
 								$product->product_name = $title[1];
 								$product->url = $urlendoed;
-								$product->unit_price = $price[0];
+								$product->unit_price = $price[0]*1.20;
 								$product->item_shipping_cost = ($price[0]*0.10);
 								$product->provider_id = $providerID;
 								$product->category_id = $this->matchCategory($category[1]);
@@ -563,7 +572,7 @@ class Home extends Controller{
 					$product = $this->model('product');
 							$product->product_name = $_POST['adminProdName'];
 							$product->url = $URLencoded;
-							$product->unit_price = $_POST['adminProdPrice'];
+							$product->unit_price = $_POST['adminProdPrice']*1.20;
 							$product->item_shipping_cost = ($_POST['adminProdPrice']*0.10);
 							$product->provider_id = $providerID;
 							$product->category_id = $this->matchCategory($_POST['adminProdCategory']);
@@ -644,6 +653,68 @@ class Home extends Controller{
         //var_dump($matchedCat);
 	    return $matchedCat;
         
+    }
+
+    private function prepareOrder(){
+    	error_reporting(0);
+    	$budget = $_SESSION['budget'];
+    	$order = $this->model('orders');
+    	$order->username = $_SESSION['user'];
+    	$order->budget = $budget;
+    	$order->shipping_address = $_POST['ShipAddr'];
+    	$order->price_per_item = $_SESSION['MPPI'];
+    	$order->save();
+
+    	$orderID = $this->model('orders')->orderBy('date','DESC')->first()->order_id;
+
+    	$preference = $this->model('preference_detail');
+		$preference = $preference->where('username', $_SESSION['user'])->get();
+		$products = $this->model('product');
+		$product = array();
+		
+		foreach ($preference as $pref) {
+			if(!empty($_SESSION['MPPI']))
+			$products = $products
+						->where('category_id', $pref->preference_id)
+						->where('unit_price', '<=', $_SESSION['MPPI'])
+						->orderBy('unit_price', 'ASC')
+						->get();
+			else
+				$products = $products
+						->where('category_id', $pref->preference_id)
+						->where('unit_price', '<=', $budget)
+						->orderBy('unit_price', 'ASC')
+						->get();
+			for($i = 0; $i < $products->count(); $i++){
+				//echo "          " .$products->count();
+				$product[] = $products->get($i);
+			}
+		}
+		
+		$index = 0;
+		while($budget > $product[0]->unit_price){
+			echo $budget . "<br/>";
+			for($j = 0; $j < count($product); $j++){
+				if($product[$j]->unit_price < $budget)
+					$index = $j;
+				else {
+					break;
+				}
+			}
+			$randomLimit = rand(0,$index);
+			if($index === 0)
+				break;
+			echo  $product[$randomLimit]->unit_price. "<br/>";
+			$orderDetail = $this->model('order_detail');
+			$orderDetail->order_id = $orderID;
+			$orderDetail->product_id = $product[$randomLimit]->product_id;
+			$orderDetail->item_price = $product[$randomLimit]->unit_price;
+			//$orderDetail->save();
+			$budget = $budget - $product[$randomLimit]->unit_price;
+			echo $budget . "<br/>";
+		}
+		return $product;
+    	
     }
     
     

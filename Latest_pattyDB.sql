@@ -47,17 +47,17 @@ DROP TABLE IF EXISTS `order_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_detail` (
-  `order_table_id` int(11) NOT NULL,
+  `order_table_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `item_price` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT '1',
+  `item_price` double(11,2) NOT NULL,
   PRIMARY KEY (`order_table_id`),
   KEY `product_id` (`product_id`),
   KEY `order_id` (`order_id`,`product_id`),
   CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +79,7 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) COLLATE latin1_bin NOT NULL,
-  `date` date NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `total` int(11) DEFAULT NULL,
   `budget` int(11) NOT NULL,
   `shipping_address` varchar(50) COLLATE latin1_bin NOT NULL,
@@ -87,13 +87,13 @@ CREATE TABLE `orders` (
   `tracking_number` int(20) DEFAULT NULL,
   `price_per_item` int(11) DEFAULT NULL,
   `shipping_cost` int(11) DEFAULT NULL,
-  `status_id` int(11) NOT NULL,
+  `status_id` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`order_id`),
   KEY `username` (`username`),
   KEY `status_id` (`status_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`),
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -137,7 +137,7 @@ DROP TABLE IF EXISTS `preference_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `preference_detail` (
-  `pref_table_id` int(11) NOT NULL,
+  `pref_table_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) COLLATE latin1_bin NOT NULL DEFAULT '',
   `preference_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`pref_table_id`),
@@ -145,7 +145,7 @@ CREATE TABLE `preference_detail` (
   KEY `username` (`username`,`preference_id`),
   CONSTRAINT `preference_detail_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`),
   CONSTRAINT `preference_detail_ibfk_2` FOREIGN KEY (`preference_id`) REFERENCES `preference` (`preference_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,6 +154,7 @@ CREATE TABLE `preference_detail` (
 
 LOCK TABLES `preference_detail` WRITE;
 /*!40000 ALTER TABLE `preference_detail` DISABLE KEYS */;
+INSERT INTO `preference_detail` VALUES (1,'test2',4);
 /*!40000 ALTER TABLE `preference_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +182,7 @@ CREATE TABLE `product` (
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`availability`) REFERENCES `status` (`status_id`),
   CONSTRAINT `product_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `preference` (`preference_id`),
   CONSTRAINT `product_ibfk_3` FOREIGN KEY (`provider_id`) REFERENCES `provider` (`provider_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +191,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (3,'The Legend of Zelda: Art &amp; Artifacts','https%3A%2F%2Fwww.amazon.ca%2Fgp%2Fproduct%2F1506703356%2Fref%3Ds9_zwish_hd_bw_b3qQa_g14_i1%3Fpf_rd_m%3DA3DWYIK6Y9EEQB%26pf_rd_s%3Dmerchandised-search-6%26pf_rd_r%3DJGVTC5Z1GKNYAEX8EV6S%26pf_rd_t%3D101%26pf_rd_p%3D3fd3ec9d-e1cb-5f5f-86ac-9d461300eccc%26pf_rd_i%3D916520',32.00,NULL,3.00,4,11,1);
+INSERT INTO `product` VALUES (3,'The Legend of Zelda: Art &amp; Artifacts','https%3A%2F%2Fwww.amazon.ca%2Fgp%2Fproduct%2F1506703356%2Fref%3Ds9_zwish_hd_bw_b3qQa_g14_i1%3Fpf_rd_m%3DA3DWYIK6Y9EEQB%26pf_rd_s%3Dmerchandised-search-6%26pf_rd_r%3DJGVTC5Z1GKNYAEX8EV6S%26pf_rd_t%3D101%26pf_rd_p%3D3fd3ec9d-e1cb-5f5f-86ac-9d461300eccc%26pf_rd_i%3D916520',32.00,NULL,3.00,4,11,1),(4,'ASUS F555LA 15.6\" Full-HD Laptop (Core i3, 4GB RAM','https%3A%2F%2Fwww.amazon.ca%2FF555LA-Full-HD-Laptop-500GB-Windows%2Fdp%2FB011KFQASE%2Fref%3Dlp_667823011_1_7%3Fs%3Delectronics%26ie%3DUTF8%26qid%3D1479766307%26sr%3D1-7',499.99,NULL,50.00,4,4,1),(6,'Free 32G Micro Card AUTO-VOX D1 Full HD 1080P 2.7\'','https%3A%2F%2Fwww.amazon.ca%2FAUTO-VOX-Recorder-Dashboard-G-Sensor-Recording%2Fdp%2FB01AT4BF28%2Fref%3Dsr_1_1%3Fs%3Delectronics%26ie%3DUTF8%26qid%3D1479767701%26sr%3D1-1',148.79,NULL,12.40,4,4,1),(7,'Everydaysource White/Silver Universal In-Ear Stere','https%3A%2F%2Fwww.amazon.ca%2FEverydaysource-Silver-Universal-Stereo-Headset%2Fdp%2FB007ZYUZE0%2Fref%3Dsr_1_8%3Fs%3Delectronics%26ie%3DUTF8%26qid%3D1479767791%26sr%3D1-8',2.87,NULL,0.24,4,4,1),(8,'Sodial Sodial- Pink Earbud Headphone Earphone For ','https%3A%2F%2Fwww.amazon.ca%2FSodial-Sodial-Headphone-Earphone-Iphone%25C2%25AE%2Fdp%2FB009LZVIOC%2Fref%3Dsr_1_14%3Fs%3Delectronics%26ie%3DUTF8%26qid%3D1479767802%26sr%3D1-14',3.91,NULL,0.33,4,4,1);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -359,7 +360,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('hyp','$2y$10$1Fyqh2Fu3fK/BySKE/R7JOFmdecx//pJsRmXlLhL8rYc6R2cget4.','1875','h4m1n5','daniel.edery@hotmail.com',1),('hyp1','$2y$10$U3LCJV2iXd/Yhe80.AXGC..HBwUpsH4FdByaUo9L5ToCMHigiVvNC','','','daniel.edery@hotmail.com',1),('test1','$2y$10$//2aPfg9en2FUKZUd3Pjwei91ipKxRSh6MzHYT/d4ad3DKpxDenWq','testint','12345','daniel.edery@hotmail.com',1),('test2','$2y$10$ZQ8EUMujd9dGMNpNiQX/oeEspt6VmbcmjAfiDTMY.7RdG8QJdbI8e','','','daniel.edery@hotmail.com',4);
+INSERT INTO `user` VALUES ('hyp','$2y$10$1Fyqh2Fu3fK/BySKE/R7JOFmdecx//pJsRmXlLhL8rYc6R2cget4.','1875','h4m1n5','daniel.edery@hotmail.com',1),('hyp1','$2y$10$U3LCJV2iXd/Yhe80.AXGC..HBwUpsH4FdByaUo9L5ToCMHigiVvNC','','','daniel.edery@hotmail.com',1),('test1','$2y$10$//2aPfg9en2FUKZUd3Pjwei91ipKxRSh6MzHYT/d4ad3DKpxDenWq','testint','12345','daniel.edery@hotmail.com',1),('test2','$2y$10$ZQ8EUMujd9dGMNpNiQX/oeEspt6VmbcmjAfiDTMY.7RdG8QJdbI8e','12345678','54321','daniel.edery@hotmail.com',4);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -372,4 +373,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-21 16:19:57
+-- Dump completed on 2016-11-21 19:08:42
