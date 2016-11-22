@@ -20,8 +20,8 @@
     
     <?php include("../public/includes/navbar.php"); ?>
       <?php include("includes/footer.php");
-      echo "<br/><br/><br/><br/>"; 
-      var_dump($data['email']);
+      //echo "<br/><br/><br/><br/>"; 
+      //var_dump($data['email']);
       ?>
 
     <h1 class="registerhead">Enter Your Shipping Details</h1>
