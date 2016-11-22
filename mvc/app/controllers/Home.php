@@ -57,10 +57,7 @@ class Home extends Controller{
 	}
     
     public function userAccount(){
-        if($this->checkAuth()){
-		  $this->view('home/userAccount');
-        }else
-            $this->view('home/index');
+		$this->view('home/userAccount');
 	}
     
     public function shippingWorker(){
@@ -82,7 +79,6 @@ class Home extends Controller{
     public function contact() {
         $this->view('home/contact');
     }
-    
 	public function logUser(){
 		if(!empty($_POST["UserLogin"])){
 
@@ -723,7 +719,7 @@ class Home extends Controller{
 		$shippingCost = $total *0.2;
 		$updateOrder = $this->model('Orders')->where('order_id', $orderID)->first();
 		$updateOrder->total = $total;
-		$updateOrder->
+		//$updateOrder->
 		return $product;
     	
     }
