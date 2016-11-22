@@ -7,7 +7,7 @@ class Order_detail extends Eloquent
 
 	public $timestamps = false;
 	protected $table = 'order_detail';
-	protected $primaryKey = array('order_id','product_id');
+	protected $primaryKey = 'order_table_id';
 	protected $fillable = ['order_id','product_id','quantity','item_price'];
 }
 ?>

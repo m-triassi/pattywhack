@@ -709,7 +709,7 @@ class Home extends Controller{
 			$orderDetail->order_id = $orderID;
 			$orderDetail->product_id = $product[$randomLimit]->product_id;
 			$orderDetail->item_price = $product[$randomLimit]->unit_price;
-			//$orderDetail->save();
+			$orderDetail->save();
 			$budget = $budget - $product[$randomLimit]->unit_price;
 			echo $budget . "<br/>";
 		}
