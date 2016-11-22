@@ -57,7 +57,10 @@ class Home extends Controller{
 	}
     
     public function userAccount(){
-		$this->view('home/userAccount');
+        if($this->checkAuth()){
+		  $this->view('home/userAccount');
+        }else
+            $this->view('home/index');
 	}
     
     public function shippingWorker(){
@@ -79,6 +82,7 @@ class Home extends Controller{
     public function contact() {
         $this->view('home/contact');
     }
+    
 	public function logUser(){
 		if(!empty($_POST["UserLogin"])){
 

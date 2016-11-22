@@ -50,10 +50,10 @@
                 {
                     print "<table class=table>";    
                     print "<tr>";
-                    print "<th>From:</th> <td>" . $resp[$i]->username . "</td>";
+                    print "<th>From:</th> <td style='text-align: right;'>" . $resp[$i]->username . "</td>";
                     print "</tr>";
                     print "<tr>";
-                    print "<th>Response:</th> <td> ". $resp[$i]->answer ."</td>";
+                    print "<th>Response:</th> <td style='text-align: right;'> ". $resp[$i]->answer ."</td>";
                     print "</tr>";
                     print "</table><br/>";
                     

@@ -59,6 +59,38 @@
     if(isset($data['message'])) { 
         echo "<div class='alert alert-danger' style='margin-top: 4%; font-size: 2em;'>$data[message]</div>";
      }?>
+    
+    <form class="editAccount">
+        <h2 class="modhead">Your Orders</h2>
+        <div class="form-group well">
+            <table class="table table-striped">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Status</th>
+                    <th>Tracking Number</th>
+                    <th>Contents of Order</th>
+                    <th>Cancel Order?</th>
+                </tr>
+                <?php 
+
+                    $orders = $this->model('orders');
+                    $userOrders = $orders->where('username', $_SESSION['user'])->get();
+                    //var_dump($orders);
+                    for ($k = 0; $k < $orders->count(); $k++)
+                    {
+                        echo "<tr>";
+                        echo "<td>" . $userOrders->get($k)->order_id . "</td>";
+                        echo "<td>" . $userOrders->get($k)->status_id . "</td>";
+                        echo "<td>" . $userOrders->get($k)->tracking_number . "</td>";
+                        echo "<td> </td>";
+                        echo "<td><a href=" .  "><span class='glyphicon glyphicon-remove'</a></td>"; 
+                    }
+                ?>
+            </table>
+        </div>
+    
+    </form>
+    
     <form method="POST" class="editAccount" action="../home/editUser" >
         <h2 class="modhead">Modify Account Details</h2>
         <div class="form-group well">
