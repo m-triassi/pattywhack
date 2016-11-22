@@ -656,44 +656,45 @@ class Home extends Controller{
     }
 
     private function prepareOrder(){
-    	error_reporting(0);
+    	//error_reporting(0);
     	$budget = $_SESSION['budget'];
-    	$order = $this->model('orders');
+    	$order = $this->model('Orders');
     	$order->username = $_SESSION['user'];
     	$order->budget = $budget;
     	$order->shipping_address = $_POST['ShipAddr'];
     	$order->price_per_item = $_SESSION['MPPI'];
     	$order->save();
+		echo  "<br/><br/><br/><br/>Budget:   " . $budget."<br/>" ;
+    	$orderID = $this->model('Orders')->orderBy('date','DESC')->first()->order_id;
 
-    	$orderID = $this->model('orders')->orderBy('date','DESC')->first()->order_id;
-
-    	$preference = $this->model('preference_detail');
+    	$preference = $this->model('Preference_detail');
 		$preference = $preference->where('username', $_SESSION['user'])->get();
-		$products = $this->model('product');
+		$products = $this->model('Product');
 		$product = array();
 		
 		foreach ($preference as $pref) {
-			if(!empty($_SESSION['MPPI']))
-			$products = $products
+			if(!empty($_SESSION['MPPI'])){
+			$productInOrder = $products
 						->where('category_id', $pref->preference_id)
 						->where('unit_price', '<=', $_SESSION['MPPI'])
 						->orderBy('unit_price', 'ASC')
 						->get();
-			else
-				$products = $products
+			}
+			else{
+				$productInOrder = $products
 						->where('category_id', $pref->preference_id)
 						->where('unit_price', '<=', $budget)
 						->orderBy('unit_price', 'ASC')
 						->get();
-			for($i = 0; $i < $products->count(); $i++){
-				//echo "          " .$products->count();
-				$product[] = $products->get($i);
+			}
+			for($i = 0; $i < $productInOrder->count(); $i++){
+				$product[] = $productInOrder->get($i);
 			}
 		}
 		
 		$index = 0;
 		while($budget > $product[0]->unit_price){
-			echo $budget . "<br/>";
+			echo "Price of Lowest Item:   " . $product[0]->unit_price . "<br/>";
 			for($j = 0; $j < count($product); $j++){
 				if($product[$j]->unit_price < $budget)
 					$index = $j;
@@ -704,7 +705,7 @@ class Home extends Controller{
 			$randomLimit = rand(0,$index);
 			if($index === 0)
 				break;
-			echo  $product[$randomLimit]->unit_price. "<br/>";
+			//echo  $product[$randomLimit]->unit_price. "<br/>";
 			$orderDetail = $this->model('order_detail');
 			$orderDetail->order_id = $orderID;
 			$orderDetail->product_id = $product[$randomLimit]->product_id;
