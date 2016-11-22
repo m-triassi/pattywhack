@@ -19,10 +19,7 @@
 </head>
     
     <?php include("../public/includes/navbar.php"); ?>
-      <?php include("includes/footer.php");
-      echo "<br/><br/><br/><br/>"; 
-      var_dump($data['email']);
-      ?>
+      <?php include("includes/footer.php");?>
 
     <h1 class="registerhead">Enter Your Shipping Details</h1>
 

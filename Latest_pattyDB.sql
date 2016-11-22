@@ -57,7 +57,7 @@ CREATE TABLE `order_detail` (
   KEY `order_id` (`order_id`,`product_id`),
   CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +66,7 @@ CREATE TABLE `order_detail` (
 
 LOCK TABLES `order_detail` WRITE;
 /*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
+INSERT INTO `order_detail` VALUES (1,2,7,1,2.87),(2,2,8,1,3.91);
 /*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,11 +82,11 @@ CREATE TABLE `orders` (
   `username` varchar(30) COLLATE latin1_bin NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `total` int(11) DEFAULT NULL,
-  `budget` int(11) NOT NULL,
+  `budget` double(11,2) NOT NULL,
   `shipping_address` varchar(50) COLLATE latin1_bin NOT NULL,
   `rating` int(1) DEFAULT NULL,
   `tracking_number` int(20) DEFAULT NULL,
-  `price_per_item` int(11) DEFAULT NULL,
+  `price_per_item` double(11,2) DEFAULT NULL,
   `shipping_cost` int(11) DEFAULT NULL,
   `status_id` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`order_id`),
@@ -93,7 +94,7 @@ CREATE TABLE `orders` (
   KEY `status_id` (`status_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`),
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,6 +103,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,'test2','2016-11-22 02:07:27',NULL,10.00,'1875 rue Saint-Louis',NULL,NULL,10.00,NULL,1),(2,'test2','2016-11-22 02:07:57',NULL,10.00,'1875 rue Saint-Louis',NULL,NULL,10.00,NULL,1);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,7 +147,7 @@ CREATE TABLE `preference_detail` (
   KEY `username` (`username`,`preference_id`),
   CONSTRAINT `preference_detail_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`),
   CONSTRAINT `preference_detail_ibfk_2` FOREIGN KEY (`preference_id`) REFERENCES `preference` (`preference_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -373,4 +375,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-21 19:08:42
+-- Dump completed on 2016-11-22  9:34:11

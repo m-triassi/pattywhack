@@ -251,10 +251,10 @@ class Home extends Controller{
         
 
         $userPref = $this->model('preference_detail')->where('username', $_SESSION["user"])->get();
-        echo '<pre>';
+        /*echo '<pre>';
 		//var_dump($userPref);
 		var_dump($_POST);
-		echo '</pre>';
+		echo '</pre>';*/
 
         for ($i = 0; $i < 24; $i++)
         {
@@ -664,7 +664,7 @@ class Home extends Controller{
     	$order->shipping_address = $_POST['ShipAddr'];
     	$order->price_per_item = $_SESSION['MPPI'];
     	$order->save();
-		echo  "<br/><br/><br/><br/>Budget:   " . $budget."<br/>" ;
+		//echo  "<br/><br/><br/><br/>Budget:   " . $budget."<br/>" ;
     	$orderID = $this->model('Orders')->orderBy('date','DESC')->first()->order_id;
 
     	$preference = $this->model('Preference_detail');
@@ -693,8 +693,9 @@ class Home extends Controller{
 		}
 		
 		$index = 0;
+		$total = 0;
 		while($budget > $product[0]->unit_price){
-			echo "Price of Lowest Item:   " . $product[0]->unit_price . "<br/>";
+			//echo "Price of Lowest Item:   " . $product[0]->unit_price . "<br/>";
 			for($j = 0; $j < count($product); $j++){
 				if($product[$j]->unit_price < $budget)
 					$index = $j;
@@ -711,9 +712,14 @@ class Home extends Controller{
 			$orderDetail->product_id = $product[$randomLimit]->product_id;
 			$orderDetail->item_price = $product[$randomLimit]->unit_price;
 			$orderDetail->save();
+			$total = $total + $product[$randomLimit]->unit_price;
 			$budget = $budget - $product[$randomLimit]->unit_price;
-			echo $budget . "<br/>";
+			//echo $budget . "<br/>";
 		}
+		$shippingCost = $total *0.2;
+		$updateOrder = $this->model('Orders')->where('order_id', $orderID)->first();
+		$updateOrder->total = $total;
+		$updateOrder->
 		return $product;
     	
     }
