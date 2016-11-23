@@ -230,21 +230,22 @@ class Home extends Controller{
 		    		$execute->setPayerId($PayerID);
 
 
-		    		try{
-		    			$result = $payment->execute($execute, $this->paypal);	  
-		    					
+			    		try{
+			    			$result = $payment->execute($execute, $this->paypal);	  
+			    			$allOrders = $this->model('Orders')->get();
+							$updateOrder = $allOrders->where('order_id', $_SESSION['order_id'])->first();
+							$updateOrder->status_id = 8;
+							$updateOrder->save();  			
 
-		    		}catch(Exception $e){
-		    			$this->view('home/userAccount');
+			    		}catch(Exception $e){
+			    			$this->view('home/userAccount');
+			    		}
+		    		
 		    		}
-		    		$allOrders = $this->model('Orders')->get();
-						$updateOrder = $allOrders->where('order_id', $_SESSION['order_id'])->first();
-						$updateOrder->status_id = 8;
-						$updateOrder->save();  	
-		    		}
 
 
-			$this->view('home/userAccount');
+			        header("Location: http://localhost/pattywhack/mvc/public/home/userAccount");	
+
     	}
 
     public function userAccount(){

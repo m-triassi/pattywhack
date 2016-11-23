@@ -187,8 +187,7 @@
         </div>
 
 
-        <form><textarea rows="4" cols="50"> <?php echo "<pre>"; var_dump($_SESSION['result']); echo "</pre>"; ?>
-</textarea></form>
+      
 </body>
 
 </html>
