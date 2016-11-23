@@ -163,6 +163,34 @@ class Home extends Controller{
         $this->view('home/shipping');
         
 	}
+    
+    public function setTracking() 
+    {
+        
+        $id = $_POST['orderID'];
+        $setTrack = $this->model('orders')->where('order_id', $id)->first();
+        $setTrack->tracking_number = $_POST['track'];
+        $setTrack->save();
+        
+        header("Location: http://localhost/pattywhack/mvc/public/home/shippingWorker");
+        
+    }
+    
+    public function setShipped($id)
+    {
+        $setShip = $this->model('orders')->where('order_id', $id)->first();
+        $setShip->status_id = 8;
+        $setShip->save();
+        header("Location: http://localhost/pattywhack/mvc/public/home/shippingWorker");
+    }
+    
+    public function setComplete($id)
+    {
+        $setComp = $this->model('orders')->where('order_id', $id)->first();
+        $setComp->status_id = 2;
+        $setComp->save();
+        header("Location: http://localhost/pattywhack/mvc/public/home/shippingWorker");
+    }
 
     public function confirmOrder(){
     	$product = $this->prepareOrder();
@@ -260,9 +288,14 @@ class Home extends Controller{
     
     public function deleteOrder($orderId) 
     {
+        //server request URI
+        $currPage = $_SERVER['REQUEST_URI'];
         $toDelete = $this->model('orders')->where('order_id', $orderId)->first();
         $toDelete->delete();
-        header("Location: http://localhost/pattywhack/mvc/public/home/userAccount");
+        if ($currPage = "/pattywhack/mvc/public/home/shippingworker")
+            header("Location: http://localhost/pattywhack/mvc/public/home/shippingWorker");
+        else
+            header("Location: http://localhost/pattywhack/mvc/public/home/userAccount");
         
     }
     
@@ -345,7 +378,7 @@ class Home extends Controller{
 		if(isset($_SESSION['user'])) {
 			$getUserByUsername = $this->model('user');
 			$auth = $getUserByUsername->where('username' , $_SESSION["user"])->first()->authority_id;
-			if($auth == 4){
+			if($auth >= 4){
 				return TRUE;
 			}
 			else{

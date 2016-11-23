@@ -8,6 +8,7 @@ class Controller
 	}
 
 	public function view($view, $data = []){
+        echo $view;
 		require_once '../app/views/' . $view . '.php';
 	}
 }

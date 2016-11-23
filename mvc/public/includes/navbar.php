@@ -25,6 +25,7 @@
                     
                     if($control->checkAuth()){
                         echo '<li><a href="/pattywhack/mvc/public/home/adminPanel"  style="float: right; font-size: 15px;">Admin Panel</a></li>';
+                        echo '<li><a href="/pattywhack/mvc/public/home/shippingWorker"  style="float: right; font-size: 15px;">Order Control Panel</a></li>';
                     }
                     
                 }
