@@ -16,9 +16,9 @@
 </head>
     <?php
     if(isset($data['message'])){
-        print '<div class="alert alert-danger" style="margin-top: 4%; font-size: 2em;">';
-        print 'echo $data[message]';
-        print ' </div> ';
+        echo '<div class="alert alert-danger" style="margin-top: 4%; font-size: 2em;">';
+        echo $data['message'];
+        echo  ' </div> ';
     }
 ?> 
     <?php include("../public/includes/navbar.php"); ?>
@@ -34,7 +34,7 @@
         </div>
         <div class="form-group">
             <label for="exampleInputUsername1">Username </label>
-            <input type="text" required class="form-control" name="UsernameBox" placeholder="Username" pattern="(?=.*[a-zA-Z]).{4,30}" />
+            <input type="text" required class="form-control" name="UsernameBox" placeholder="Username" pattern="(?=.*[a-zA-Z]).{4,30}" value="<?php  if(isset($data['username'])){echo $data['username'];}?>"/>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>

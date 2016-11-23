@@ -11,7 +11,7 @@ class User extends Eloquent
 	protected $primaryKey = 'username';
 
 	
-	protected $fillable = ['username', 'password_hash', 'address' , 'postal_code', 'email'];
+	protected $fillable = ['username', 'password_hash', 'address' , 'postal_code', 'email', 'authority_id'];
 
 	public function isValid(){
 		$valid = true;

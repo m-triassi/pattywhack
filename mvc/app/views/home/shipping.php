@@ -26,19 +26,19 @@
         
         <div class="form-group">
             <label for="email">Email </label>
-            <input type="text" required class="form-control" name="email" placeholder="Email" value="<?php echo $data['email']; ?>" />
+            <input type="text" required class="form-control" name="email" placeholder="Email" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="<?php if(isset($data['email']))echo $data['email']; ?>" />
         </div>
         
         
         <div class="form-group">
             <label for="ShipAddr">Shipping Address </label>
-            <input type="text" required class="form-control" name="ShipAddr" placeholder="Shipping Address" value="<?php echo $data['address']; ?>" />
+            <input type="text" required class="form-control" name="ShipAddr" placeholder="Shipping Address" value="<?php if(isset($data['email']))echo $data['address']; ?>" />
         </div>
         
         
         <div class="form-group">
             <label for="postalCode">Postal/Zip Code </label>
-            <input type="text" required class="form-control" name="postalCode" placeholder="Postal/Zip Code" value="<?php echo $data['postalCode']; ?>"/>
+            <input type="text" required class="form-control" name="postalCode" placeholder="Postal/Zip Code" value="<?php if(isset($data['email']))echo $data['postalCode']; ?>"/>
         </div>
         
         

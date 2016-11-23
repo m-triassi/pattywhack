@@ -190,9 +190,10 @@ class Home extends Controller{
     }
 
     public function confirmOrder(){
+    	if($this->checkAnonymous()){
+
+    	}
     	$product = $this->prepareOrder();
-    	//echo "<br/><br/><br/><br/>";
-    	//print_r($product);
 
     	 $order = $this->model('Orders')->where('order_id', $_SESSION['order_id'])->first();
 
@@ -205,6 +206,39 @@ class Home extends Controller{
 		$this->view('home/confirmOrder', ['price' => $price , 'shipping' => $shipping, 'total' => $total]);
 	}
     
+
+	private function checkAnonymous(){
+		if(!isset($_SESSION['user'])){
+				$user = $this->model('user')->where('email', $_POST['email'])->get();
+				if($user->count() == 0){ //0 or empty password
+					$newguy = new User;
+					$newguy->username = $_POST['email'];
+					$newguy->address = $_POST["ShipAddr"];
+					$newguy->password_hash = '';
+					$newguy->postal_code = $_POST["postalCode"];
+					$newguy->email = $_POST['email'];
+					$newguy->authority_id = 3;
+					$newguy->save();
+
+					$_SESSION['user'] = $_POST['email'];
+				}else if($user->first()->password_hash == ''){ //0 or empty password
+					
+					$user->first()->address = $_POST["ShipAddr"];					
+					$user->first()->postal_code = $_POST["postalCode"];
+					$user->first()->email = $_POST['email'];
+					$user->first()->save();
+
+					$_SESSION['user'] = $_POST['email'];
+				}
+				else{
+					$this->view('home/placeOrder', ['message' => "That email is currently assign to a member. Please log in."]);
+				    die();
+				}
+		}
+	}
+
+
+
     public function insertOrder(){
         header("Location: http://localhost/pattywhack/mvc/public/home");	
 		$this->view('home/index');
@@ -699,36 +733,44 @@ class Home extends Controller{
 
 
 	public function createUser(){
+		$email = isset($_POST["EmailBox"]) ? $_POST["EmailBox"] : '';
+		$address = isset($_POST["AddressBox"]) ? $_POST["AddressBox"] : '';
+		$postalCode = isset($_POST["PostalCodeBox"]) ? $_POST["PostalCodeBox"] : '';
+		$username = isset($_POST["UsernameBox"]) ? $_POST["UsernameBox"] : '';
+		$userUsername = $this->model('user')->where('username', $_POST['UsernameBox'])->get();
+		$userEmail = $this->model('user')->where('email', $_POST['EmailBox'])->get();
+		$passHash = password_hash($_POST["PasswordBox"], PASSWORD_DEFAULT);
 		if(isset($_POST)){
-			$passHash = password_hash($_POST["PasswordBox"], PASSWORD_DEFAULT);
-			$newguy = new User;
-			$newguy->username = $_POST["UsernameBox"];
-			$newguy->password_hash = $passHash;
-			$newguy->address = $_POST["AddressBox"];
-			$newguy->postal_code = $_POST["PostalCodeBox"];
-			$newguy->email = $_POST["EmailBox"];// Hash::check($_POST["password"], $hashedPassword)
-			/*$newguy = User::create([
-					'username' => $_POST["UsernameBox"],
-					'password_hash' => $passHash, 
-					'address' => $_POST["AddressBox"],
-					'postal_code'=> $_POST["PostalCodeBox"],
-					'email'	=> $_POST['EmailBox']
-				]);*/
 			
-			$getUserByEmail = User::where('username' , $_POST["UsernameBox"])->get();
 			
-			if($newguy->isValid() && ($getUserByEmail->count() == 0)){
-				$newguy->save();
-				header("Location: http://localhost/pattywhack/mvc/public/home");			
 
-			}		
-			else{
-				if(isset($_POST["EmailBox"]) && isset($_POST["AddressBox"]) && isset($_POST["PostalCodeBox"]))
-					$this->view('home/register',['message'=>"Username already in use.", 'email'=>$_POST["EmailBox"],'address'=>$_POST["AddressBox"],'pCode'=>$_POST["PostalCodeBox"]]);
-
+			if($userUsername->count() != 0 && $userEmail->count() != 0)				
+				$this->view('home/register',['message'=>"Username and email are both in use. (Log in to account)", 'email'=> $email,'address'=>$address,'pCode'=>$postalCode , 'username'=>$username ]);			
+			elseif($userUsername->count() != 0)		
+				$this->view('home/register',['message'=>"Username already in use.", 'email'=> $email,'address'=>$address,'pCode'=>$postalCode, 'username'=>$username]);
+			elseif($userEmail->count() != 0){
+				if($userEmail->first()->authority_id == 3){
+					$userEmail->first()->username = $username;
+					$userEmail->first()->password_hash = $passHash;
+					$userEmail->first()->address = $address;
+					$userEmail->first()->postal_code = $postalCode;
+					$userEmail->first()->authority_id = 1;
+					$userEmail->first()->save();
+				}
+				else
+					$this->view('home/register',['message'=>"Email is already assigned to an account", 'email'=> $email,'address'=>$address,'pCode'=>$postalCode, 'username'=>$username]);
 			}
-			
+			else{
+				$newguy = new User;
+				$newguy->username = $username;
+				$newguy->password_hash = $passHash;
+				$newguy->address = $address;
+				$newguy->postal_code = $postalCode;
+				$newguy->email = $email;
+				$newguy->save();
+			}
 		}
+		header("Location: http://localhost/pattywhack/mvc/public/home/index");
 	}
 
 	public function editUser(){
