@@ -1,7 +1,108 @@
 <?php
 use Illuminate\Http\Request as Request;
 
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Api\Payer;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
+use PayPal\Api\Details;
+use PayPal\Api\Amount;
+use PayPal\Api\Transaction;
+use PayPal\Api\Payment;
+use PayPal\Api\RedirectUrls;
+
+define('SITE_URL', 'http://192.168.1.101:80/pattywhack/mvc/public/home');
+
+
+
+
 class Home extends Controller{
+
+	public function payment(){
+		
+		if(!empty($_SESSION['order_id'])){
+
+			$paypal = new \PayPal\Rest\ApiContext(
+			new \PayPal\Auth\OAuthTokenCredential(
+				'ARxUXJHH5K43BUp-u39mPXfW-mfAxahfbSkEyPMzLVXDDkhoIFiNtL7ET4WMvx0ly4e8jVm-MP5fXusP',
+				'EGd8S6WcqLROCZc-UOYAdsxbD0V1Ncyz-0QwEtNIn-8ZPVFCLCc8TMBud_9BAiKTGU9OrUDIUsF_onm0'
+				 )
+			);
+
+			$order = $this->model('Orders')->where('order_id', $_SESSION['order_id'])->first();
+
+			$product = 'Random Products Bill';
+			$price = $order->total;
+			$shipping = $order->shipping_cost;
+			
+			$tax = $price * 0.15;
+			$total = $price + $shipping + $tax;
+			$payer = new Payer();
+			$payer->setPaymentMethod('paypal');
+
+
+			$item = new Item();
+			$item->setName($product)
+				->setCurrency('CAD')
+				->setQuantity(1)
+				->setPrice($price);
+
+			$itemList = new ItemList();
+			$itemList->setItems([$item]);
+
+
+			$details = new Details();
+			$details->setShipping($shipping)
+				->setTax($tax)
+				->setSubtotal($price);
+
+			$amount = new Amount();
+			$amount->setCurrency('CAD')
+				   ->setTotal($total)
+				   ->setDetails($details);
+
+			$transaction = new Transaction();
+			$transaction->setAmount($amount)
+					    ->setDescription('Random Product Bill Payment')
+					    ->setInvoiceNumber(uniqid());
+
+			$redirectUrls = new RedirectUrls();
+			$redirectUrls->setReturnUrl(SITE_URL . '/pay.php?approved=true')
+						->setCancelUrl(SITE_URL . '/pay.php?approved=false');
+
+			$payment = new Payment();
+			$payment->setIntent('sale')
+					->setPayer($payer)
+					->setRedirectUrls($redirectUrls)
+					->setTransactions([$transaction]);
+
+				try{
+					$payment->create($paypal);
+				}catch(Exception $e){
+					echo "<pre>";
+					echo $_SESSION['order_id'] . "<br/>";
+					//echo $price . "<br/>";
+					//echo $tax . "<br/>";
+					//echo $shipping . "<br/>";
+					//echo $total . "<br/>";
+					var_dump($e);
+					echo "</pre>";
+				}
+
+			$approvalUrl = $payment->getApprovalLink();
+
+			header("Location: {$approvalUrl}");
+
+			// Need to finish execute payment
+			//https://youtu.be/BD1dOWIABe0?t=1813
+		}
+		
+
+
+	}
+
+
 	public function index($name = ''){
 		/*$user = $this->model('User');
 		$user->$name = $name;*/
@@ -716,10 +817,13 @@ class Home extends Controller{
 			$budget = $budget - $product[$randomLimit]->unit_price;
 			//echo $budget . "<br/>";
 		}
-		$shippingCost = $total *0.2;
-		$updateOrder = $this->model('Orders')->where('order_id', $orderID)->first();
+		$shippingCost = ($total * (5.0/6.0))/2.0;
+		$allOrders = $this->model('Orders')->get();
+		$updateOrder = $allOrders->where('order_id', $orderID)->first();
 		$updateOrder->total = $total;
-		//$updateOrder->
+		$updateOrder->shipping_cost = $shippingCost;
+		$updateOrder->save();
+		$_SESSION['order_id'] = $orderID;
 		return $product;
     	
     }
