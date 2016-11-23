@@ -40,14 +40,20 @@ function revealMPPI() {
 </head>
     <?php include("../public/includes/navbar.php"); ?>
     <?php include("includes/footer.php"); ?>
-    <?php var_dump($data); ?>
+    
+
+     <?php 
+    if(isset($data['message'])) { 
+        echo "<div class='alert alert-danger' style='margin-top: 4%; font-size: 2em;'>$data[message]</div>";
+     }?>
+    
     <h1 class="registerhead">Place your order</h1>
 
 <body style="display:none;" class="homebody">
 
     <form method="POST" class="registerform" action="../home/shipping" >
         <div class="form-group">
-            <label for="budgetBox">Order Budget: </label>
+            <label for="budgetBox">Order Budget: (*Without Taxes!*)</label>
             <input type="number" required class="form-control" onkeyup="update()" name="budgetBox" id="budgBox"/>
         </div>
         <div id="MPPI" class="form-group" style="display: none;">

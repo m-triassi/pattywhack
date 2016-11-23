@@ -212,11 +212,14 @@ class Home extends Controller{
     
     public function processPayment(){
 			if(!empty($_GET)){
-		    		if(!isset($_GET['success'],$_GET['paymentId'],$_GET['PayerID']))
-		    			$this->view('home/index');
+		    		if(!isset($_GET['success'],$_GET['paymentId'],$_GET['PayerID']) || (bool)$_GET['success'] === false){
+						$this->cancelOrder();
+		    			 header("Location: http://localhost/pattywhack/mvc/public/home");	
+		    			 return;
+		    		}
 
-		    		if((bool)$_GET['success'] === false)
-		    			$this->view('home/index');
+		    		
+		    			
 		    		
 		    		$getresult = 'success=' . $_GET['success'] . '&paymentId=' .$_GET['paymentId'] . '&PayerID=' . $_GET['PayerID'];
 		    		$_SESSION['result'] = $getresult;
@@ -234,7 +237,7 @@ class Home extends Controller{
 			    			$result = $payment->execute($execute, $this->paypal);	  
 			    			$allOrders = $this->model('Orders')->get();
 							$updateOrder = $allOrders->where('order_id', $_SESSION['order_id'])->first();
-							$updateOrder->status_id = 8;
+							$updateOrder->status_id = 9;
 							$updateOrder->save();  			
 
 			    		}catch(Exception $e){
@@ -247,6 +250,13 @@ class Home extends Controller{
 			        header("Location: http://localhost/pattywhack/mvc/public/home/userAccount");	
 
     	}
+
+    private function cancelOrder(){
+    	$allOrders = $this->model('Orders')->get();
+			$updateOrder = $allOrders->where('order_id', $_SESSION['order_id'])->first();
+			$updateOrder->status_id = 3;
+			$updateOrder->save();
+    }
 
     public function userAccount(){
     	if($this->checkAuth()){   		    		
@@ -881,18 +891,22 @@ class Home extends Controller{
 
     	$preference = $this->model('Preference_detail');
 		$preference = $preference->where('username', $_SESSION['user'])->get();
+		
+		if($preference->count() == 0){
+			$preference = $this->model('Preference')->get();
+		}
 		$products = $this->model('Product');
 		$product = array();
 		
 		foreach ($preference as $pref) {
-			if(!empty($_SESSION['MPPI'])){
+			if(!empty($_SESSION['MPPI'])){	
 			$productInOrder = $products
 						->where('category_id', $pref->preference_id)
 						->where('unit_price', '<=', $_SESSION['MPPI'])
 						->orderBy('unit_price', 'ASC')
 						->get();
 			}
-			else{
+			else{				
 				$productInOrder = $products
 						->where('category_id', $pref->preference_id)
 						->where('unit_price', '<=', $budget)
@@ -903,22 +917,22 @@ class Home extends Controller{
 				$product[] = $productInOrder->get($i);
 			}
 		}
-		
-		$index = 0;
+
+		if(empty($product)){
+			$this->view('home/placeOrder', ['message'=> "Please insert a higher budget price or a higher item limit."]);
+			die(var_dump($preference->count()));
+		}
+
+		$index = count($product)-1;
 		$total = 0;
+		
 		while($budget > $product[0]->unit_price){
 			//echo "Price of Lowest Item:   " . $product[0]->unit_price . "<br/>";
-			for($j = 0; $j < count($product); $j++){
-				if($product[$j]->unit_price < $budget)
-					$index = $j;
-				else {
-					break;
-				}
-			}
+			
 			$randomLimit = rand(0,$index);
-			if($index === 0)
-				break;
+			
 			//echo  $product[$randomLimit]->unit_price. "<br/>";
+			if($product[$randomLimit]->unit_price <= $budget){
 			$orderDetail = $this->model('order_detail');
 			$orderDetail->order_id = $orderID;
 			$orderDetail->product_id = $product[$randomLimit]->product_id;
@@ -926,15 +940,26 @@ class Home extends Controller{
 			$orderDetail->save();
 			$total = $total + $product[$randomLimit]->unit_price;
 			$budget = $budget - $product[$randomLimit]->unit_price;
-			//echo $budget . "<br/>";
+			}
+			else{
+				$index = $randomLimit -1;
+			}
 		}
-		$shippingCost = ($total * (1.0/6.0))/2.0;
-		$allOrders = $this->model('Orders')->get();
-		$updateOrder = $allOrders->where('order_id', $orderID)->first();
-		$updateOrder->total = $total;
-		$updateOrder->shipping_cost = $shippingCost;
-		$updateOrder->save();
-		$_SESSION['order_id'] = $orderID;
+		
+		if($total != 0){
+			$shippingCost = ($total * (1.0/6.0))/2.0;
+			$allOrders = $this->model('Orders')->get();
+			$updateOrder = $allOrders->where('order_id', $orderID)->first();
+			$updateOrder->total = $total;
+			$updateOrder->shipping_cost = $shippingCost;
+			$updateOrder->save();
+			$_SESSION['order_id'] = $orderID;
+		}
+		else{
+				$this->view('home/placeOrder', ['message'=> "Please insert a higher budget price or a higher item limit."]);
+				die();
+
+		}
 		return $product;
     	
     }
