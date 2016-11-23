@@ -19,9 +19,9 @@
             require_once '../app/controllers/home.php';
             $control = new home();
                 if(isset($_SESSION['user'])) {
-                    echo "<p class='navbar-text navbar-right> Welcome " . $_SESSION['user'] . "</p>";
                     echo '<li><a href="/pattywhack/mvc/public/home/logOut"  style="float: right; font-size: 15px;">Logout</a></li>';
                     echo '<li><a href="/pattywhack/mvc/public/home/userAccount"  style="float: right; font-size: 15px;">My Account</a></li>';
+                    echo "<li><p class='navbar-text navbar-right' style='padding-right: 7px;font-size: 16px;'> Welcome, " . $_SESSION['user'] . " </p></li>";
                     
                     if($control->checkAuth()){
                         echo '<li><a href="/pattywhack/mvc/public/home/adminPanel"  style="float: right; font-size: 15px;">Admin Panel</a></li>';
