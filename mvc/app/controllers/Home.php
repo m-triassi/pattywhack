@@ -12,23 +12,27 @@ use PayPal\Api\Transaction;
 use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 
-define('SITE_URL', 'http://192.168.1.101:80/pattywhack/mvc/public/home');
+define('SITE_URL', 'http://192.168.56.1:80/pattywhack/mvc/public/home');
 
 
 
 
 class Home extends Controller{
+	public $paypal;
 
-	public function payment(){
-		
-		if(!empty($_SESSION['order_id'])){
-
-			$paypal = new \PayPal\Rest\ApiContext(
+	public function __construct(){
+		 $this->paypal = new \PayPal\Rest\ApiContext(
 			new \PayPal\Auth\OAuthTokenCredential(
 				'ARxUXJHH5K43BUp-u39mPXfW-mfAxahfbSkEyPMzLVXDDkhoIFiNtL7ET4WMvx0ly4e8jVm-MP5fXusP',
 				'EGd8S6WcqLROCZc-UOYAdsxbD0V1Ncyz-0QwEtNIn-8ZPVFCLCc8TMBud_9BAiKTGU9OrUDIUsF_onm0'
 				 )
 			);
+	}
+	public function payment(){
+		
+		if(!empty($_SESSION['order_id'])){
+
+			
 
 			$order = $this->model('Orders')->where('order_id', $_SESSION['order_id'])->first();
 
@@ -68,8 +72,14 @@ class Home extends Controller{
 					    ->setInvoiceNumber(uniqid());
 
 			$redirectUrls = new RedirectUrls();
-			$redirectUrls->setReturnUrl(SITE_URL . '/pay.php?approved=true')
-						->setCancelUrl(SITE_URL . '/pay.php?approved=false');
+//			$redirectUrls->setReturnUrl(SITE_URL . '/pay.php?approved=true')
+//						->setCancelUrl(SITE_URL . '/pay.php?approved=false');
+//http://192.168.56.1/pattywhack/mvc/public/home/pay.php?approved=true&paymentId=PAY-695130643V217064CLA2ZY4Y&token=EC-5PR4699574723245V&PayerID=6B8FWKHKAXQDG
+			$redirectUrls->setReturnUrl(SITE_URL . '/pay/approved=true')
+						->setCancelUrl(SITE_URL . '/pay/approved=false');
+
+
+
 
 			$payment = new Payment();
 			$payment->setIntent('sale')
@@ -78,7 +88,7 @@ class Home extends Controller{
 					->setTransactions([$transaction]);
 
 				try{
-					$payment->create($paypal);
+					$payment->create($this->paypal);
 				}catch(Exception $e){
 					echo "<pre>";
 					echo $_SESSION['order_id'] . "<br/>";
@@ -100,6 +110,14 @@ class Home extends Controller{
 		
 
 
+	}
+
+	public function pay($param){
+		
+		echo "<pre>";
+		parse_str($param,$array);
+		var_dump($array);
+		echo "</pre>";
 	}
 
 
