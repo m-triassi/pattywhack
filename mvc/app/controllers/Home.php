@@ -11,6 +11,7 @@ use PayPal\Api\Amount;
 use PayPal\Api\Transaction;
 use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
+use PayPal\Api\PaymentExecution;
 
 define('SITE_URL', 'http://192.168.56.1:80/pattywhack/mvc/public/home');
 
@@ -28,6 +29,8 @@ class Home extends Controller{
 				 )
 			);
 	}
+
+
 	public function payment(){
 		
 		if(!empty($_SESSION['order_id'])){
@@ -110,13 +113,7 @@ class Home extends Controller{
 
 
 
-	public function pay(){
-
-		//http://192.168.56.1/pattywhack/mvc/public/home/pay?paymentId=PAY-6RE66524YW127272DLA22XKY&token=EC-8W902828BV464384E&PayerID=6B8FWKHKAXQDG
-		echo "<pre>";
-		var_dump(!empty($_GET));
-		echo "</pre>";
-	}
+	
 
 
 	public function index($name = ''){
@@ -217,24 +214,25 @@ class Home extends Controller{
     	if(!empty($_GET)){
 
     		if(!isset($_GET['success'],$_GET['paymentId'],$_GET['PayerID']))
-    			die();
+    			$this->view('home/userAccount');
+
     		if((bool)$_GET['success'] === false)
-    			die();
+    			$this->view('home/userAccount');
+
     		$paymentId = $_GET['paymentId'];
     		$PayerID = $_GET['PayerID'];
 
-    		$payment = Payment::get($paymentId,$PayerID)
+    		$payment = Payment::get($paymentId,$this->paypal);
 
-    		$execute = new PaymentExecute();
-    		$execute->setPayerId($payment);
+    		$execute = new PaymentExecution();
+    		$execute->setPayerId($PayerID);
 
     		try{
     			$result = $payment->execute($execute, $this->paypal);
     		}catch(Exception $e){
-    			die($e);
+    			$this->view('home/userAccount');
     		}
-
-    		header("Location: http://localhost/pattywhack/mvc/public/userAccount");
+    		$this->view('home/userAccount', ['get' => $_GET]);
     	}
 		$this->view('home/userAccount');
 	}
