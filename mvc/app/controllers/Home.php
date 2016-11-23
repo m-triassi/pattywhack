@@ -226,6 +226,14 @@ class Home extends Controller{
 		return $getURLs = $this->model('RequestURL')->where('status_id', 1)->get();
 	}
     
+    public function deleteOrder($orderId) 
+    {
+        $toDelete = $this->model('orders')->where('order_id', $orderId)->first();
+        $toDelete->delete();
+        header("Location: http://localhost/pattywhack/mvc/public/home/userAccount");
+        
+    }
+    
     public function listQuestions(){
         return $this->model('question')->get();
         

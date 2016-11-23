@@ -63,30 +63,36 @@
     <form class="editAccount">
         <h2 class="modhead">Your Orders</h2>
         <div class="form-group well">
-            <table class="table table-striped">
-                <tr>
-                    <th>Order ID</th>
-                    <th>Order Status</th>
-                    <th>Tracking Number</th>
-                    <th>Contents of Order</th>
-                    <th>Cancel Order?</th>
-                </tr>
                 <?php 
-
+                    
                     $orders = $this->model('orders');
                     $userOrders = $orders->where('username', $_SESSION['user'])->get();
-                    //var_dump($orders);
-                    for ($k = 0; $k < $orders->count(); $k++)
-                    {
-                        echo "<tr>";
-                        echo "<td>" . $userOrders->get($k)->order_id . "</td>";
-                        echo "<td>" . $userOrders->get($k)->status_id . "</td>";
-                        echo "<td>" . $userOrders->get($k)->tracking_number . "</td>";
-                        echo "<td> </td>";
-                        echo "<td><a href=" .  "><span class='glyphicon glyphicon-remove'</a></td>"; 
+                    //var_dump($userOrders);
+                
+                    if($userOrders->count() === 0)
+                        echo "<h3 style='text-align: center;'>Sure is empty over here... Try placing an order!</h3>";
+                    else {
+                        echo "<table class='table table-striped'>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Order Status</th>
+                                    <th>Tracking Number</th>
+                                    <th>Contents of Order</th>
+                                    <th>Cancel Order?</th>
+                                </tr>";
+                        
+                        for ($k = 0; $k < $userOrders->count(); $k++)
+                        {
+                            echo "<tr>";
+                            echo "<td>" . $userOrders->get($k)->order_id . "</td>";
+                            echo "<td>" . $userOrders->get($k)->status_id . "</td>";
+                            echo "<td>" . $userOrders->get($k)->tracking_number . "</td>";
+                            echo "<td> </td>";
+                            echo "<td><a href=../home/deleteOrder/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-remove'</a></td>"; 
+                        }
+                        echo "</table>";
                     }
                 ?>
-            </table>
         </div>
     
     </form>

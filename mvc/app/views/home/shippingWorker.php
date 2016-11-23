@@ -33,11 +33,27 @@
         <div class="form-group well" style="height:700px;overflow-y:auto;">
             <table class="table table-striped">
                 
-                <tr><th>Order ID</th><th>Ordered By</th><th>Date Placed</th><th>Shipping Address</th><th>Tracking Number</th><th>Modify Details</th></tr>
+                <tr><th>Order ID</th><th>Ordered By</th><th>Date Placed</th><th>Shipping Address</th><th>Tracking Number</th><th>Order Status</th><th>Delete Order</th><th>Mark as Shipped</th> </tr>
                 
                 <?php 
-                    print "<tr>";
-                    print "</tr>";
+                
+                
+                    $orders = $this->model('orders');
+                    $userOrders = $orders->get();
+                    //var_dump($orders);
+                    for ($k = 0; $k < $orders->count(); $k++)
+                    {
+                        echo "<tr>";
+                        echo "<td>" . $userOrders->get($k)->order_id . "</td>";
+                        echo "<td>" . $userOrders->get($k)->username . "</td>";
+                        echo "<td>" . $userOrders->get($k)->date . "</td>";
+                        echo "<td>" . $userOrders->get($k)->shipping_address . "</td>";
+                        echo "<td><input type=number value=" . $userOrders->get($k)->tracking_number . "> <a href=../home/setTracking/" . $userOrders->get($k)->order_id . ">Set</a></td>";
+                        echo "<td>" . $userOrders->get($k)->status_id . "</td>";
+                        echo "<td><a href=../home/deleteOrder/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-remove'</a></td>";
+                        echo "<td><a href=../home/setShipped/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-send'</a></td>";
+                    }
+                    
                 ?>
             
             </table>
