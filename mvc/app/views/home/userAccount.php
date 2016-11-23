@@ -77,12 +77,15 @@
                                     <th>Contents of Order</th>
                                     <th>Cancel Order?</th>
                                 </tr>";
+                        $status = $this->model('status')->get();
                         
                         for ($k = 0; $k < $userOrders->count(); $k++)
                         {
+                            $id = $userOrders->get($k)->status_id;
+                            $statusName = $status->where('status_id', $id)->first()->status_name;
                             echo "<tr>";
                             echo "<td>" . $userOrders->get($k)->order_id . "</td>";
-                            echo "<td>" . $userOrders->get($k)->status_id . "</td>";
+                            echo "<td>" . $statusName . "</td>";
                             echo "<td>" . $userOrders->get($k)->tracking_number . "</td>";
                             echo "<td> </td>";
                             echo "<td><a href=../home/deleteOrder/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-remove'</a></td>"; 
@@ -182,6 +185,10 @@
             ?>
         </table>
         </div>
+
+
+        <form><textarea rows="4" cols="50"> <?php echo "<pre>"; var_dump($_SESSION['result']); echo "</pre>"; ?>
+</textarea></form>
 </body>
 
 </html>

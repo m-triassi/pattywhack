@@ -13,7 +13,7 @@ use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\PaymentExecution;
 
-define('SITE_URL', 'http://192.168.56.1:80/pattywhack/mvc/public/home');
+define('SITE_URL', 'http://localhost:80/pattywhack/mvc/public/home');
 
 
 
@@ -79,8 +79,8 @@ class Home extends Controller{
 //			$redirectUrls->setReturnUrl(SITE_URL . '/pay?approved=true')
 //						->setCancelUrl(SITE_URL .  '/pay?approved=false');
 //http://192.168.56.1/pattywhack/mvc/public/home/pay.php?approved=true&paymentId=PAY-695130643V217064CLA2ZY4Y&token=EC-5PR4699574723245V&PayerID=6B8FWKHKAXQDG
-			$redirectUrls->setReturnUrl(SITE_URL . '/userAccount?success=true')
-						 ->setCancelUrl(SITE_URL . '/userAccount?success=false');
+			$redirectUrls->setReturnUrl(SITE_URL . '/processPayment?success=true')
+						 ->setCancelUrl(SITE_URL . '/processPayment?success=false');
 
 
 
@@ -210,32 +210,53 @@ class Home extends Controller{
 		$this->view('home/index');
 	}
     
-    public function userAccount(){
-    	if(!empty($_GET)){
+    public function processPayment(){
+			if(!empty($_GET)){
+		    		if(!isset($_GET['success'],$_GET['paymentId'],$_GET['PayerID']))
+		    			$this->view('home/index');
 
-    		if(!isset($_GET['success'],$_GET['paymentId'],$_GET['PayerID']))
-    			$this->view('home/userAccount');
+		    		if((bool)$_GET['success'] === false)
+		    			$this->view('home/index');
+		    		
+		    		$getresult = 'success=' . $_GET['success'] . '&paymentId=' .$_GET['paymentId'] . '&PayerID=' . $_GET['PayerID'];
+		    		$_SESSION['result'] = $getresult;
 
-    		if((bool)$_GET['success'] === false)
-    			$this->view('home/userAccount');
+	    			$paymentId = $_GET['paymentId'];
+		    		$PayerID = $_GET['PayerID'];
 
-    		$paymentId = $_GET['paymentId'];
-    		$PayerID = $_GET['PayerID'];
+		    		$payment = Payment::get($paymentId,$this->paypal);
 
-    		$payment = Payment::get($paymentId,$this->paypal);
+		    		$execute = new PaymentExecution();
+		    		$execute->setPayerId($PayerID);
 
-    		$execute = new PaymentExecution();
-    		$execute->setPayerId($PayerID);
 
-    		try{
-    			$result = $payment->execute($execute, $this->paypal);
-    		}catch(Exception $e){
-    			$this->view('home/userAccount');
-    		}
-    		$this->view('home/userAccount', ['get' => $_GET]);
+		    		try{
+		    			$result = $payment->execute($execute, $this->paypal);	  
+		    					
+
+		    		}catch(Exception $e){
+		    			$this->view('home/userAccount');
+		    		}
+		    		$allOrders = $this->model('Orders')->get();
+						$updateOrder = $allOrders->where('order_id', $_SESSION['order_id'])->first();
+						$updateOrder->status_id = 8;
+						$updateOrder->save();  	
+		    		}
+
+
+			$this->view('home/userAccount');
     	}
-		$this->view('home/userAccount');
-	}
+
+    public function userAccount(){
+    	if($this->checkAuth()){   		    		
+	    		$this->view('home/userAccount');
+	    	}
+	    	else{
+	    		$this->view('home/index');
+	    	}
+		}
+
+	
     
     public function shippingWorker(){
 		$this->view('home/shippingWorker');
@@ -906,7 +927,7 @@ class Home extends Controller{
 			$budget = $budget - $product[$randomLimit]->unit_price;
 			//echo $budget . "<br/>";
 		}
-		$shippingCost = ($total * (5.0/6.0))/2.0;
+		$shippingCost = ($total * (1.0/6.0))/2.0;
 		$allOrders = $this->model('Orders')->get();
 		$updateOrder = $allOrders->where('order_id', $orderID)->first();
 		$updateOrder->total = $total;
