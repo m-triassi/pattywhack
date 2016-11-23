@@ -36,7 +36,7 @@ class Home extends Controller{
 
 			$order = $this->model('Orders')->where('order_id', $_SESSION['order_id'])->first();
 
-			$product = 'Random Products Bill';
+			$product = 'Your Patty Whack Surprise!';
 			$price = $order->total;
 			$shipping = $order->shipping_cost;
 			
@@ -68,15 +68,16 @@ class Home extends Controller{
 
 			$transaction = new Transaction();
 			$transaction->setAmount($amount)
-					    ->setDescription('Random Product Bill Payment')
+						->setItemList($itemList)
+					    ->setDescription('Patty Whack Bill')
 					    ->setInvoiceNumber(uniqid());
 
 			$redirectUrls = new RedirectUrls();
-//			$redirectUrls->setReturnUrl(SITE_URL . '/pay.php?approved=true')
-//						->setCancelUrl(SITE_URL . '/pay.php?approved=false');
+//			$redirectUrls->setReturnUrl(SITE_URL . '/pay?approved=true')
+//						->setCancelUrl(SITE_URL .  '/pay?approved=false');
 //http://192.168.56.1/pattywhack/mvc/public/home/pay.php?approved=true&paymentId=PAY-695130643V217064CLA2ZY4Y&token=EC-5PR4699574723245V&PayerID=6B8FWKHKAXQDG
-			$redirectUrls->setReturnUrl(SITE_URL . '/pay/approved=true')
-						->setCancelUrl(SITE_URL . '/pay/approved=false');
+			$redirectUrls->setReturnUrl(SITE_URL . '/userAccount?success=true')
+						 ->setCancelUrl(SITE_URL . '/userAccount?success=false');
 
 
 
@@ -92,16 +93,11 @@ class Home extends Controller{
 				}catch(Exception $e){
 					echo "<pre>";
 					echo $_SESSION['order_id'] . "<br/>";
-					//echo $price . "<br/>";
-					//echo $tax . "<br/>";
-					//echo $shipping . "<br/>";
-					//echo $total . "<br/>";
 					var_dump($e);
 					echo "</pre>";
 				}
 
 			$approvalUrl = $payment->getApprovalLink();
-
 			header("Location: {$approvalUrl}");
 
 			// Need to finish execute payment
@@ -112,11 +108,13 @@ class Home extends Controller{
 
 	}
 
-	public function pay($param){
-		
+
+
+	public function pay(){
+
+		//http://192.168.56.1/pattywhack/mvc/public/home/pay?paymentId=PAY-6RE66524YW127272DLA22XKY&token=EC-8W902828BV464384E&PayerID=6B8FWKHKAXQDG
 		echo "<pre>";
-		parse_str($param,$array);
-		var_dump($array);
+		var_dump(!empty($_GET));
 		echo "</pre>";
 	}
 
@@ -155,8 +153,13 @@ class Home extends Controller{
         $_SESSION['MPPI']  = $_POST['points'];
         $getUserByUsername = $this->model('user');
         $user = $getUserByUsername->where('username' , $_SESSION["user"])->first();
+       
+
         if(!empty($user)) 
         	$this->view('home/shipping',['email'=>$user->email,'address'=>"$user->address",'postalCode'=>"$user->postal_code"]);
+
+
+
         $this->view('home/shipping');
         
 	}
@@ -166,8 +169,15 @@ class Home extends Controller{
     	//echo "<br/><br/><br/><br/>";
     	//print_r($product);
 
+    	 $order = $this->model('Orders')->where('order_id', $_SESSION['order_id'])->first();
 
-		$this->view('home/confirmOrder');
+			$price = $order->total;
+			$shipping = $order->shipping_cost;
+			
+			$tax = round($price * 0.15, 2);
+			$total = $price + $shipping + $tax;
+
+		$this->view('home/confirmOrder', ['price' => $price , 'shipping' => $shipping, 'total' => $total]);
 	}
     
     public function insertOrder(){
@@ -176,6 +186,28 @@ class Home extends Controller{
 	}
     
     public function userAccount(){
+    	if(!empty($_GET)){
+
+    		if(!isset($_GET['success'],$_GET['paymentId'],$_GET['PayerID']))
+    			die();
+    		if((bool)$_GET['success'] === false)
+    			die();
+    		$paymentId = $_GET['paymentId'];
+    		$PayerID = $_GET['PayerID'];
+
+    		$payment = Payment::get($paymentId,$PayerID)
+
+    		$execute = new PaymentExecute();
+    		$execute->setPayerId($payment);
+
+    		try{
+    			$result = $payment->execute($execute, $this->paypal);
+    		}catch(Exception $e){
+    			die($e);
+    		}
+
+    		header("Location: http://localhost/pattywhack/mvc/public/userAccount");
+    	}
 		$this->view('home/userAccount');
 	}
     

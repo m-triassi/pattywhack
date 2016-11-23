@@ -57,7 +57,7 @@ CREATE TABLE `order_detail` (
   KEY `order_id` (`order_id`,`product_id`),
   CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`),
   CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `order_detail` (
 
 LOCK TABLES `order_detail` WRITE;
 /*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
-INSERT INTO `order_detail` VALUES (1,2,7,1,2.87),(2,2,8,1,3.91);
+INSERT INTO `order_detail` VALUES (3,4,8,1,3.91),(4,4,8,1,3.91),(5,4,7,1,2.87),(6,4,7,1,2.87),(7,4,7,1,2.87),(8,5,8,1,3.91),(9,5,7,1,2.87),(10,6,8,1,3.91),(11,6,8,1,3.91),(12,6,7,1,2.87),(13,6,8,1,3.91),(14,6,7,1,2.87),(15,6,8,1,3.91),(16,6,8,1,3.91),(17,6,8,1,3.91),(18,7,8,1,3.91),(19,7,8,1,3.91),(20,8,7,1,2.87),(21,8,8,1,3.91),(22,9,8,1,3.91),(23,9,8,1,3.91),(24,10,8,1,3.91),(25,10,8,1,3.91),(26,11,8,1,3.91),(27,11,8,1,3.91),(28,11,8,1,3.91),(29,12,8,1,3.91),(30,12,7,1,2.87),(31,12,7,1,2.87),(32,12,8,1,3.91),(33,13,7,1,2.87),(34,13,7,1,2.87),(35,13,8,1,3.91),(36,14,8,1,3.91),(37,14,8,1,3.91);
 /*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,20 +81,20 @@ CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) COLLATE latin1_bin NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `total` int(11) DEFAULT NULL,
+  `total` double(11,2) DEFAULT NULL,
   `budget` double(11,2) NOT NULL,
   `shipping_address` varchar(50) COLLATE latin1_bin NOT NULL,
   `rating` int(1) DEFAULT NULL,
   `tracking_number` int(20) DEFAULT NULL,
   `price_per_item` double(11,2) DEFAULT NULL,
-  `shipping_cost` int(11) DEFAULT NULL,
+  `shipping_cost` double(11,2) DEFAULT NULL,
   `status_id` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`order_id`),
   KEY `username` (`username`),
   KEY `status_id` (`status_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`),
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'test2','2016-11-22 02:07:27',NULL,10.00,'1875 rue Saint-Louis',NULL,NULL,10.00,NULL,1),(2,'test2','2016-11-22 02:07:57',NULL,10.00,'1875 rue Saint-Louis',NULL,NULL,10.00,NULL,1);
+INSERT INTO `orders` VALUES (1,'test2','2016-11-22 02:07:27',NULL,10.00,'1875 rue Saint-Louis',NULL,NULL,10.00,NULL,1),(2,'test2','2016-11-22 02:07:57',NULL,10.00,'1875 rue Saint-Louis',NULL,NULL,10.00,NULL,1),(3,'test2','2016-11-22 14:45:12',NULL,20.00,'1875 rue Saint-Louis',NULL,NULL,2.00,NULL,1),(4,'test2','2016-11-22 14:47:29',NULL,20.00,'1875 rue Saint-Louis',NULL,NULL,10.00,NULL,1),(5,'test2','2016-11-23 13:40:55',7.00,10.00,'12345678',NULL,NULL,10.00,3.00,1),(6,'test2','2016-11-23 14:31:46',29.00,30.00,'12345678',NULL,NULL,16.00,12.00,1),(7,'test2','2016-11-23 14:38:28',8.00,10.00,'12345678',NULL,NULL,6.00,3.00,1),(8,'test2','2016-11-23 14:43:07',7.00,10.00,'12345678',NULL,NULL,6.00,3.00,1),(9,'test2','2016-11-23 14:45:59',8.00,10.00,'12345678',NULL,NULL,6.00,3.00,1),(10,'test2','2016-11-23 15:03:56',8.00,10.00,'12345678',NULL,NULL,6.00,3.00,1),(11,'test2','2016-11-23 15:08:46',12.00,15.00,'12345678',NULL,NULL,8.00,5.00,1),(12,'test2','2016-11-23 15:11:26',14.00,15.00,'12345678',NULL,NULL,8.00,6.00,1),(13,'test2','2016-11-23 15:13:32',9.65,10.00,'12345678',NULL,NULL,4.00,4.02,1),(14,'test2','2016-11-23 15:14:44',7.82,10.00,'12345678',NULL,NULL,4.00,3.26,1);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +184,7 @@ CREATE TABLE `product` (
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`availability`) REFERENCES `status` (`status_id`),
   CONSTRAINT `product_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `preference` (`preference_id`),
   CONSTRAINT `product_ibfk_3` FOREIGN KEY (`provider_id`) REFERENCES `provider` (`provider_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -193,7 +193,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (3,'The Legend of Zelda: Art &amp; Artifacts','https%3A%2F%2Fwww.amazon.ca%2Fgp%2Fproduct%2F1506703356%2Fref%3Ds9_zwish_hd_bw_b3qQa_g14_i1%3Fpf_rd_m%3DA3DWYIK6Y9EEQB%26pf_rd_s%3Dmerchandised-search-6%26pf_rd_r%3DJGVTC5Z1GKNYAEX8EV6S%26pf_rd_t%3D101%26pf_rd_p%3D3fd3ec9d-e1cb-5f5f-86ac-9d461300eccc%26pf_rd_i%3D916520',32.00,NULL,3.00,4,11,1),(4,'ASUS F555LA 15.6\" Full-HD Laptop (Core i3, 4GB RAM','https%3A%2F%2Fwww.amazon.ca%2FF555LA-Full-HD-Laptop-500GB-Windows%2Fdp%2FB011KFQASE%2Fref%3Dlp_667823011_1_7%3Fs%3Delectronics%26ie%3DUTF8%26qid%3D1479766307%26sr%3D1-7',499.99,NULL,50.00,4,4,1),(6,'Free 32G Micro Card AUTO-VOX D1 Full HD 1080P 2.7\'','https%3A%2F%2Fwww.amazon.ca%2FAUTO-VOX-Recorder-Dashboard-G-Sensor-Recording%2Fdp%2FB01AT4BF28%2Fref%3Dsr_1_1%3Fs%3Delectronics%26ie%3DUTF8%26qid%3D1479767701%26sr%3D1-1',148.79,NULL,12.40,4,4,1),(7,'Everydaysource White/Silver Universal In-Ear Stere','https%3A%2F%2Fwww.amazon.ca%2FEverydaysource-Silver-Universal-Stereo-Headset%2Fdp%2FB007ZYUZE0%2Fref%3Dsr_1_8%3Fs%3Delectronics%26ie%3DUTF8%26qid%3D1479767791%26sr%3D1-8',2.87,NULL,0.24,4,4,1),(8,'Sodial Sodial- Pink Earbud Headphone Earphone For ','https%3A%2F%2Fwww.amazon.ca%2FSodial-Sodial-Headphone-Earphone-Iphone%25C2%25AE%2Fdp%2FB009LZVIOC%2Fref%3Dsr_1_14%3Fs%3Delectronics%26ie%3DUTF8%26qid%3D1479767802%26sr%3D1-14',3.91,NULL,0.33,4,4,1);
+INSERT INTO `product` VALUES (3,'The Legend of Zelda: Art &amp; Artifacts','https%3A%2F%2Fwww.amazon.ca%2Fgp%2Fproduct%2F1506703356%2Fref%3Ds9_zwish_hd_bw_b3qQa_g14_i1%3Fpf_rd_m%3DA3DWYIK6Y9EEQB%26pf_rd_s%3Dmerchandised-search-6%26pf_rd_r%3DJGVTC5Z1GKNYAEX8EV6S%26pf_rd_t%3D101%26pf_rd_p%3D3fd3ec9d-e1cb-5f5f-86ac-9d461300eccc%26pf_rd_i%3D916520',32.00,NULL,3.00,4,11,1),(4,'ASUS F555LA 15.6\" Full-HD Laptop (Core i3, 4GB RAM','https%3A%2F%2Fwww.amazon.ca%2FF555LA-Full-HD-Laptop-500GB-Windows%2Fdp%2FB011KFQASE%2Fref%3Dlp_667823011_1_7%3Fs%3Delectronics%26ie%3DUTF8%26qid%3D1479766307%26sr%3D1-7',499.99,NULL,50.00,4,4,1),(6,'Free 32G Micro Card AUTO-VOX D1 Full HD 1080P 2.7\'','https%3A%2F%2Fwww.amazon.ca%2FAUTO-VOX-Recorder-Dashboard-G-Sensor-Recording%2Fdp%2FB01AT4BF28%2Fref%3Dsr_1_1%3Fs%3Delectronics%26ie%3DUTF8%26qid%3D1479767701%26sr%3D1-1',148.79,NULL,12.40,4,4,1),(7,'Everydaysource White/Silver Universal In-Ear Stere','https%3A%2F%2Fwww.amazon.ca%2FEverydaysource-Silver-Universal-Stereo-Headset%2Fdp%2FB007ZYUZE0%2Fref%3Dsr_1_8%3Fs%3Delectronics%26ie%3DUTF8%26qid%3D1479767791%26sr%3D1-8',2.87,NULL,0.24,4,4,1),(8,'Sodial Sodial- Pink Earbud Headphone Earphone For ','https%3A%2F%2Fwww.amazon.ca%2FSodial-Sodial-Headphone-Earphone-Iphone%25C2%25AE%2Fdp%2FB009LZVIOC%2Fref%3Dsr_1_14%3Fs%3Delectronics%26ie%3DUTF8%26qid%3D1479767802%26sr%3D1-14',3.91,NULL,0.33,4,4,1),(9,'TI 81 Texas Instruments Scientific Graphing Calcul','http%3A%2F%2Fwww.ebid.net%2Fca%2Ffor-sale%2Fti-81-texas-instruments-scientific-graphing-calculator-152365955.htm',19.31,NULL,1.61,4,23,3);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,7 +266,7 @@ CREATE TABLE `request` (
   PRIMARY KEY (`request_id`),
   KEY `status_id` (`status_id`),
   CONSTRAINT `request_ibfk_1` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,7 +275,7 @@ CREATE TABLE `request` (
 
 LOCK TABLES `request` WRITE;
 /*!40000 ALTER TABLE `request` DISABLE KEYS */;
-INSERT INTO `request` VALUES (1,'https://www.amazon.ca/Asus-Transformer-T100HA-DH11T-CA-10-1-Inch-Laptop/dp/B0186SN2PC/ref=sr_1_1?s=pc&ie=UTF8&qid=1479486615&sr=1-1&keywords=convertible',2),(2,'https%3A%2F%2Fwww.amazon.ca%2Fgp%2Fproduct%2F1506703356%2Fref%3Ds9_zwish_hd_bw_b3qQa_g14_i1%3Fpf_rd_m%3DA3DWYIK6Y9EEQB%26pf_rd_s%3Dmerchandised-search-6%26pf_rd_r%3DJGVTC5Z1GKNYAEX8EV6S%26pf_rd_t%3D101%26pf_rd_p%3D3fd3ec9d-e1cb-5f5f-86ac-9d461300eccc%26pf_rd_i%3D916520',6),(3,'https%3A%2F%2Fwww.amazon.ca%2FPlaytex-Diaper-Genie-Disposal-System%2Fdp%2FB00LCR1KZO%2Fref%3Dgbph_img_m-6_7b56_e18c27a8%3Fsmid%3DA3DWYIK6Y9EEQB%26pf_rd_p%3Def10e933-94dc-4f20-bbee-3a13e9607b56%26pf_rd_s%3Dmerchandised-search-6%26pf_rd_t%3D101%26pf_rd_i%3D3561346011%26pf_rd_m%3DA3DWYIK6Y9EEQB%26pf_rd_r%3D4YRVC6FCDDMKF52F1B5Z',1);
+INSERT INTO `request` VALUES (1,'https://www.amazon.ca/Asus-Transformer-T100HA-DH11T-CA-10-1-Inch-Laptop/dp/B0186SN2PC/ref=sr_1_1?s=pc&ie=UTF8&qid=1479486615&sr=1-1&keywords=convertible',2),(2,'https%3A%2F%2Fwww.amazon.ca%2Fgp%2Fproduct%2F1506703356%2Fref%3Ds9_zwish_hd_bw_b3qQa_g14_i1%3Fpf_rd_m%3DA3DWYIK6Y9EEQB%26pf_rd_s%3Dmerchandised-search-6%26pf_rd_r%3DJGVTC5Z1GKNYAEX8EV6S%26pf_rd_t%3D101%26pf_rd_p%3D3fd3ec9d-e1cb-5f5f-86ac-9d461300eccc%26pf_rd_i%3D916520',6),(3,'https%3A%2F%2Fwww.amazon.ca%2FPlaytex-Diaper-Genie-Disposal-System%2Fdp%2FB00LCR1KZO%2Fref%3Dgbph_img_m-6_7b56_e18c27a8%3Fsmid%3DA3DWYIK6Y9EEQB%26pf_rd_p%3Def10e933-94dc-4f20-bbee-3a13e9607b56%26pf_rd_s%3Dmerchandised-search-6%26pf_rd_t%3D101%26pf_rd_i%3D3561346011%26pf_rd_m%3DA3DWYIK6Y9EEQB%26pf_rd_r%3D4YRVC6FCDDMKF52F1B5Z',7),(4,'http%3A%2F%2Fwww.ebid.net%2Fca%2Ffor-sale%2Fti-81-texas-instruments-scientific-graphing-calculator-152365955.htm',6);
 /*!40000 ALTER TABLE `request` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -375,4 +375,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-22  9:34:11
+-- Dump completed on 2016-11-23 10:31:52
