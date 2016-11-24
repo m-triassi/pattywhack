@@ -839,17 +839,7 @@ class Home extends Controller{
 				$ebay = "ebay.ca";
 				$ebid = "ebid.net";
 				$providerID = 4;				
-				if(strpos($URLencoded, $amazon) != FALSE){					
-					$this->parseAmazon($URLencoded, false);
-				}
-				elseif(strpos($URLencoded, $ebay) != FALSE){					
-					$this->parseEBAY ($URLencoded, false);
-				}
-				elseif(strpos($URLencoded, $ebid) != FALSE){
-					$this->parseEBid($URLencoded, false);
-				}
-				elseif (!$error) {
-					
+				if(!$error){
 					$product = $this->model('product');
 							$product->product_name = $_POST['adminProdName'];
 							$product->url = $URLencoded;
@@ -859,6 +849,16 @@ class Home extends Controller{
 							$product->category_id = $this->matchCategory($_POST['adminProdCategory']);
 							$product->save();
 				}
+				elseif(strpos($URLencoded, $amazon) != FALSE){					
+					$this->parseAmazon($URLencoded, false);
+				}
+				elseif(strpos($URLencoded, $ebay) != FALSE){					
+					$this->parseEBAY ($URLencoded, false);
+				}
+				elseif(strpos($URLencoded, $ebid) != FALSE){
+					$this->parseEBid($URLencoded, false);
+				}
+				
 			}
 			$this->view('home/adminPanel');
 		}else{
