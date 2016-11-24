@@ -355,17 +355,18 @@ class Home extends Controller{
 		return $getURLs = $this->model('RequestURL')->where('status_id', 1)->get();
 	}
     
-    public function deleteOrder($orderId) 
+    public function deleteOrder($orderId, $whereFrom) 
     {
         //server request URI
         $currPage = $_SERVER['REQUEST_URI'];
         $toDelete = $this->model('orders')->where('order_id', $orderId)->first();
-        $toDelete->status_id = 8;
+        $toDelete->status_id = 3;
         $toDelete->save();
-        if ($currPage = "/pattywhack/mvc/public/home/shippingworker")
-            header("Location: http://localhost/pattywhack/mvc/public/home/shippingWorker");
-        else
+        
+        if ($whereFrom == 2)
             header("Location: http://localhost/pattywhack/mvc/public/home/userAccount");
+        else
+            header("Location: http://localhost/pattywhack/mvc/public/home/shippingWorker");
         
     }
     
@@ -435,7 +436,12 @@ class Home extends Controller{
     {
         $quesToAdd = $this->model('question');
         
-        $quesToAdd->username = $_SESSION['user'];
+        if(isset($_SESSION['user']))
+            $quesToAdd->username = $_SESSION['user'];
+        else
+           $quesToAdd->username = $_POST['emailBox'];
+        
+        
         $quesToAdd->question = $_POST['qBox'];
         $quesToAdd->status_id = 1;
         

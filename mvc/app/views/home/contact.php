@@ -27,6 +27,13 @@
     <form method="POST" class="registerform" action="../home/addQuestion" >
         
         <div class="form-group">
+            <?php 
+                if(!isset($_SESSION['user']))
+                    echo "<label for=qBox>Your Email: </label>
+                          <input required class=form-control type=email name=emailBox placeholder='Your Email'><br />";
+            
+            ?>
+            
             <label for="qBox">Submit a Question </label>
             <textarea required class="form-control" name="qBox" placeholder="Ask us Anything!"></textarea>
         </div>

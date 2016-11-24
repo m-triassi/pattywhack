@@ -97,8 +97,8 @@
                                     echo "<td> </td>";
 
                                 
-                                if($id == 1)
-                                    echo "<td><a href=../home/deleteOrder/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-remove'/> </a></td>"; 
+                                if($id == 9)
+                                    echo "<td><a href=../home/deleteOrder/" . $userOrders->get($k)->order_id . "/2><span class='glyphicon glyphicon-remove'/> </a></td>"; 
                                 else
                                     echo "<td> </td>";
                                 echo "</tr>";

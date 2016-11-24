@@ -45,6 +45,10 @@
                             $status = "Pending";
                         elseif ($userOrders->get($k)->status_id == 8)
                             $status = "Shipped";
+                        elseif ($userOrders->get($k)->status_id == 9)
+                            $status = "Payed";
+                        elseif ($userOrders->get($k)->status_id == 3)
+                            $status = "Canceled";
                         else
                             $status = "Complete";
                         
@@ -58,7 +62,7 @@
                         echo "<td>" . $userOrders->get($k)->shipping_address . "</td>";
                         echo "<td><input type=number name=track value=" . $userOrders->get($k)->tracking_number . "> <button type='submit' class='btn btn-sm btn-success'>Set</button></td>";
                         echo "<td>" . $status . "</td>";
-                        echo "<td><a href=../home/deleteOrder/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-remove'</a></td>";
+                        echo "<td><a href=../home/deleteOrder/" . $userOrders->get($k)->order_id . "/1><span class='glyphicon glyphicon-remove'</a></td>";
                         echo "<td><a href=../home/setShipped/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-send'</a></td>";
                         echo "<td><a href=../home/setComplete/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-ok'</a></td>";
                         echo "</form>";

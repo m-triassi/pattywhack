@@ -40,7 +40,7 @@
     <?php include("includes/footer.php"); ?>
     <h1 class="registerhead"></h1>
 
-<body style="display:none;" class="homebody">
+<body style="display:none; padding-bottom: 50px;" class="homebody">
     <div>
         <h2 style="color:white;">Add a Product</h2>
         <form method="POST" action="../home/parseLink" >
@@ -138,6 +138,28 @@
                 
             ?>
         </table>
+        </div>
+        
+        <h2 style="color:white;">Product Database </h2>    
+        <div class="well">
+        <table class="table">
+            <tr>
+            <th>Product Name</th><th>Unit Price</th><th>Shipping Cost</th><th>URL to Product</th><th>Availability</th><th>Submit Changes</th>
+            </tr> 
+            
+            <?php 
+            /*
+                $allProds $this->model('product')->get();
+                for($j = 0; $j < $allProds->count(); $j++)
+                {
+                    echo "<tr>";
+                    
+                    echo "</tr>";
+                }
+            */
+            ?>
+            
+              </table>
         </div>
         
     </div>
