@@ -83,7 +83,7 @@
                         {
                             $id = $userOrders->get($k)->status_id;
                             $statusName = $status->where('status_id', $id)->first()->status_name;
-                            if($id == 2 || $id == 8 || $id == 9){
+                            if($id == 1 || $id == 2 || $id == 8 || $id == 9){
                                 echo "<tr>";
                                 echo "<td>" . $userOrders->get($k)->order_id . "</td>";
                                 echo "<td>" . $statusName . "</td>";
@@ -98,6 +98,7 @@
                                     echo "<td><a href=../home/deleteOrder/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-remove'/> </a></td>"; 
                                 else
                                     echo "<td> </td>";
+                                echo "</tr>";
                         }
                         }
                         echo "</table>";
