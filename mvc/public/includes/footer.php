@@ -119,7 +119,7 @@
     
     /* Animations */
 .cub-1 {
-    -webkit-animation: rotation 7s infinite linear;
+    -webkit-animation: rotation 25s infinite linear;
 }
     
 @-webkit-keyframes rotation {
