@@ -296,6 +296,14 @@ class Home extends Controller{
     {   
         $this->view('home/viewOrder', ['order_id'=>$id]);
     }
+    
+    public function rateOrder($id, $rate)
+    {
+        $rateThis = $this->model('orders')->where('order_id', $id)->first();
+        $rateThis->rating = $rate;
+        $rateThis->save();
+        header("Location: http://localhost/pattywhack/mvc/public/home/userAccount");
+    }
 
     public function userAccount(){
     	if($this->checkAuth()){   		    		

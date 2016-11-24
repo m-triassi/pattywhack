@@ -8,7 +8,9 @@
 <link rel="stylesheet" type="text/css" href="/pattywhack/mvc/public/stylesheets/adminStyles.css">
 <!-- Includes -->
     <?php include("../public/includes/navbar.php"); ?>
-    <?php include("includes/footer.php"); ?>
+     <?php include("includes/footer.php"); ?>
+
+    
     
     
 <script>
@@ -74,6 +76,7 @@
         
             
     </div>
+   
 </body>
 
 </html>

@@ -77,6 +77,8 @@
                                     <th>Order ID</th>
                                     <th>Order Status</th>
                                     <th>Tracking Number</th>
+                                    <th>Rate Order</th>
+                                    <th>Your Rating</th>
                                     <th style='width: 23px;'>Contents of Order</th>
                                     <th style='width: 23px;'>Cancel Order?</th>
                                 </tr>";
@@ -91,10 +93,24 @@
                                 echo "<td>" . $userOrders->get($k)->order_id . "</td>";
                                 echo "<td>" . $statusName . "</td>";
                                 echo "<td>" . $userOrders->get($k)->tracking_number . "</td>";
-                                if ($id == 2)
+                                if ($id == 2){
+                                    
+                                    echo "<td><a href=../home/rateOrder/" . $userOrders->get($k)->order_id . "/1><span class='glyphicon glyphicon-star'/> 
+                                    <a href=../home/rateOrder/" . $userOrders->get($k)->order_id . "/2><span class='glyphicon glyphicon-star'/>
+                                    <a href=../home/rateOrder/" . $userOrders->get($k)->order_id . "/3><span class='glyphicon glyphicon-star'/>
+                                    <a href=../home/rateOrder/" . $userOrders->get($k)->order_id . "/4><span class='glyphicon glyphicon-star'/>
+                                    <a href=../home/rateOrder/" . $userOrders->get($k)->order_id . "/5><span class='glyphicon glyphicon-star'/></td>";
+                                    echo "<td>" . $userOrders->get($k)->rating . "</td>";
                                     echo "<td><a href=../home/viewOrder/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-eye-open'/> </td>";
-                                else
+                                    
+                                }
+                                else {
+                                    
                                     echo "<td> </td>";
+                                    echo "<td> </td>";
+                                    echo "<td> </td>";
+                                    
+                                }
 
                                 
                                 if($id == 9)
