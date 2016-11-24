@@ -94,10 +94,7 @@ class Home extends Controller{
 				try{
 					$payment->create($this->paypal);
 				}catch(Exception $e){
-					echo "<pre>";
-					echo $_SESSION['order_id'] . "<br/>";
-					var_dump($e);
-					echo "</pre>";
+					
 				}
 
 			$approvalUrl = $payment->getApprovalLink();
@@ -933,6 +930,7 @@ class Home extends Controller{
         if($scoreArray[$j] !== 1 &&  $scoreArray[$j] < 50){
         	$j = 22;
         }
+        $allCats = $this->model('preference')->get();
         $matchedCat = $allCats->get($j)->preference_id;
         //var_dump($matchedCat);
 	    return $matchedCat;
@@ -962,9 +960,10 @@ class Home extends Controller{
 		
 		foreach ($preference as $pref) {
 			if(!empty($_SESSION['MPPI'])){	
-			$productInOrder = $products
+				$productInOrder = $products
 						->where('category_id', $pref->preference_id)
-						->where('unit_price', '<=', $_SESSION['MPPI'])
+						->where('unit_price', '<=', $_SESSION['MPPI'])		
+						->where('availability', 4)				
 						->orderBy('unit_price', 'ASC')
 						->get();
 			}
@@ -972,9 +971,29 @@ class Home extends Controller{
 				$productInOrder = $products
 						->where('category_id', $pref->preference_id)
 						->where('unit_price', '<=', $budget)
+						->where('availability', 4)
 						->orderBy('unit_price', 'ASC')
 						->get();
 			}
+			$productUnavailableinPref =  $products
+											->where('category_id', $pref->preference_id)
+											->where('availability', 5)
+											->get();
+
+
+			if($productUnavailableinPref->count() != 0 && $productInOrder->count() == 0){
+				if(!empty($_SESSION['MPPI']))
+ 					$productInOrder = $products->where('availability', 4)->where('unit_price', '<=', $_SESSION['MPPI'])->orderBy('unit_price', 'ASC')->get();
+ 				else
+ 					$productInOrder = $products->where('availability', 4)->where('unit_price', '<=', $budget)->orderBy('unit_price', 'ASC')->get();
+
+ 				for($i = 0; $i < $productInOrder->count(); $i++){
+					$product[] = $productInOrder->get($i);
+				}
+
+ 				break;
+			}
+
 			for($i = 0; $i < $productInOrder->count(); $i++){
 				$product[] = $productInOrder->get($i);
 			}
@@ -982,7 +1001,7 @@ class Home extends Controller{
 
 		if(empty($product)){
 			$this->view('home/placeOrder', ['message'=> "Please insert a higher budget price or a higher item limit."]);
-			die(var_dump($preference->count()));
+			die();
 		}
 
 		$index = count($product)-1;
@@ -1026,6 +1045,35 @@ class Home extends Controller{
     	
     }
     
+    public function editProduct($id){
+    	if($this->checkAuth()){
+    		$product = $this->model('product')->where('product_id', $id)->get();
+    		if($product->count() != 0){
+
+    			$product = $product->first();
+    			if(!empty($_POST['productName']))
+    				$product->product_name = $_POST['productName'];
+	    		if(!empty($_POST['productPrice']))
+	    			$product->unit_price = $_POST['productPrice'];
+	    		if(!empty($_POST['shippingCost']))
+	    			$product->item_shipping_cost = $_POST['shippingCost'];
+	    		if(!empty($_POST['url'])){
+	    			$url = urlencode($_POST['url']);
+	    			$product->url = $url;
+	    		}
+	    		if(isset($_POST['availBox']))	    			
+	    			$product->availability = 4;
+	    		else
+	    			$product->availability = 5;
+    		}
+    		
+    		$product->save();
+
+    		header("Location: http://localhost/pattywhack/mvc/public/home/adminPanel");
+    	}
+    	else
+    		header("Location: http://localhost/pattywhack/mvc/public/home");
+    }
     
 	
 }

@@ -141,22 +141,41 @@
         </div>
         
         <h2 style="color:white;">Product Database </h2>    
-        <div class="well">
-        <table class="table">
+        <div class="well">        
+        <table class="table" >
             <tr>
             <th>Product Name</th><th>Unit Price</th><th>Shipping Cost</th><th>URL to Product</th><th>Availability</th><th>Submit Changes</th>
             </tr> 
             
             <?php 
-            /*
-                $allProds $this->model('product')->get();
-                for($j = 0; $j < $allProds->count(); $j++)
-                {
-                    echo "<tr>";
+            
+                $allProds = $this->model('product')->get();
+                foreach ($allProds as $product) {
+                    echo "<form method='POST' action=\"../home/editProduct/". $product->product_id . "\" \>";
+                    echo "<tr><td>";
+                    echo "<input type='text'   value='$product->product_name' name='productName' />";
+                    echo "</td><td>";
+                    echo "<input type='number' step=\"any\" value=$product->unit_price name='productPrice' />";
+                    echo "</td><td>";
+                    echo "<input type='number' step=\"any\" value=$product->item_shipping_cost name='shippingCost' />";
+                    echo "</td><td>";
+                    $url = urldecode($product->url);
+                    echo "<input type='text' value=$url name='url' />";
+                    echo "</td><td>";
+                    if($product->availability == 4){
+                        echo "<input type=checkbox value=" . $product->product_id . " name=availBox checked>";                        
+                    }
+                    else{
+                        echo "<input type=checkbox value=" . $product->product_id . " name=availBox >";  
+                    }
+                    echo "</td><td>";
+                    echo "<button type='submit' <span class='glyphicon glyphicon-edit' />";
                     
-                    echo "</tr>";
+                    echo "</td></tr>";
+                    echo "</form>";
+                    
                 }
-            */
+            
             ?>
             
               </table>
