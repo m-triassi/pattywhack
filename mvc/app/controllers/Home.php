@@ -286,7 +286,7 @@ class Home extends Controller{
     	}
 
     private function cancelOrder(){
-    	$allOrders = $this->model('Orders')->get();
+    	   $allOrders = $this->model('Orders')->get();
 			$updateOrder = $allOrders->where('order_id', $_SESSION['order_id'])->first();
 			$updateOrder->status_id = 3;
 			$updateOrder->save();
@@ -360,7 +360,8 @@ class Home extends Controller{
         //server request URI
         $currPage = $_SERVER['REQUEST_URI'];
         $toDelete = $this->model('orders')->where('order_id', $orderId)->first();
-        $toDelete->delete();
+        $toDelete->status_id = 8;
+        $toDelete->save();
         if ($currPage = "/pattywhack/mvc/public/home/shippingworker")
             header("Location: http://localhost/pattywhack/mvc/public/home/shippingWorker");
         else
