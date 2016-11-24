@@ -132,10 +132,10 @@
 <div id="tridiv" style="z-index: -1; position: fixed;">
   <div class="scene" style="-webkit-transform:rotateX(-15deg) rotateY(154deg); -moz-transform:rotateX(-15deg) rotateY(154deg); -ms-transform:rotateX(-15deg) rotateY(154deg); transform:rotateX(-15deg) rotateY(154deg); ">
     <div class="shape cuboid-1 cub-1">
-      <div class="face ft"></div>
-      <div class="face bk"></div>
-      <div class="face rt"></div>
-      <div class="face lt"></div>
+      <div class="face ft"><img src="/pattywhack/mvc/public/img/pattyLogo.ico" style="height: 200px; width: 200px; display: block; margin: 0 auto;margin-top: 90px;"></div>
+      <div class="face bk"><img src="/pattywhack/mvc/public/img/pattyLogo.ico" style="height: 200px; width: 200px; display: block; margin: 0 auto;margin-top: 90px;"></div>
+      <div class="face rt"><img src="/pattywhack/mvc/public/img/david.jpg" style="height: 80px; width: 80px;"> <img src="/pattywhack/mvc/public/img/pattyLogo.ico" style="height: 200px; width: 200px; display: block; margin: 0 auto;margin-top: 10px;"></div>
+      <div class="face lt"><img src="/pattywhack/mvc/public/img/pattyLogo.ico" style="height: 200px; width: 200px; display: block; margin: 0 auto;margin-top: 90px;"></div>
       <div class="face bm"></div>
       <div class="face tp"></div>
     </div>
