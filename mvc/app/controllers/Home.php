@@ -762,7 +762,7 @@ class Home extends Controller{
 				$this->view('home/register',['message'=>"Username already in use.", 'email'=> $email,'address'=>$address,'pCode'=>$postalCode, 'username'=>$username]);
 			elseif($userEmail->count() != 0){
 				if($userEmail->first()->authority_id == 3){
-					$userEmail->first()->username = $username;
+					//$userEmail->first()->username = $username;
 					$userEmail->first()->password_hash = $passHash;
 					$userEmail->first()->address = $address;
 					$userEmail->first()->postal_code = $postalCode;
