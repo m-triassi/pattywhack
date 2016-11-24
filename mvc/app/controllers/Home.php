@@ -291,6 +291,11 @@ class Home extends Controller{
 			$updateOrder->status_id = 3;
 			$updateOrder->save();
     }
+    
+    public function viewOrder($id)
+    {   
+        $this->view('home/viewOrder', ['order_id'=>$id]);
+    }
 
     public function userAccount(){
     	if($this->checkAuth()){   		    		

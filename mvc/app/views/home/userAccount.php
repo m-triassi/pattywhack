@@ -74,8 +74,8 @@
                                     <th>Order ID</th>
                                     <th>Order Status</th>
                                     <th>Tracking Number</th>
-                                    <th>Contents of Order</th>
-                                    <th>Cancel Order?</th>
+                                    <th style='width: 23px;'>Contents of Order</th>
+                                    <th style='width: 23px;'>Cancel Order?</th>
                                 </tr>";
                         $status = $this->model('status')->get();
                         
@@ -84,12 +84,20 @@
                             $id = $userOrders->get($k)->status_id;
                             $statusName = $status->where('status_id', $id)->first()->status_name;
                             if($id == 2 || $id == 8 || $id == 9){
-                            echo "<tr>";
-                            echo "<td>" . $userOrders->get($k)->order_id . "</td>";
-                            echo "<td>" . $statusName . "</td>";
-                            echo "<td>" . $userOrders->get($k)->tracking_number . "</td>";
-                            echo "<td> </td>";
-                            echo "<td><a href=../home/deleteOrder/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-remove'</a></td>"; 
+                                echo "<tr>";
+                                echo "<td>" . $userOrders->get($k)->order_id . "</td>";
+                                echo "<td>" . $statusName . "</td>";
+                                echo "<td>" . $userOrders->get($k)->tracking_number . "</td>";
+                                if ($id == 2)
+                                    echo "<td><a href=../home/viewOrder/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-eye-open'/> </td>";
+                                else
+                                    echo "<td> </td>";
+
+                                
+                                if($id == 1)
+                                    echo "<td><a href=../home/deleteOrder/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-remove'/> </a></td>"; 
+                                else
+                                    echo "<td> </td>";
                         }
                         }
                         echo "</table>";

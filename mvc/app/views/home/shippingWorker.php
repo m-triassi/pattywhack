@@ -31,7 +31,7 @@
             <table class="table table-striped">
                 
                 
-                <tr><th>Order ID</th><th>Ordered By</th><th>Date Placed</th><th>Shipping Address</th><th>Tracking Number</th><th>Order Status</th><th style="width:15px;">Delete Order</th><th style="width:15px;">Mark as Shipped</th><th style="width:15px;">Mark as Complete</th> </tr>
+                <tr><th style="width:15px;">View Contents</th><th>Order ID</th><th>Ordered By</th><th>Date Placed</th><th>Shipping Address</th><th>Tracking Number</th><th>Order Status</th><th style="width:15px;">Delete Order</th><th style="width:15px;">Mark as Shipped</th><th style="width:15px;">Mark as Complete</th> </tr>
                 
                 <?php 
                 
@@ -51,6 +51,7 @@
                         
                         echo "<form method=POST class=general action=../home/setTracking >";
                         echo "<tr>";
+                        echo "<td><a href=../home/viewOrder/" . $userOrders->get($k)->order_id . "><span class='glyphicon glyphicon-eye-open'</a></td>";
                         echo "<td>" . $userOrders->get($k)->order_id . "</td>" . "<input type=hidden value=" . $userOrders->get($k)->order_id . " name=orderID >";
                         echo "<td>" . $userOrders->get($k)->username . "</td>";
                         echo "<td>" . $userOrders->get($k)->date . "</td>";
