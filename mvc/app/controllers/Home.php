@@ -916,7 +916,7 @@ class Home extends Controller{
         $matchedCat = "";
         if($toMatch == "" || $toMatch == null)
         	return 25;
-        $allCats = $this->model('preference')->get();
+        $allCats = $this->model('Preference')->get();
        
         for($i = 0; $i < $allCats->count(); $i++)
         {
@@ -926,13 +926,13 @@ class Home extends Controller{
         }
         
         $j = array_search(max($scoreArray), $scoreArray);
-        
-        if($scoreArray[$j] !== 1 &&  $scoreArray[$j] < 50){
-        	$j = 22;
+        var_dump($scoreArray);
+        if($scoreArray[$j] !== 1 &&  $scoreArray[$j] < 40){
+        	$j = 21;
         }
         $allCats = $this->model('preference')->get();
         $matchedCat = $allCats->get($j)->preference_id;
-        //var_dump($matchedCat);
+        
 	    return $matchedCat;
         
     }
