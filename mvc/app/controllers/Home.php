@@ -838,18 +838,17 @@ class Home extends Controller{
 				$amazon = "amazon.ca";
 				$ebay = "ebay.ca";
 				$ebid = "ebid.net";
-				$providerID = 4;				
-				if(strpos($URLencoded, $amazon) != FALSE){					
-					$this->parseAmazon($URLencoded, false);
-				}
-				elseif(strpos($URLencoded, $ebay) != FALSE){					
-					$this->parseEBAY ($URLencoded, false);
-				}
-				elseif(strpos($URLencoded, $ebid) != FALSE){
-					$this->parseEBid($URLencoded, false);
-				}
-				elseif (!$error) {
-					
+				$providerID;
+				if(strpos($URLencoded, $amazon) != FALSE)
+					$providerID = 1;
+				elseif(strpos($URLencoded, $ebay) != FALSE)
+					$providerID = 2;
+				elseif(strpos($URLencoded, $ebid) != FALSE)
+					$providerID = 3;
+				else
+					$providerID = 4;
+				
+				if(!$error){
 					$product = $this->model('product');
 							$product->product_name = $_POST['adminProdName'];
 							$product->url = $URLencoded;
@@ -859,6 +858,16 @@ class Home extends Controller{
 							$product->category_id = $this->matchCategory($_POST['adminProdCategory']);
 							$product->save();
 				}
+				elseif(strpos($URLencoded, $amazon) != FALSE){					
+					$this->parseAmazon($URLencoded, false);
+				}
+				elseif(strpos($URLencoded, $ebay) != FALSE){					
+					$this->parseEBAY ($URLencoded, false);
+				}
+				elseif(strpos($URLencoded, $ebid) != FALSE){
+					$this->parseEBid($URLencoded, false);
+				}
+				
 			}
 			$this->view('home/adminPanel');
 		}else{

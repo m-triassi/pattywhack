@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 http://www.ebay.ca/itm/Hunter-Boots-Girls-Original-Young-Rain-Boot-/152304720556?var=451507905435&_trkparms=%26rpp_cid%3D5833359ee4b03cb24c7fa457%26rpp_icid%3D58332f0ee4b01cae304a2a0a
 http://www.ebay.ca/itm/Brand-New-Cobra-Portable-Power-JumPack-6000mAh-2-4-Amp-USB-Port-CPP8000-/272454408312?_trkparms=%26rpp_cid%3D5833359ee4b03cb24c7fa457%26rpp_icid%3D58332f0ee4b01cae304a2a0a
 http://www.ebay.ca/itm/KitchenAid-K45SSOB-Classic-Series-4-5-Quart-10-Speed-Onyx-Black-Stand-Mixer-/111929609316?_trkparms=%26rpp_cid%3D5833359ee4b03cb24c7fa457%26rpp_icid%3D58332f0ee4b01cae304a2a0a
@@ -32,3 +33,5 @@ https://www.amazon.ca/dp/B00MAWSV0M/ref=wl_it_dp_o_pd_nS_ttl?_encoding=UTF8&coli
 
 
 ASSSSSSSS
+=======
+>>>>>>> origin/Daniel_MVC
