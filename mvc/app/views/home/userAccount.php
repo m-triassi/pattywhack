@@ -34,11 +34,14 @@
           text-align: center;
           list-style-type: none;
             align-content: center;
+            
         }
         ul.items li {
           float:left;
+            padding: 40px;
+            padding-left: 60px;
         }
-        ul.items li:nth-child(3n+4) {
+        ul.items li:nth-child(8n+9) {
           clear:left;
           float:left;
         }
@@ -139,7 +142,7 @@
     
     <form method="POST" class="editaccount" action="../home/updatePreference">
         <h2 class="modhead">Change your Prefences</h2>
-        <div class="form-group well" style="padding-bottom: 250px;">
+        <div class="form-group well container-fluid"s>
             <ul class="items">
                 <?php 
                 $control->listAllPref();
