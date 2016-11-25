@@ -19,14 +19,23 @@
 <script type="text/javascript">
 $( document ).ready(function() {
     $("#budgBox").keyup(function() {
+            if(document.getElementById("MPPI").style.display == 'none')
+        {
+            $('#points').attr('min', $("#budgBox").val());
+            $('#points').attr('max', $("#budgBox").val());
+        }
+    else
+    {
+        $('#points').attr('min', 0);
         $('#points').attr('max', $("#budgBox").val());
+    }
     });
     
     
 });
     
 function updateTextInput(val) {
-    document.getElementById('dispVal').value=val; 
+        document.getElementById('dispVal').value=val; 
 }    
   
 function revealMPPI() {
