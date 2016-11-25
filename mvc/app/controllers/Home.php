@@ -303,7 +303,7 @@ class Home extends Controller{
     }
 
     public function userAccount(){
-    	if($this->checkAuth()){   		    		
+    	if($this->checkPblicAuth()){   		    		
 	    		$this->view('home/userAccount');
 	    	}
 	    	else{
@@ -454,12 +454,30 @@ class Home extends Controller{
         header("Location: http://localhost/pattywhack/mvc/public/home/contact");
     }
 
+    public function checkPblicAuth(){
+		if(isset($_SESSION['user'])) {
+			$getUserByUsername = $this->model('user');
+			$auth = $getUserByUsername->where('username' , $_SESSION["user"])->first()->authority_id;
+			if($auth == 4 || $auth == 1 || $auth == 3){
+				return TRUE;
+			}
+			else{
+				return false;
+			}
+        }
+        else{
+        return false;
+    	}
+	}
+
+
+
 
 	public function checkAuth(){
 		if(isset($_SESSION['user'])) {
 			$getUserByUsername = $this->model('user');
 			$auth = $getUserByUsername->where('username' , $_SESSION["user"])->first()->authority_id;
-			if($auth >= 4){
+			if($auth == 4){
 				return TRUE;
 			}
 			else{
@@ -1006,6 +1024,14 @@ class Home extends Controller{
 											->get();
 
 
+			
+
+			for($i = 0; $i < $productInOrder->count(); $i++){
+				$product[] = $productInOrder->get($i);
+			}
+		}
+
+		if(empty($product)){
 			if($productUnavailableinPref->count() != 0 && $productInOrder->count() == 0){
 				if(!empty($_SESSION['MPPI']))
  					$productInOrder = $products->where('availability', 4)->where('unit_price', '<=', $_SESSION['MPPI'])->orderBy('unit_price', 'ASC')->get();
@@ -1015,18 +1041,11 @@ class Home extends Controller{
  				for($i = 0; $i < $productInOrder->count(); $i++){
 					$product[] = $productInOrder->get($i);
 				}
-
- 				break;
 			}
-
-			for($i = 0; $i < $productInOrder->count(); $i++){
-				$product[] = $productInOrder->get($i);
+			if(empty($product)){
+				$this->view('home/placeOrder', ['message'=> "Please insert a higher budget price or a higher item limit."]);
+				die();
 			}
-		}
-
-		if(empty($product)){
-			$this->view('home/placeOrder', ['message'=> "Please insert a higher budget price or a higher item limit."]);
-			die();
 		}
 
 		$index = count($product)-1;
