@@ -1000,7 +1000,7 @@ class Home extends Controller{
 		}
 		$products = $this->model('Product');
 		$product = array();
-		
+		$productUnavailableinPref;
 		foreach ($preference as $pref) {
 			if(!empty($_SESSION['MPPI'])){	
 				$productInOrder = $products
@@ -1052,11 +1052,10 @@ class Home extends Controller{
 		$total = 0;
 		
 		while($budget > $product[0]->unit_price){
-			//echo "Price of Lowest Item:   " . $product[0]->unit_price . "<br/>";
 			
 			$randomLimit = rand(0,$index);
+
 			
-			//echo  $product[$randomLimit]->unit_price. "<br/>";
 			if($product[$randomLimit]->unit_price <= $budget){
 			$orderDetail = $this->model('order_detail');
 			$orderDetail->order_id = $orderID;
