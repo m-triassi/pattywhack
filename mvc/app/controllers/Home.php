@@ -598,6 +598,7 @@ class Home extends Controller{
 
 
 	public function parseAmazon($urlendoed, $changeRequest = true){	
+		error_reporting(0);
 		if($this->checkAuth()){
 			error_reporting(E_ERROR | E_WARNING | E_PARSE);
 			$url = urldecode($urlendoed);
@@ -638,6 +639,11 @@ class Home extends Controller{
 					preg_match("/[0-9]+.[0-9]+/", $priceTag, $price);
 					//var_dump($price[0]);
 				}
+
+
+				if(empty($price) || empty($title))
+					return;
+
 				if($price[0] !== null){
 				$product = $this->model('product');
 								$product->product_name = $title;
@@ -656,9 +662,7 @@ class Home extends Controller{
 								}
 				}			
 								$this->view('home/adminPanel');
-		/*
-		https://www.amazon.ca/Playtex-Diaper-Genie-Disposal-System/dp/B00LCR1KZO/ref=gbph_img_m-6_7b56_e18c27a8?smid=A3DWYIK6Y9EEQB&pf_rd_p=ef10e933-94dc-4f20-bbee-3a13e9607b56&pf_rd_s=merchandised-search-6&pf_rd_t=101&pf_rd_i=3561346011&pf_rd_m=A3DWYIK6Y9EEQB&pf_rd_r=4YRVC6FCDDMKF52F1B5Z
-		*/
+		
 
 			}
 			
@@ -669,10 +673,12 @@ class Home extends Controller{
 
 
 	public function parseEBAY($urlendoed, $changeRequest = true){
+		error_reporting(0);
 		if($this->checkAuth()){
 			$url = urldecode($urlendoed);
 			$providerID = 2;
 			if($url != null){
+				try{
 				$dom = file_get_contents($url);		
 
 				$pattern = "/<h1 class=\"it-ttl\" .+ id=\"itemTitle\"><span class=\"g-hdn\">.+<\/span>+(.+)+<\/h1>/";
@@ -683,6 +689,9 @@ class Home extends Controller{
 				$pattern3 = "/<ul .+ itemtype=\"http:\/\/schema.org\/BreadcrumbList\">+[[:space:]]+(.+)/";
 				preg_match($pattern3, $dom, $categories);
 				preg_match("/<span itemprop=\"name\">(.+)<\/span>/", $categories[1], $category);
+
+				if(empty($price) || empty($title))
+					return;
 
 				$product = $this->model('product');
 								$product->product_name = $title[1];
@@ -700,7 +709,10 @@ class Home extends Controller{
 									}
 								}			
 								$this->view('home/adminPanel');
+							}catch(Exception $e){
+								$this->view('home/adminPanel');
 							}
+						}
 							
 		}else{
 								$this->view('home/index');
@@ -710,6 +722,7 @@ class Home extends Controller{
 	
 
 	public function parseEBid($urlendoed, $changeRequest = true){
+		error_reporting(0);
 		if($this->checkAuth()){
 			$url = urldecode($urlendoed);
 			$providerID = 3;
@@ -723,6 +736,9 @@ class Home extends Controller{
 				$pattern3 = "/>.+<A HREF='http:\/\/www.ebid.net\/ca\/buy\/(.+)\/'.>/";
 				preg_match($pattern3, $dom, $categories);
 				$category = substr($categories[1],0,strpos($categories[1],'/'));
+
+				if(empty($price) || empty($title))
+					return;
 
 				$product = $this->model('product');
 								$product->product_name = $title[1];
