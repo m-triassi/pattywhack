@@ -343,7 +343,7 @@ class Home extends Controller{
 				$verify = password_verify($_POST["PasswordLogin"], $hash);
 				if($verify){
 					$_SESSION['user'] = $_POST["UserLogin"];
-					$_SESSION['email'] = $getUserByUsername->first()->email;
+					$_SESSION['email'] = $getUserByUsername->where('username' , $_POST["UserLogin"])->first()->email;
 					header("Location: http://localhost/pattywhack/mvc/public/home");				
 				}
 				else{

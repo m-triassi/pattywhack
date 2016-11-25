@@ -19,7 +19,7 @@
 <script type="text/javascript">
 $( document ).ready(function() {
     $("#budgBox").keyup(function() {
-            if(document.getElementById("MPPI").style.display == 'none')
+            if(document.getElementById("MPPI").style.display === 'none')
         {
             $('#points').attr('min', $("#budgBox").val());
             $('#points').attr('max', $("#budgBox").val());
